@@ -32,12 +32,23 @@ description: Strategy Radar agent — scans external news and data, matches each
 3. ถ้ามีรายงานก่อนหน้าใน `radar/reports/` ให้อ่านรายงานล่าสุด 1 ฉบับ เพื่อ (ก) ไม่รายงานสัญญาณซ้ำโดยไม่มีพัฒนาการใหม่ และ (ข) ติดตามสัญญาณที่ยังเปิดอยู่
 
 ### 2. วางแผนการค้นหา (Query Plan)
-- สำหรับแต่ละกลยุทธ์ใน scope: สร้าง 2–4 queries จาก `watch.queries` และ `watch.keywords_th` / `watch.keywords_en` ผสมกับปีหรือเดือนปัจจุบัน เพื่อให้ได้ข่าวใหม่
-- เพิ่ม cross-cutting queries จาก `radar/sources.yaml` → `cross_cutting_topics` (นโยบายพลังงาน, เศรษฐกิจมหภาค, AI, ESG ฯลฯ)
-- จำกัดจำนวน queries ตาม `depth` และให้ครอบคลุมทุกกลยุทธ์อย่างน้อย 1 query
+เขียนแผนก่อนค้นทุกครั้ง โดยระบุ **มุม (angle)** และ **driver (PESTEL+I)** ของแต่ละคำค้น ค่าตั้งทั้งหมดอยู่ใน `radar/sources.yaml` (หรือ `meta/radar` ใน Cockpit)
+
+| มุม | จำนวนต่อวัน | วิธีเลือก | เพื่ออะไร |
+|---|---|---|---|
+| `strategy` รายกลยุทธ์ | 1 ต่อกลยุทธ์ | หมุน `watch.queries` / keyword ตามวันที่ของปี | ทุกกลยุทธ์ได้รับการสแกนทุกวัน |
+| `blindspot` ปิดจุดบอด | สูงสุด 4 | กลยุทธ์ที่ไม่มีสัญญาณใน 30 วัน ได้คำค้นเพิ่ม 1 คำค้น | ไม่ปล่อยให้กลยุทธ์ใด "เงียบ" นาน |
+| `signpost` จุดเตือนสมมติฐาน | 3 | สมมติฐานสถานะ challenged → weakening → watch → no_signal → strengthened | ทดสอบสมมติฐานโดยตรง ไม่รอให้ข่าวมาหาเอง |
+| `primary` แหล่งทางการ | 3 | หมุน `primary_sources` · ใช้ WebSearch `allowed_domains` | จับกฎระเบียบตั้งแต่ขั้นร่าง / รับฟังความคิดเห็น |
+| หัวข้อภาพรวม | 5 | `rotation.days[(วันที่ของปี) mod 3]` จาก 12 หัวข้อ | ครอบคลุม PESTEL+I · หัวข้อ priority ได้ 2 ครั้งต่อ 3 วัน |
+| เติม PESTEL | 0–3 | ถ้าวันนั้นไม่มีคำค้นด้าน T, S หรือ En | กันไม่ให้ Radar เอียงไปทางนโยบาย/อุตสาหกรรม |
+
+12 หัวข้อภาพรวม: เศรษฐกิจมหภาค · นโยบายพลังงาน · AI และองค์กร · ESG และข้อกำหนดลูกค้า · Platform & Ecosystem · **อุปสงค์และงบลงทุนลูกค้า** · **ต้นทุนวัตถุดิบและซัพพลายเชน** · **คนและแรงงาน** · ภูมิรัฐศาสตร์และการค้า · ความเสี่ยงภูมิอากาศเชิงกายภาพ · ตลาดทุนและแหล่งเงิน · เสียงสาธารณะ
+
 - ใช้ทั้งภาษาไทยและอังกฤษ — ข่าวท้องถิ่นใช้ไทย, เทคโนโลยี/คู่แข่งต่างประเทศใช้อังกฤษ
 - query ภาษาไทยใช้ปี พ.ศ. (2569 = 2026, 2570 = 2027) และตรวจปีในผลลัพธ์ให้ถูกระบบก่อนสรุปว่าข่าวใหม่หรือเก่า
-- มี query อย่างน้อย 1 ชุดสำหรับ **ความเคลื่อนไหวของคู่แข่ง** (ประกาศ SET, การได้สัญญา) จาก `stakeholders.competitors`
+- ความเคลื่อนไหวคู่แข่งรายบริษัทเป็นงานของ A2 (รายสัปดาห์) — ถ้าเจอระหว่างค้นก็เก็บได้ตามปกติ
+- สัญญาณอ่อนระยะ 1–5 ปี (H2–H3) และตัวชี้วัดภายนอกเป็นงานของ A1H ทุกวันศุกร์ — ดู [horizon-scan](../horizon-scan/SKILL.md)
 
 ### 3. รวบรวมข่าว (Collect)
 - ใช้ **WebSearch** เป็นหลัก ส่งหลาย queries พร้อมกันในรอบเดียว ใช้ mode `standard` เป็นค่าเริ่มต้น และใช้ `extended` สำหรับเรื่องเฉพาะทาง ข่าวไทยที่หายาก หรือเมื่อผลลัพธ์บาง/เก่า
@@ -46,6 +57,7 @@ description: Strategy Radar agent — scans external news and data, matches each
 
 ### 4. คัดกรอง (Screen)
 - ตัดข่าวที่เก่ากว่า `period` (ยกเว้นเป็นบริบทสำคัญ และต้องระบุว่าเป็นข่าวเก่า), ข่าวที่ไม่มีวันที่ หรือไม่เกี่ยวข้อง
+- รายการจากแหล่งทางการที่ยังเปิดอยู่ (เช่น การรับฟังความคิดเห็นที่ยังไม่ปิด) ย้อนได้ถึง 30 วัน และบันทึกกำหนดวัน (`deadline`)
 - รวมข่าวเหตุการณ์เดียวกันจากหลายสำนักเป็น **1 สัญญาณ** (หลายแหล่งอ้างอิง = ความเชื่อมั่นสูงขึ้น)
 - ให้ระดับแหล่งข่าว (Source Tier A–D) ตาม `radar/sources.yaml`
 
@@ -66,13 +78,15 @@ description: Strategy Radar agent — scans external news and data, matches each
 - สร้าง **Heatmap** กลยุทธ์ × ด้านผลกระทบ
 - สรุป **Assumption Watch** — สมมติฐานใดเริ่มสั่นคลอน
 - ระบุ **Blind spots** — กลยุทธ์ที่ไม่พบสัญญาณ (อาจเพราะ keyword ไม่ดี) และเสนอ keyword ใหม่
+- สรุป **ความครอบคลุม (coverage)** — จำนวนคำค้นตาม driver และมุม · กลยุทธ์ที่ยังไม่มีสัญญาณใน 30 วัน (`stillBlind`)
+- สรุป **จุดเตือนที่ตรวจ** (`signpostsChecked`) และ **กฎระเบียบที่กำลังมา** (`regulatoryPipeline`: ชื่อ หน่วยงาน ขั้น กำหนดวัน)
 - เสนอ **คำถามเชิงกลยุทธ์สำหรับที่ประชุมผู้บริหาร** 3–5 ข้อ
 
 ### 7. ส่งมอบ (Deliver)
 1. เขียนรายงานตาม `references/report-template.md` ไปที่ `radar/reports/YYYY-MM-DD-radar.md`
 2. เพิ่มแถวลง `radar/signal-log.csv` (สร้าง header ถ้ายังไม่มี — ดูคอลัมน์ใน scoring-rubric)
 3. **ส่งเข้า Strategy Cockpit (ถ้ามี)** — ถ้ามีไฟล์ `private/cockpit/cockpit.url` หรือผู้ใช้ให้ URL ของ Cockpit artifact:
-   - เขียนสัญญาณใหม่ลง collection `signals` ด้วย ArtifactData `batch` (doc_id = `SIG-YYYYMMDD-NN`; ฟิลด์: `headline, date, run, driver, impact, likelihood, score, level, horizon, confidence, direction, impacts[{s, d[], dir}], strategies[], fact, sowhat, nowhat, owner, assumptions[], sources[{name,url}], tier, status:"new", note:""`)
+   - เขียนสัญญาณใหม่ลง collection `signals` ด้วย ArtifactData `batch` (doc_id = `SIG-YYYYMMDD-NN`; ฟิลด์: `headline, date, run, angle, deadline, driver, impact, likelihood, score, level, horizon, confidence, direction, impacts[{s, d[], dir}], strategies[], fact, sowhat, nowhat, owner, assumptions[], sources[{name,url}], tier, status:"new", note:""`)
    - **ห้ามเขียนทับ** `status` และ `note` ของสัญญาณเดิม (ผู้ใช้แก้ไว้) — สัญญาณที่มีพัฒนาการใหม่ให้สร้าง doc ใหม่
    - อัปเดต `strategies/<id>.assumptions[].status/evidence` ตาม Assumption Watch และ `meta/cockpit` (`lastRun`, `period`, `queries`, `signalCount`)
    - อ่าน document ก่อนเขียนทับ และส่ง `if_version` ทุกครั้ง

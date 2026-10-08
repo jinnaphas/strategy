@@ -5,7 +5,7 @@
 
 ## 1. คำตอบสั้น
 
-**9 Agents = 1 Orchestrator + 8 Specialist Agents** เปิดใช้ทีละระลอก · ตอนนี้ใช้งานแล้ว 8 ตัว (A0 · A1 · A2 · A3 · A5 · A6 · A7 · A8) ซึ่งรวมกันเป็น [Weekly Disruption Cycle](03-weekly-disruption-cycle.md) ทุกวันจันทร์
+**10 Agents = 1 Orchestrator + 9 Specialist Agents** เปิดใช้ทีละระลอก · ตอนนี้ใช้งานแล้ว 9 ตัว (A0 · A1 · A1H · A2 · A3 · A5 · A6 · A7 · A8) ซึ่งรวมกันเป็น [Weekly Disruption Cycle](03-weekly-disruption-cycle.md) ทุกวันจันทร์ · A1H แยกงานมองไกล (Horizon Scan) ออกจาก A1 ทุกวันศุกร์
 
 | เกณฑ์ที่ใช้กำหนดจำนวน | ผลลัพธ์ |
 |---|---|
@@ -24,6 +24,7 @@ flowchart TB
     ORC["A0 Strategy Orchestrator<br/>ทะเบียนกลยุทธ์ · ตรวจความสอดคล้อง · Weekly Brief"]
     subgraph SENSE["Sense"]
         A1["A1 Strategy Radar"]
+        A1H["A1H Horizon Scan & Indicators"]
         A2["A2 Tender & Competitor Intelligence"]
     end
     subgraph DECIDE["Decide"]
@@ -51,7 +52,8 @@ flowchart TB
 | ID | Agent | ทำอะไร | หน้าที่ | ระยะของแผน | Input → Output | รอบ | เจ้าของ (คน) | อิสระ | ระลอก |
 |---|---|---|---|---|---|---|---|---|---|
 | A0 | **Strategy Orchestrator** ✅ | รวมผลทุก Agent ตรวจสถานะทีม Agent ตรวจข้อมูลค้าง เสนอปรับทะเบียน | F7, F10 | ทุกระยะ | รายงานของทุก Agent → **Weekly Disruption Brief** | จันทร์ 08:50 | Strategy Lead | L2 | 1 |
-| A1 | **Strategy Radar** ✅ | สแกนข่าว/นโยบาย/ตลาด จับคู่กับกลยุทธ์และสมมติฐาน | F1, F2 | Externally-Oriented | ทะเบียน + ข่าว → Daily Brief, สัญญาณ, Assumption Watch | ทุกวัน 07:45 | CI Analyst | L2 | 1 |
+| A1 | **Strategy Radar** ✅ | สแกนข่าว/นโยบาย/ตลาด จุดเตือนของสมมติฐาน แหล่งทางการ และกลยุทธ์ที่ยังเป็นจุดบอด จับคู่กับกลยุทธ์และสมมติฐาน | F1, F2 | Externally-Oriented | ทะเบียน + ข่าว + แหล่งทางการ → Daily Brief, สัญญาณ, Assumption Watch, กฎระเบียบที่กำลังมา | ทุกวัน 07:45 | CI Analyst | L2 | 1 |
+| A1H | **Horizon Scan & Indicators** ✅ | สัญญาณอ่อนระยะ 1–5 ปี (H2–H3) และตัวชี้วัดภายนอกรายสัปดาห์ที่มีแหล่งอ้างอิง ([05](05-radar-coverage-and-horizon-scan.md)) | F1 | Externally-Oriented | ธีม Horizon + ทะเบียน → สัญญาณ H2–H3, ตัวชี้วัด, ข้อเสนอให้ A3/A7 | ศุกร์ 06:40 | CI Analyst | L2 | 1 |
 | A2 | **Tender & Competitor Intelligence** ✅ | ประกาศจัดซื้อ ผลผู้ชนะ ประกาศตลาดหลักทรัพย์ของคู่แข่ง win/loss และโจทย์ Pre-TOR | F2, F6 | Externally-Oriented | e-GP, เว็บลูกค้า, ประกาศบริษัทจดทะเบียน → Tender pipeline, Win/Loss brief | จันทร์ 05:55 | Business Generation | L2 | 1 |
 | A3 | **Strategic Options & Scenario** ✅ | ออกแบบ Solution ให้เรื่องที่ Disrupt แผนเป็น Emerging Strategy พร้อมทางเลือก 2–3 ทาง (ต่อไป: Rolling forecast และฉากทัศน์ตัวเลขจาก ERP) | F3, F4, F5 | Forecast-Based | Scorecard ของ A7, ประมูล, พันธมิตร, Must-Win → Emerging Strategy, Decision Memo | จันทร์ 08:35 | Strategy Lead + CFO | L2 | 1 (ส่วน forecast: 3) |
 | A4 | **Portfolio & Capital Allocation** | ติด Strategy ID ให้ Capex/Opex คำนวณ Strategic Fit เตือน say–do gap | F4 | Budgeting–Forecast | รายการ Capex/Opex + ทะเบียน → Capex fit report, Investment memo draft | ตามรอบงบ | CFO + Strategy Office | L2 | 2 |
@@ -62,18 +64,18 @@ flowchart TB
 
 ### ความครอบคลุมหน้าที่งาน
 
-| หน้าที่ | A0 | A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 |
-|---|---|---|---|---|---|---|---|---|---|
-| F1 มองอนาคต & สแกนสภาพแวดล้อม | | ● | | | | | | | |
-| F2 วิเคราะห์ข้อมูลเชิงกลยุทธ์ | | ● | ● | | | | | | |
-| F3 กำหนดกลยุทธ์ & ทางเลือก | | | | ● | | | | | |
-| F4 บริหารพอร์ต & จัดสรรทรัพยากร | | | | ● | ● | | | | |
-| F5 การเติบโต & โมเดลธุรกิจ | | | | | | ● | | | |
-| F6 Corporate Development & Ecosystem | | | ● | | | ● | | | |
-| F7 แปลงกลยุทธ์เป็นแผน & ถ่ายทอด | ● | | | | | | ● | | |
-| F8 บริหารโครงการ & Transformation | | | | | | | ● | | |
-| F9 ติดตามผล ทบทวน & ปรับ | | | | | | | | ● | |
-| F10 ที่ปรึกษาผู้บริหาร & สื่อสาร | ● | | | | | | | | ● |
+| หน้าที่ | A0 | A1 | A1H | A2 | A3 | A4 | A5 | A6 | A7 | A8 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| F1 มองอนาคต & สแกนสภาพแวดล้อม | | ● | ● | | | | | | | |
+| F2 วิเคราะห์ข้อมูลเชิงกลยุทธ์ | | ● | | ● | | | | | | |
+| F3 กำหนดกลยุทธ์ & ทางเลือก | | | | | ● | | | | | |
+| F4 บริหารพอร์ต & จัดสรรทรัพยากร | | | | | ● | ● | | | | |
+| F5 การเติบโต & โมเดลธุรกิจ | | | | | | | ● | | | |
+| F6 Corporate Development & Ecosystem | | | | ● | | | ● | | | |
+| F7 แปลงกลยุทธ์เป็นแผน & ถ่ายทอด | ● | | | | | | | ● | | |
+| F8 บริหารโครงการ & Transformation | | | | | | | | ● | | |
+| F9 ติดตามผล ทบทวน & ปรับ | | | | | | | | | ● | |
+| F10 ที่ปรึกษาผู้บริหาร & สื่อสาร | ● | | | | | | | | | ● |
 
 ## 4. ระดับความอิสระ (Autonomy)
 

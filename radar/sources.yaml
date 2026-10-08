@@ -50,28 +50,269 @@ source_tiers:
     label: "บล็อก / โซเชียล / ข่าวประชาสัมพันธ์ที่ยังไม่ยืนยัน"
     note: "ใช้เป็นสัญญาณอ่อน (weak signal) เท่านั้น ต้องระบุ 'ต้องตรวจสอบ'"
 
-# หัวข้อเฝ้าระวังที่ตัดข้ามทุกกลยุทธ์ — Agent จะนำไปสร้าง query เพิ่มเติม
+
+# ---------------------------------------------------------------------------
+# หัวข้อเฝ้าระวังที่ตัดข้ามทุกกลยุทธ์ (12 หัวข้อ · PESTEL+I)
+# priority: true = มุมที่ควรเห็นบ่อยที่สุด (ได้ 2 ครั้งต่อรอบ 3 วัน)
+# dims = ด้านที่กระทบ D1–D10 ตาม scoring-rubric
+# ---------------------------------------------------------------------------
 cross_cutting_topics:
-  - name: "เศรษฐกิจมหภาคไทยและอาเซียน"
+  - key: macro
+    name: "เศรษฐกิจมหภาคไทยและอาเซียน"
     driver: E
-    queries_th: ["เศรษฐกิจไทย คาดการณ์ GDP", "กนง. อัตราดอกเบี้ยนโยบาย", "งบลงทุนภาครัฐ โครงสร้างพื้นฐาน"]
+    dims: ["D1", "D7"]
+    priority: false
+    queries_th: ["เศรษฐกิจไทย คาดการณ์ GDP", "กนง. อัตราดอกเบี้ยนโยบาย", "งบลงทุนภาครัฐ โครงสร้างพื้นฐาน เบิกจ่าย"]
     queries_en: ["Thailand economic outlook", "ASEAN infrastructure investment"]
-  - name: "นโยบายพลังงานและไฟฟ้า"
+  - key: energy_policy
+    name: "นโยบายพลังงานและไฟฟ้า"
     driver: P
-    queries_th: ["แผน PDP ใหม่", "กกพ. ประกาศ", "ไฟฟ้าสีเขียว Direct PPA", "ค่าไฟฟ้า Ft"]
+    dims: ["D5", "D1"]
+    priority: false
+    queries_th: ["แผน PDP ครม. อนุมัติ", "กกพ. ประกาศ", "ไฟฟ้าสีเขียว Direct PPA", "ค่าไฟฟ้า Ft งวดใหม่"]
     queries_en: ["Thailand power development plan", "Thailand energy regulatory commission"]
-  - name: "AI และการเปลี่ยนแปลงองค์กร"
+  - key: ai_org
+    name: "AI และการเปลี่ยนแปลงองค์กร"
     driver: T
+    dims: ["D4", "D8"]
+    priority: false
     queries_th: ["Agentic AI องค์กรไทย", "กฎหมาย AI ประเทศไทย", "AI แรงงาน ทักษะ"]
     queries_en: ["agentic AI enterprise adoption", "AI regulation Thailand", "AI workforce reskilling"]
-  - name: "ESG และ Net Zero"
+  - key: esg_requirements
+    name: "ESG, Net Zero และข้อกำหนดจากลูกค้า/ผู้ประเมิน"
     driver: En
-    queries_th: ["พ.ร.บ.การเปลี่ยนแปลงสภาพภูมิอากาศ", "คาร์บอนเครดิต ไทย", "ภาษีคาร์บอน"]
-    queries_en: ["Thailand climate change act", "CBAM Thailand exporters"]
-  - name: "Platform & Ecosystem Economy"
+    dims: ["D10", "D2", "D5"]
+    priority: false
+    queries_th: ["พ.ร.บ.การเปลี่ยนแปลงสภาพภูมิอากาศ", "ภาษีคาร์บอน ไทย", "SET ESG Ratings เกณฑ์ใหม่", "ซัพพลายเออร์ Scope 3 ข้อกำหนด RE100"]
+    queries_en: ["CBAM Thailand exporters", "FTSE Russell ESG methodology change", "Scope 3 supplier requirements Asia manufacturers", "ISSB IFRS S2 Thailand adoption"]
+  - key: platform_ecosystem
+    name: "Platform & Ecosystem Economy"
     driver: I
+    dims: ["D9", "D4"]
+    priority: false
     queries_th: ["แพลตฟอร์มธุรกิจ ecosystem ไทย", "ความร่วมมือทางธุรกิจ พลังงาน ดิจิทัล"]
     queries_en: ["platform business model industrial", "ecosystem partnership energy digital Southeast Asia"]
+  - key: customer_demand
+    name: "ความต้องการและงบลงทุนของลูกค้า"
+    driver: I
+    dims: ["D2", "D1"]
+    priority: true
+    queries_th: ["BOI อนุมัติ โครงการลงทุน โรงงานใหม่", "นิคมอุตสาหกรรม ขยายพื้นที่ ยอดขายที่ดิน", "งบลงทุน กฟภ. กฟน. เบิกจ่าย", "ดาต้าเซ็นเตอร์ จัดหาไฟฟ้า ลงทุน ไทย", "ย้ายฐานการผลิต China+1 ไทย"]
+    queries_en: ["Thailand BOI approvals data center electronics", "Thailand industrial estate land sales record", "China plus one manufacturing relocation Thailand"]
+  - key: input_costs
+    name: "ต้นทุนวัตถุดิบและซัพพลายเชน"
+    driver: E
+    dims: ["D6"]
+    priority: true
+    queries_th: ["ราคาทองแดง แนวโน้ม", "ค่าเงินบาท แนวโน้ม", "ค่าระวางเรือ ตู้คอนเทนเนอร์", "มาตรการตอบโต้การทุ่มตลาด เหล็ก ไฟฟ้า"]
+    queries_en: ["LME copper price outlook", "grain-oriented electrical steel price shortage", "transformer oil supply price", "LFP battery cell price trend", "container freight rates Asia"]
+  - key: talent
+    name: "คนและแรงงาน"
+    driver: S
+    dims: ["D8"]
+    priority: true
+    queries_th: ["ค่าแรงขั้นต่ำ 2570", "ขาดแคลนแรงงาน วิศวกร ไทย", "SMART Visa BOI", "ผลสำรวจเงินเดือน IT AI ไทย", "มหาวิทยาลัย หลักสูตร AI"]
+    queries_en: ["Thailand tech talent shortage", "AI layoffs reskilling Asia", "engineering workforce shortage power sector"]
+  - key: geopolitics_trade
+    name: "ภูมิรัฐศาสตร์และการค้า"
+    driver: P
+    dims: ["D3", "D6", "D1"]
+    priority: false
+    queries_th: ["ภาษีนำเข้าสหรัฐ สินค้าไทย", "สินค้าจีนทะลัก ไทย มาตรการ", "FTA อาเซียน ความคืบหน้า", "การค้าชายแดน ไทย"]
+    queries_en: ["US tariffs Thailand exports", "China overcapacity exports Southeast Asia", "ASEAN trade agreement 2026"]
+  - key: climate_physical
+    name: "ความเสี่ยงสภาพภูมิอากาศเชิงกายภาพ"
+    driver: En
+    dims: ["D6", "D1", "D10"]
+    priority: false
+    queries_th: ["น้ำท่วม นิคมอุตสาหกรรม", "คลื่นความร้อน ความต้องการไฟฟ้าสูงสุด", "ภัยแล้ง เอลนีโญ ลานีญา เกษตร", "พายุ ระบบไฟฟ้าเสียหาย"]
+    queries_en: ["Thailand flood risk industrial estates", "heatwave peak electricity demand Southeast Asia", "El Nino La Nina outlook Southeast Asia"]
+  - key: capital_markets
+    name: "ตลาดทุนและแหล่งเงินทุน"
+    driver: E
+    dims: ["D7"]
+    priority: false
+    queries_th: ["หุ้นกู้สีเขียว ไทย", "SET หุ้นกลุ่มพลังงาน", "สินเชื่อเพื่อความยั่งยืน ธนาคาร", "กองทุน infrastructure พลังงาน"]
+    queries_en: ["Thailand green bond issuance", "sustainability-linked loan Thailand", "energy transition fund Southeast Asia", "Thai corporate bond market outlook"]
+  - key: public_voice
+    name: "เสียงสาธารณะและชื่อเสียง"
+    driver: S
+    dims: ["D10", "D2"]
+    priority: false
+    queries_th: ["ชาวบ้านคัดค้าน โรงไฟฟ้าชีวมวล", "ร้องเรียน ค่าไฟแพง", "ความเห็นประชาชน โซลาร์ฟาร์ม", "กระแสสังคม พลังงาน"]
+    queries_en: ["community opposition biomass power plant Thailand", "Thailand electricity bill public backlash"]
+
+# หมุนหัวข้อวันละ 5 หัวข้อ ตาม (วันที่ของปี) mod 3
+rotation:
+  cycle_days: 3
+  days:
+    - ["customer_demand", "input_costs", "energy_policy", "climate_physical", "ai_org"]
+    - ["customer_demand", "talent", "geopolitics_trade", "esg_requirements", "macro"]
+    - ["input_costs", "talent", "capital_markets", "public_voice", "platform_ecosystem"]
+
+# ---------------------------------------------------------------------------
+# แหล่งทางการ — จับกฎระเบียบตั้งแต่ขั้นร่าง / รับฟังความคิดเห็น ก่อนสื่อรายงาน
+# Agent ใช้ WebSearch แบบจำกัดโดเมน (allowed_domains) วันละ 3 แหล่ง หมุนตามวัน
+# ---------------------------------------------------------------------------
+primary_sources:
+  per_day: 3
+  sources:
+    - key: gazette
+      name: "ราชกิจจานุเบกษา (กฎหมาย/ประกาศที่มีผลแล้ว)"
+      domains: ["ratchakitcha.soc.go.th"]
+      queries_th: ["ประกาศ กระทรวงพลังงาน", "ประกาศ คณะกรรมการกำกับกิจการพลังงาน", "กฎกระทรวง ไฟฟ้า", "ประกาศ สมอ. มาตรฐาน"]
+    - key: energy_regulator
+      name: "กกพ. / สนพ. / กระทรวงพลังงาน (ร่างระเบียบ รับฟังความคิดเห็น)"
+      domains: ["erc.or.th", "eppo.go.th", "energy.go.th"]
+      queries_th: ["รับฟังความคิดเห็น ร่างระเบียบ", "ประกาศรับซื้อไฟฟ้า", "แผน PDP", "Grid Code", "อัตราค่าไฟฟ้า Ft"]
+    - key: utilities
+      name: "การไฟฟ้า (แผนลงทุน ระเบียบเชื่อมต่อ ประกาศ)"
+      domains: ["pea.co.th", "mea.or.th", "egat.co.th"]
+      queries_th: ["แผนลงทุน", "ระเบียบการเชื่อมต่อ", "ประกาศ จัดซื้อ", "สมาร์ทกริด"]
+    - key: law_hearing
+      name: "ร่างกฎหมายที่เปิดรับฟังความคิดเห็น"
+      domains: ["law.go.th"]
+      queries_th: ["ร่าง พระราชบัญญัติ พลังงาน", "ร่าง พระราชบัญญัติ การเปลี่ยนแปลงสภาพภูมิอากาศ", "ร่าง กฎหมาย ปัญญาประดิษฐ์", "ร่าง กฎหมาย แพลตฟอร์มดิจิทัล"]
+    - key: standards
+      name: "มาตรฐานผลิตภัณฑ์ (มอก. / EV / ความปลอดภัย)"
+      domains: ["tisi.go.th"]
+      queries_th: ["มอก. หม้อแปลง", "มาตรฐาน เครื่องอัดประจุไฟฟ้า", "มาตรฐาน บังคับ ใหม่ ไฟฟ้า"]
+    - key: investment_finance
+      name: "การลงทุนและตลาดทุน (BOI / ธปท. / SET)"
+      domains: ["boi.go.th", "bot.or.th", "set.or.th"]
+      queries_th: ["BOI อนุมัติ ส่งเสริมการลงทุน", "นโยบายการเงิน กนง.", "ประกาศ ตลาดหลักทรัพย์ ESG"]
+
+# จุดเตือน (signposts) ของสมมติฐานในทะเบียนกลยุทธ์ — วันละ 3 สมมติฐาน
+signposts:
+  per_day: 3
+  priority: [challenged, weakening, watch, no_signal, strengthened]
+  rule: "สร้างคำค้นจาก signposts ด้วยคำสาธารณะ และบันทึกทุกจุดที่ตรวจ แม้ไม่พบอะไร"
+
+# ทุกวันต้องมีคำค้นอย่างน้อย 1 คำค้นต่อ driver เหล่านี้ (นับรวมคำค้นรายกลยุทธ์)
+pestel_min: [T, S, En]
+
+# กลยุทธ์ที่ไม่มีสัญญาณใน 30 วัน ได้คำค้นเพิ่ม (สูงสุด 4 กลยุทธ์ต่อวัน)
+blind_spot:
+  window_days: 30
+  extra_queries_max: 4
+
+# แผนคำค้นรายวัน (~34 คำค้น)
+daily_plan:
+  per_strategy: 1           # ทุกกลยุทธ์ในทะเบียน หมุนมุมตามวัน
+  blind_spot_extra: 4
+  signposts: 3
+  primary_sources: 3
+  topics: 5
+  competitors: "ติดตามรายบริษัทโดย A2 ทุกวันจันทร์"
+
+# ---------------------------------------------------------------------------
+# Horizon Scan (A1H) — ทุกวันศุกร์ · สัญญาณอ่อน H2–H3
+# ---------------------------------------------------------------------------
+horizon_scan:
+  day: friday
+  max_queries: 24
+  lookback_days: 60          # รอบถัดไป: ตั้งแต่รายงานก่อน สูงสุด 60 วัน
+  baseline_days: 180         # รอบแรก
+  signal_id: "SIG-YYYYMMDD-HNN"
+  themes:
+    - key: grid_tech
+      name: "เทคโนโลยีกริดและการกักเก็บพลังงานรุ่นถัดไป"
+      driver: T
+      queries_en: ["solid-state transformer commercialization", "sodium-ion battery grid storage", "grid-forming inverter adoption", "virtual power plant regulation Asia", "superconducting cable distribution"]
+      queries_th: ["หม้อแปลงโซลิดสเตต", "แบตเตอรี่โซเดียมไอออน"]
+    - key: ai_frontier
+      name: "AI, Agentic AI และ Physical AI"
+      driver: T
+      queries_en: ["agentic AI industrial operations", "AI grid operations utilities", "physical AI robotics manufacturing", "AI regulation trend 2027"]
+      queries_th: ["Physical AI โรงงาน"]
+    - key: bioeconomy
+      name: "Bioeconomy วัสดุชีวภาพและการดูดกลับคาร์บอน"
+      driver: En
+      queries_en: ["engineered bamboo composite innovation", "lignin bio-based chemicals commercialization", "biochar carbon removal standard", "molded fiber barrier coating PFAS-free", "durable carbon removal market"]
+      queries_th: ["ไผ่วิศวกรรม วัสดุชีวภาพ"]
+    - key: compute_energy
+      name: "Data Center และพลังงานสำหรับ AI"
+      driver: T
+      queries_en: ["data center liquid cooling adoption", "small modular reactor data center Asia", "AI electricity demand forecast 2030", "sovereign AI cloud Southeast Asia"]
+    - key: business_models
+      name: "โมเดลธุรกิจ Platform และ Data Space"
+      driver: I
+      queries_en: ["energy-as-a-service business model", "peer-to-peer energy trading pilot", "industrial data space Catena-X Manufacturing-X", "digital product passport batteries electronics"]
+      queries_th: ["แพลตฟอร์มซื้อขายไฟฟ้า"]
+    - key: society
+      name: "สังคม แรงงาน และประชากร"
+      driver: S
+      queries_en: ["future of work AI jobs Asia", "aging workforce Thailand automation"]
+      queries_th: ["สังคมสูงวัย แรงงาน ไทย"]
+    - key: geo_long
+      name: "ภูมิรัฐศาสตร์ระยะยาว"
+      driver: P
+      queries_en: ["critical minerals supply chain decoupling", "carbon border adjustment expansion Asia", "ASEAN power grid 2035"]
+    - key: climate_long
+      name: "สภาพภูมิอากาศระยะยาว"
+      driver: En
+      queries_en: ["Southeast Asia climate scenario 2040 physical risk", "climate adaptation finance Asia"]
+
+# ---------------------------------------------------------------------------
+# ตัวชี้วัดภายนอกรายสัปดาห์ (A1H) — บันทึกเฉพาะตัวเลขที่มีแหล่งอ้างอิง
+# freshness_days: อายุสูงสุดของค่า (null = ใช้ค่าทางการล่าสุดได้)
+# ห้ามแปลงหน่วยหรือสกุลเงินเอง
+# ---------------------------------------------------------------------------
+indicators:
+  - key: copper
+    name: "ราคาทองแดง (LME)"
+    unit: "USD/ตัน"
+    q: "LME copper price USD per tonne"
+    q_alt: "ราคาทองแดง LME ล่าสุด ดอลลาร์ต่อตัน"
+    freshness_days: 14
+  - key: thb_usd
+    name: "ค่าเงินบาท"
+    unit: "บาท/USD"
+    q: "ค่าเงินบาท เปิดตลาดเช้านี้ บาทต่อดอลลาร์"
+    q_alt: "Thai baht dollar close"
+    freshness_days: 14
+  - key: policy_rate
+    name: "อัตราดอกเบี้ยนโยบาย ธปท."
+    unit: "% ต่อปี"
+    q: "กนง. มติ อัตราดอกเบี้ยนโยบาย ล่าสุด"
+    q_alt: "Bank of Thailand policy rate decision"
+    freshness_days: null
+  - key: ft
+    name: "ค่า Ft งวดปัจจุบัน"
+    unit: "สตางค์/หน่วย"
+    q: "ค่า Ft งวด กกพ. สตางค์ต่อหน่วย"
+    q_alt: "กกพ. ค่าไฟฟ้า งวด ค่า Ft"
+    freshness_days: null
+  - key: eu_ets
+    name: "ราคาคาร์บอน EU ETS"
+    unit: "EUR/tCO2"
+    q: "EU carbon price EUA euros per tonne"
+    q_alt: "EU ETS carbon allowance price this week"
+    freshness_days: 14
+  - key: tver
+    name: "ราคาคาร์บอนเครดิต T-VER เฉลี่ย"
+    unit: "บาท/tCO2e"
+    q: "ราคาซื้อขาย คาร์บอนเครดิต T-VER เฉลี่ย บาทต่อตัน"
+    q_alt: "อบก. ราคาคาร์บอนเครดิต เฉลี่ย ไตรมาส"
+    freshness_days: null
+  - key: dc_capacity
+    name: "กำลังไฟ Data Center ไทยที่ประกาศ/ได้ BOI"
+    unit: "MW"
+    q: "Thailand data center capacity MW BOI approved"
+    q_alt: "ดาต้าเซ็นเตอร์ ไทย กำลังไฟ เมกะวัตต์ BOI อนุมัติ"
+    freshness_days: null
+  - key: lfp_cell
+    name: "ราคาเซลล์ LFP สำหรับ ESS (จีน)"
+    unit: "RMB/Wh"
+    q: "LFP energy storage cell price RMB/Wh"
+    q_alt: "InfoLink TrendForce LFP cell price RMB Wh"
+    freshness_days: 21
+  - key: pulp
+    name: "ราคาเยื่อไม้ใยสั้น (BHKP จีน)"
+    unit: "USD/ตัน"
+    q: "China hardwood pulp BHKP price USD per tonne"
+    q_alt: "ราคาเยื่อกระดาษ ใยสั้น จีน"
+    freshness_days: 21
 
 search_policy:
   default_mode: standard          # standard | extended
@@ -81,7 +322,7 @@ search_policy:
     - "depth: deep"
   max_queries:
     quick: 15
-    standard: 30
+    standard: 34
     deep: 60
   never_include_in_queries:
     - "ชื่อกลยุทธ์ภายในหรือรหัสโครงการลับ"
