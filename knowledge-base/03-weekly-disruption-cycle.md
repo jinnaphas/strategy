@@ -26,7 +26,9 @@ flowchart LR
     A5["06:25 · A5<br/>Ecosystem"] --> A7
     A6["06:55 · A6<br/>การปฏิบัติ"] --> A7
     A1["07:45 · A1<br/>Radar รายวัน"] --> A7
-    A7["08:20 · A7<br/>Plan Disruption Scorecard"] --> A0["08:50 · A0<br/>Weekly Disruption Brief"]
+    A7["08:20 · A7<br/>Plan Disruption Scorecard"] --> A3["08:35 · A3<br/>Emerging Strategy + ทางเลือก"]
+    A3 --> A0["08:50 · A0<br/>Weekly Disruption Brief + สรุปผู้บริหาร"]
+    A0 --> A8["09:10 · A8<br/>Pack ก่อนประชุม"]
     A0 --> H{{"09:00 Strategy Office huddle<br/>ส่งต่อเจ้าของ · เลือกเรื่องที่ต้องตัดสินใจ"}}
     H -. "ปรับสถานะสัญญาณ / ประมูล / พันธมิตร<br/>บันทึกมติ" .-> DB[("Strategy Cockpit DB")]
     DB -.-> A2 & A5 & A6 & A1
@@ -44,7 +46,9 @@ flowchart LR
 | A5 Ecosystem Scout | ทะเบียนกลยุทธ์ + WebSearch | `partners`, `signals` (รหัส `-E`), `reports/A5-<วันที่>` | Partner pipeline · Ecosystem themes |
 | A6 Execution Tracker | `battles`, `issues`, `events`, `decisions`, `signals` | `reports/A6-<วันที่>` | งานเลยกำหนด · ใกล้ครบกำหนด · สัญญาณค้าง · Escalation |
 | A7 Strategy Review | ทุกอย่างข้างบน + สมมติฐาน | `reports/A7-<วันที่>`, สถานะสมมติฐาน | Plan Disruption Scorecard · Emerging · Non-Realized |
-| A0 Orchestrator | รายงานทุกตัว + Daily Brief ของ A1 | `reports/A0-<วันที่>` | **Weekly Disruption Brief** |
+| A3 Strategic Options | รายงาน A7 + ทะเบียน + พันธมิตร + ประมูล | `emerging`, `reports/A3-<วันที่>` | Solution (Emerging Strategy) + Decision Memo — ดู [04](04-emerging-strategy-and-executive-briefing.md) |
+| A0 Orchestrator | รายงานทุกตัว + Daily Brief ของ A1 | `reports/A0-<วันที่>` | **Weekly Disruption Brief** + สรุปผู้บริหาร 1 หน้า |
+| A8 Board & Communication | สรุปผู้บริหาร + Emerging Strategy | `boardpacks` | Pack สไลด์ก่อนประชุม EC / BOD |
 
 ## 4. มาตรวัดที่ใช้ร่วมกัน
 
