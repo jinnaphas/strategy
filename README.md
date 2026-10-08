@@ -5,6 +5,11 @@ Repo สำหรับบริหารงานกลยุทธ์องค
 
 > 🔒 repo นี้เป็น public — ข้อมูลกลยุทธ์จริง รายงานที่ Agent สร้าง และ Strategy Cockpit ถูกเก็บแยกในพื้นที่ private (ดู [`.gitignore`](.gitignore))
 
+## หน้าเว็บ
+
+- [`index.html`](index.html) — หน้าแรกของระบบ (เผยแพร่ผ่าน GitHub Pages ได้ ไม่มีข้อมูลลับ) อธิบายการทำงานของ Strategy Radar รายวัน วงจรบริหาร และทีม 9 Agents พร้อมปุ่มไป Strategy Cockpit
+- **Strategy Cockpit** — หน้าบริหารที่มีข้อมูลกลยุทธ์จริง เป็น artifact ส่วนตัวบน claude.ai (เปิดได้เฉพาะผู้ได้รับสิทธิ์)
+
 ## โครงสร้าง
 
 | โฟลเดอร์ | เนื้อหา |
@@ -21,7 +26,7 @@ Repo สำหรับบริหารงานกลยุทธ์องค
 | ID | Agent | หน้าที่ | ระลอก | สถานะ |
 |---|---|---|---|---|
 | A0 | Strategy Orchestrator | ทะเบียนกลยุทธ์ ตรวจความสอดคล้อง Weekly Brief | 1 | 🔜 |
-| A1 | [Strategy Radar](radar/README.md) | ข่าว/ข้อมูลภายนอก → กลยุทธ์ไหน ด้านไหน โอกาสหรือภัย | 1 | ✅ พร้อมใช้ |
+| A1 | [Strategy Radar](radar/README.md) | ข่าว/ข้อมูลภายนอก → กลยุทธ์ไหน ด้านไหน โอกาสหรือภัย | 1 | ✅ ทำงานทุกเช้า 07:45 น. |
 | A2 | Tender & Competitor Intelligence | ประกาศจัดซื้อ ผลผู้ชนะ ความเคลื่อนไหวคู่แข่ง | 1 | 🔜 |
 | A3 | Forecast & Scenario | Rolling forecast + ฉากทัศน์ | 3 | วางแผน |
 | A4 | Portfolio & Capital Allocation | ผูก Capex/Opex กับกลยุทธ์ | 2 | วางแผน |

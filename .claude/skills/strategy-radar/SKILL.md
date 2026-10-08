@@ -27,7 +27,7 @@ description: Strategy Radar agent — scans external news and data, matches each
 ## Procedure
 
 ### 1. โหลดบริบท
-1. อ่าน `strategies/strategy-register.yaml` ถ้าไม่มี ให้แจ้งผู้ใช้ และใช้ `strategy-register.example.yaml` ในโหมด **DEMO** (ระบุ DEMO ชัดเจนบนรายงาน)
+1. อ่านทะเบียนกลยุทธ์ ตามลำดับ: (ก) collection `strategies` + `meta/radar` ใน Strategy Cockpit DB ถ้ามี URL ของ Cockpit (`private/cockpit/cockpit.url` หรือผู้ใช้ให้มา) — เป็นแหล่งหลักเพราะ Routine รายวันใช้แหล่งเดียวกัน (ข) `strategies/strategy-register.yaml` (ค) ถ้าไม่มีทั้งสองแหล่ง ให้แจ้งผู้ใช้ และใช้ `strategy-register.example.yaml` ในโหมด **DEMO** (ระบุ DEMO ชัดเจนบนรายงาน)
 2. อ่าน `radar/sources.yaml` และ `references/scoring-rubric.md`
 3. ถ้ามีรายงานก่อนหน้าใน `radar/reports/` ให้อ่านรายงานล่าสุด 1 ฉบับ เพื่อ (ก) ไม่รายงานสัญญาณซ้ำโดยไม่มีพัฒนาการใหม่ และ (ข) ติดตามสัญญาณที่ยังเปิดอยู่
 
