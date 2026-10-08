@@ -1,0 +1,89 @@
+# Strategy Radar — แหล่งข้อมูลและหัวข้อเฝ้าระวังภาพรวม
+# ใช้คู่กับ .claude/skills/strategy-radar/SKILL.md
+# ไฟล์นี้ไม่มีข้อมูลลับ (กลยุทธ์จริงอยู่ใน strategies/strategy-register.yaml ซึ่งถูก .gitignore)
+
+source_tiers:
+  A:
+    label: "ทางการ / ต้นทาง"
+    description: "หน่วยงานรัฐ ผู้กำกับดูแล ประกาศบริษัทจดทะเบียน องค์กรระหว่างประเทศ"
+    examples:
+      - ratchakitcha.soc.go.th        # ราชกิจจานุเบกษา
+      - energy.go.th                  # กระทรวงพลังงาน
+      - eppo.go.th                    # สำนักงานนโยบายและแผนพลังงาน (สนพ.)
+      - erc.or.th                     # คณะกรรมการกำกับกิจการพลังงาน (กกพ.)
+      - pea.co.th                     # การไฟฟ้าส่วนภูมิภาค
+      - egat.co.th                    # การไฟฟ้าฝ่ายผลิตแห่งประเทศไทย
+      - mea.or.th                     # การไฟฟ้านครหลวง
+      - boi.go.th                     # สำนักงานคณะกรรมการส่งเสริมการลงทุน
+      - bot.or.th                     # ธนาคารแห่งประเทศไทย
+      - nesdc.go.th                   # สภาพัฒนาการเศรษฐกิจและสังคมแห่งชาติ
+      - gprocurement.go.th            # ระบบจัดซื้อจัดจ้างภาครัฐ
+      - set.or.th                     # ตลาดหลักทรัพย์ฯ (ประกาศบริษัท)
+      - iea.org
+      - irena.org
+  B:
+    label: "สื่อหลักที่เชื่อถือได้"
+    examples:
+      - bangkokpost.com
+      - nationthailand.com
+      - prachachat.net
+      - thansettakij.com
+      - bangkokbiznews.com
+      - thestandard.co
+      - kaohooninternational.com      # ข่าวประกาศบริษัทจดทะเบียน
+      - reuters.com
+      - bloomberg.com
+      - asia.nikkei.com
+  C:
+    label: "สื่ออุตสาหกรรม / รายงานที่ปรึกษา"
+    examples:
+      - energynewscenter.com
+      - carbon-pulse.com
+      - ieefa.org
+      - utilitydive.com
+      - power-technology.com
+      - mckinsey.com
+      - deloitte.com
+      - gartner.com
+      - techcrunch.com
+  D:
+    label: "บล็อก / โซเชียล / ข่าวประชาสัมพันธ์ที่ยังไม่ยืนยัน"
+    note: "ใช้เป็นสัญญาณอ่อน (weak signal) เท่านั้น ต้องระบุ 'ต้องตรวจสอบ'"
+
+# หัวข้อเฝ้าระวังที่ตัดข้ามทุกกลยุทธ์ — Agent จะนำไปสร้าง query เพิ่มเติม
+cross_cutting_topics:
+  - name: "เศรษฐกิจมหภาคไทยและอาเซียน"
+    driver: E
+    queries_th: ["เศรษฐกิจไทย คาดการณ์ GDP", "กนง. อัตราดอกเบี้ยนโยบาย", "งบลงทุนภาครัฐ โครงสร้างพื้นฐาน"]
+    queries_en: ["Thailand economic outlook", "ASEAN infrastructure investment"]
+  - name: "นโยบายพลังงานและไฟฟ้า"
+    driver: P
+    queries_th: ["แผน PDP ใหม่", "กกพ. ประกาศ", "ไฟฟ้าสีเขียว Direct PPA", "ค่าไฟฟ้า Ft"]
+    queries_en: ["Thailand power development plan", "Thailand energy regulatory commission"]
+  - name: "AI และการเปลี่ยนแปลงองค์กร"
+    driver: T
+    queries_th: ["Agentic AI องค์กรไทย", "กฎหมาย AI ประเทศไทย", "AI แรงงาน ทักษะ"]
+    queries_en: ["agentic AI enterprise adoption", "AI regulation Thailand", "AI workforce reskilling"]
+  - name: "ESG และ Net Zero"
+    driver: En
+    queries_th: ["พ.ร.บ.การเปลี่ยนแปลงสภาพภูมิอากาศ", "คาร์บอนเครดิต ไทย", "ภาษีคาร์บอน"]
+    queries_en: ["Thailand climate change act", "CBAM Thailand exporters"]
+  - name: "Platform & Ecosystem Economy"
+    driver: I
+    queries_th: ["แพลตฟอร์มธุรกิจ ecosystem ไทย", "ความร่วมมือทางธุรกิจ พลังงาน ดิจิทัล"]
+    queries_en: ["platform business model industrial", "ecosystem partnership energy digital Southeast Asia"]
+
+search_policy:
+  default_mode: standard          # standard | extended
+  use_extended_when:
+    - "ผลลัพธ์บาง เก่า หรือไม่ตรงประเด็น"
+    - "ข่าวไทยเฉพาะทาง หรือข่าวที่เพิ่งเกิด"
+    - "depth: deep"
+  max_queries:
+    quick: 15
+    standard: 30
+    deep: 60
+  never_include_in_queries:
+    - "ชื่อกลยุทธ์ภายในหรือรหัสโครงการลับ"
+    - "ตัวเลขเป้าหมายภายใน"
+    - "ชื่อบุคคลภายในองค์กร"

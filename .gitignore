@@ -1,0 +1,7 @@
+# ข้อมูลกลยุทธ์จริงและรายงาน radar เป็นข้อมูลภายใน (Confidential)
+# repo นี้เป็น public — ห้าม commit ไฟล์เหล่านี้
+# ถ้าเปลี่ยน repo เป็น private แล้ว และต้องการให้ Routine รันอัตโนมัติ ให้ลบบรรทัดด้านล่างออก
+strategies/strategy-register.yaml
+radar/reports/*.md
+radar/signal-log.csv
+private/
