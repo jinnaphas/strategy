@@ -5,13 +5,13 @@
 
 ## 1. คำตอบสั้น
 
-**9 Agents = 1 Orchestrator + 8 Specialist Agents** และเปิดใช้ทีละระลอก **เริ่ม 4 ตัวใน 90 วันแรก**
+**9 Agents = 1 Orchestrator + 8 Specialist Agents** เปิดใช้ทีละระลอก · ตอนนี้ใช้งานแล้ว 6 ตัว (A0 · A1 · A2 · A5 · A6 · A7) ซึ่งรวมกันเป็น [Weekly Disruption Cycle](03-weekly-disruption-cycle.md) ทุกวันจันทร์
 
 | เกณฑ์ที่ใช้กำหนดจำนวน | ผลลัพธ์ |
 |---|---|
 | ครอบคลุมหน้าที่งานนักกลยุทธ์ครบ 10 ด้าน (F1–F10) | ทุกหน้าที่มี Agent รับผิดชอบอย่างน้อย 1 ตัว |
 | 1 Agent = เจ้าของที่เป็นคน 1 บทบาท + ข้อมูลเข้า 1 ชุด + ผลลัพธ์ที่ชัด | ไม่มี Agent ที่ไม่มีคนกำกับ |
-| แยก Agent เมื่อ **จังหวะเวลา** หรือ **แหล่งข้อมูล** ต่างกัน | Radar (ข่าว รายสัปดาห์) แยกจาก Tender Intelligence (ประกาศจัดซื้อ รายวัน) |
+| แยก Agent เมื่อ **จังหวะเวลา** หรือ **แหล่งข้อมูล** ต่างกัน | Radar (ข่าว รายวัน) แยกจาก Tender Intelligence (ประกาศจัดซื้อและคู่แข่ง รายสัปดาห์) |
 | รวม Agent เมื่อใช้ข้อมูลและเจ้าของเดียวกัน | ตรวจตัวเลขขัดกันรวมไว้ใน Orchestrator |
 | เปิดตามความพร้อมของข้อมูล | Agent ที่ต้องใช้ตัวเลขการเงินจริงรอระบบ ERP |
 
@@ -50,14 +50,14 @@ flowchart TB
 
 | ID | Agent | ทำอะไร | หน้าที่ | ระยะของแผน | Input → Output | รอบ | เจ้าของ (คน) | อิสระ | ระลอก |
 |---|---|---|---|---|---|---|---|---|---|
-| A0 | **Strategy Orchestrator** | ดูแลทะเบียนกลยุทธ์ให้เป็นข้อมูลชุดเดียว ตรวจตัวเลขขัดกัน ส่งงานต่อ รวมผล | F7, F10 | ทุกระยะ | เอกสารกลยุทธ์ + ผลจาก Agent อื่น → Weekly Brief, รายการข้อมูลค้าง | รายสัปดาห์ | Strategy Lead | L2 | 1 |
-| A1 | **Strategy Radar** ✅ | สแกนข่าว/นโยบาย/ตลาด จับคู่กับกลยุทธ์และสมมติฐาน | F1, F2 | Externally-Oriented | ทะเบียน + ข่าว → รายงาน Radar, Signal log, Assumption Watch | รายสัปดาห์ | CI Analyst | L2 | 1 |
-| A2 | **Tender & Competitor Intelligence** | ประกาศจัดซื้อ ผลผู้ชนะ ประกาศตลาดหลักทรัพย์ของคู่แข่ง win/loss และโจทย์ Pre-TOR | F2, F6 | Externally-Oriented | e-GP, เว็บลูกค้า, ประกาศบริษัทจดทะเบียน → Tender pipeline, Win/Loss brief | รายวัน–รายสัปดาห์ | Business Generation | L2 | 1 |
+| A0 | **Strategy Orchestrator** ✅ | รวมผลทุก Agent ตรวจสถานะทีม Agent ตรวจข้อมูลค้าง เสนอปรับทะเบียน | F7, F10 | ทุกระยะ | รายงานของทุก Agent → **Weekly Disruption Brief** | จันทร์ 08:50 | Strategy Lead | L2 | 1 |
+| A1 | **Strategy Radar** ✅ | สแกนข่าว/นโยบาย/ตลาด จับคู่กับกลยุทธ์และสมมติฐาน | F1, F2 | Externally-Oriented | ทะเบียน + ข่าว → Daily Brief, สัญญาณ, Assumption Watch | ทุกวัน 07:45 | CI Analyst | L2 | 1 |
+| A2 | **Tender & Competitor Intelligence** ✅ | ประกาศจัดซื้อ ผลผู้ชนะ ประกาศตลาดหลักทรัพย์ของคู่แข่ง win/loss และโจทย์ Pre-TOR | F2, F6 | Externally-Oriented | e-GP, เว็บลูกค้า, ประกาศบริษัทจดทะเบียน → Tender pipeline, Win/Loss brief | จันทร์ 05:55 | Business Generation | L2 | 1 |
 | A3 | **Forecast & Scenario** | Rolling forecast และฉากทัศน์ที่ผูกกับสมมติฐาน (ดึงตัวเลขจากระบบ ไม่สร้างเอง) | F3, F4 | Forecast-Based | ERP, งบประมาณ, Radar → Forecast 3–4 ปี, Scenario pack | รายเดือน–ไตรมาส | CFO | L1 | 3 |
 | A4 | **Portfolio & Capital Allocation** | ติด Strategy ID ให้ Capex/Opex คำนวณ Strategic Fit เตือน say–do gap | F4 | Budgeting–Forecast | รายการ Capex/Opex + ทะเบียน → Capex fit report, Investment memo draft | ตามรอบงบ | CFO + Strategy Office | L2 | 2 |
-| A5 | **Ecosystem & Growth Scout** | หาพันธมิตร/complementor คัดกรอง M&A/JV | F5, F6 | Strategic Management | ข้อมูลบริษัท ข่าว BOI → Partner pipeline, Deal screening | รายเดือน | Investment / Holding | L1 | 3 |
-| A6 | **Execution Tracker (AI-PMO)** | สรุปสถานะ Tactical Plan และงานรายคน เตือนงานล่าช้า ตรวจการถ่ายทอด KPI | F7, F8 | Budgeting / Execution | Business plan, ERP, ระบบ HR → Status report, Escalation list | ทุก 2 สัปดาห์ | COO + HR | L3 | 2 |
-| A7 | **Strategy Review & Learning** | Dashboard และรายงาน Non-Realized & Emerging Strategy (Mintzberg) รายไตรมาส | F9 | Strategic Management | Radar + Execution + KPI → Review pack, Assumption scorecard | รายไตรมาส | Strategy Office → CEO | L2 | 2 |
+| A5 | **Ecosystem & Growth Scout** ✅ | หาพันธมิตร/complementor คัดกรอง M&A/JV จับการเปลี่ยนแปลงของ Ecosystem | F5, F6 | Strategic Management | ข้อมูลบริษัท ข่าว BOI → Partner pipeline, Ecosystem themes | จันทร์ 06:25 | Investment / Holding | L2 | 1 |
+| A6 | **Execution Tracker (AI-PMO)** ✅ | งาน Must-Win ที่ช้า ประเด็นข้อมูลที่ขวาง มติที่ไม่คืบ สัญญาณค้างเกิน SLA (ต่อไป: แผนงานรายคน, ERP) | F7, F8 | Budgeting / Execution | Must-Win, ประเด็นข้อมูล, มติ, สัญญาณ → Status report, Escalation list | จันทร์ 06:55 | COO + HR | L2 (L3 เมื่อส่งเตือนได้) | 1 |
+| A7 | **Strategy Review & Learning** ✅ | Plan Disruption Scorecard รายสัปดาห์ + Non-Realized & Emerging (Mintzberg) รายไตรมาส | F9 | Strategic Management | Radar + Tender + Ecosystem + Execution → Scorecard, Assumption scorecard, Review pack | จันทร์ 08:20 | Strategy Office → CEO | L2 | 1 |
 | A8 | **Board & Communication** | ร่างเอกสาร EC/BOD (ปรับรูปแบบเท่านั้น ห้ามสร้าง/แก้ตัวเลข) และสารสื่อสารกลยุทธ์ | F10 | ทุกระยะ | ทะเบียน + รายงาน → Board pack draft, Strategy narrative | ตามรอบประชุม | Strategy Office + Corporate Comms | L2 | 1 |
 
 ### ความครอบคลุมหน้าที่งาน
@@ -88,9 +88,9 @@ flowchart TB
 
 | ระลอก | ช่วงเวลา | Agent | เหตุผล |
 |---|---|---|---|
-| 1 | 0–3 เดือน | A0, A1 ✅, A2, A8 | อ่านและร่างได้ทันที ความเสี่ยงต่ำ ได้ผลเร็ว |
-| 2 | 3–9 เดือน | A4, A6, A7 | ผูกกลยุทธ์กับงบและการปฏิบัติ |
-| 3 | หลังระบบ ERP พร้อม | A3, A5 | ต้องใช้ตัวเลขการเงินจริงและข้อมูลภายนอกเชิงลึก |
+| 1 | 0–3 เดือน | A0 ✅, A1 ✅, A2 ✅, A5 ✅, A6 ✅, A7 ✅, A8 | อ่านและร่างได้ทันที ความเสี่ยงต่ำ · A5–A7 เลื่อนขึ้นมาเพื่อตอบคำถามรายสัปดาห์ว่าอะไร Disrupt แผน |
+| 2 | 3–9 เดือน | A4 · ขยาย A6 ไปถึงแผนงานรายคน | ผูกกลยุทธ์กับงบและการปฏิบัติ |
+| 3 | หลังระบบ ERP พร้อม | A3 | ต้องใช้ตัวเลขการเงินจริง |
 
 ## 6. ทีมคนที่กำกับ Agent
 
@@ -110,12 +110,15 @@ flowchart TB
 |---|---|---|---|
 | `strategies` | ทะเบียนกลยุทธ์ + สถานะสมมติฐาน | A0, A1 | Strategy Office |
 | `signals` | สัญญาณภายนอก (Impact × Likelihood, กลยุทธ์ × ด้าน) | A1, A2, A5 | สถานะ/บันทึก |
+| `tenders` | ประกาศจัดซื้อ ผลผู้ชนะ ความเคลื่อนไหวคู่แข่ง | A2 | สถานะ (ไล่ตาม/ไม่เข้า/ชนะ/แพ้)/บันทึก |
+| `partners` | Partner pipeline | A5 | ขั้นของพันธมิตร/บันทึก |
+| `reports` | รายงานรายสัปดาห์ของ A0 · A2 · A5 · A6 · A7 | A0, A2, A5, A6, A7 | — |
 | `battles` | Must-Win และงานถัดไป | A0, A6 | เจ้าของ Must-Win |
 | `decisions` | บันทึกมติ EC/BOD/MM | — | Strategy Office |
 | `issues` | ตัวเลข/นิยามที่ขัดกัน | A0 | Strategy Office |
 | `events` | วันสำคัญ | A0, A1 | — |
-| `agents` | ทีม Agent และสถานะ | A0 | — |
-| `meta/cockpit` | วันที่รัน Radar ล่าสุด, รุ่นทะเบียน | A1 | — |
+| `agents` | ทีม Agent สถานะ และวันที่รันล่าสุด | ทุก Agent (เฉพาะของตัวเอง) | — |
+| `meta/cockpit` | วันที่รัน Radar และ Weekly Brief ล่าสุด, รุ่นทะเบียน | A1, A0 | — |
 
 > Cockpit ที่มีข้อมูลจริงเป็น artifact ส่วนตัว (private) — ไม่อยู่ใน repo นี้
 
