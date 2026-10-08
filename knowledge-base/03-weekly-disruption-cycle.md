@@ -11,7 +11,7 @@
 
 | ทาง | ตัวอย่าง | Agent ที่จับ |
 |---|---|---|
-| ภายนอก (`external`) | นโยบาย ราคา เทคโนโลยี เศรษฐกิจ | A1 Radar (รายวัน) |
+| ภายนอก (`external`) | นโยบาย ราคา เทคโนโลยี เศรษฐกิจ กฎระเบียบขั้นร่าง | A1 Radar (รายวัน) · A1H Horizon Scan + ตัวชี้วัด (ศุกร์) |
 | คู่แข่ง / ประมูล (`competitor`) | คู่แข่งได้สัญญา ประกาศจัดซื้อใหม่ ผลผู้ชนะ | A2 Tender & Competitor |
 | Ecosystem (`ecosystem`) | พันธมิตรใหม่ของคู่แข่ง ผู้เล่นต่างชาติเข้าตลาด แพลตฟอร์มใหม่ | A5 Ecosystem Scout |
 | การปฏิบัติ (`execution`) | งาน Must-Win เลยกำหนด มติที่ไม่คืบ | A6 Execution Tracker |
@@ -22,6 +22,7 @@
 
 ```mermaid
 flowchart LR
+    A1H["ศุกร์ 06:40 · A1H<br/>Horizon Scan + ตัวชี้วัด"] -.-> A7
     A2["05:55 · A2<br/>ประมูล + คู่แข่ง"] --> A7
     A5["06:25 · A5<br/>Ecosystem"] --> A7
     A6["06:55 · A6<br/>การปฏิบัติ"] --> A7
@@ -35,7 +36,7 @@ flowchart LR
 ```
 
 - ทุก Agent เป็น Claude Code Routine ที่เปิด session ใหม่ทุกครั้ง อ่านและเขียนฐานข้อมูลของ Strategy Cockpit (ข้อมูลชุดเดียว)
-- ลำดับเวลาจัดให้ A7 เห็นผลของ A2 · A5 · A6 · A1 ก่อนประเมิน และ A0 เห็นทุกอย่างก่อนสรุป
+- ลำดับเวลาจัดให้ A7 เห็นผลของ A2 · A5 · A6 · A1 และ A1H (วันศุกร์ก่อนหน้า) ก่อนประเมิน และ A0 เห็นทุกอย่างก่อนสรุป
 - ถ้า Agent ตัวใดไม่ได้รัน A0 จะรายงานใน "สถานะ Agent" และสรุปจากข้อมูลที่มี
 
 ## 3. หน้าที่ของแต่ละ Agent ในรอบสัปดาห์
@@ -45,7 +46,8 @@ flowchart LR
 | A2 Tender & Competitor | ทะเบียนกลยุทธ์ (ลูกค้า คู่แข่ง เทคโนโลยี) + WebSearch | `tenders`, `signals` (รหัส `-T`), `reports/A2-<วันที่>` | Tender pipeline · ความเคลื่อนไหวคู่แข่ง · Win/Loss |
 | A5 Ecosystem Scout | ทะเบียนกลยุทธ์ + WebSearch | `partners`, `signals` (รหัส `-E`), `reports/A5-<วันที่>` | Partner pipeline · Ecosystem themes |
 | A6 Execution Tracker | `battles`, `issues`, `events`, `decisions`, `signals` | `reports/A6-<วันที่>` | งานเลยกำหนด · ใกล้ครบกำหนด · สัญญาณค้าง · Escalation |
-| A7 Strategy Review | ทุกอย่างข้างบน + สมมติฐาน | `reports/A7-<วันที่>`, สถานะสมมติฐาน | Plan Disruption Scorecard · Emerging · Non-Realized |
+| A1H Horizon Scan (ศุกร์) | ทะเบียนกลยุทธ์ + ธีม Horizon + WebSearch | `signals` (รหัส `-H`), `indicators`, `reports/A1H-<วันที่>` | สัญญาณอ่อน H2–H3 · ตัวชี้วัดภายนอก · ข้อเสนอให้ A3/A7 — ดู [05](05-radar-coverage-and-horizon-scan.md) |
+| A7 Strategy Review | ทุกอย่างข้างบน + สมมติฐาน + ตัวชี้วัด | `reports/A7-<วันที่>`, สถานะสมมติฐาน | Plan Disruption Scorecard · Emerging · Non-Realized · จุดที่ Radar ยังมองไม่เห็น |
 | A3 Strategic Options | รายงาน A7 + ทะเบียน + พันธมิตร + ประมูล | `emerging`, `reports/A3-<วันที่>` | Solution (Emerging Strategy) + Decision Memo — ดู [04](04-emerging-strategy-and-executive-briefing.md) |
 | A0 Orchestrator | รายงานทุกตัว + Daily Brief ของ A1 | `reports/A0-<วันที่>` | **Weekly Disruption Brief** + สรุปผู้บริหาร 1 หน้า |
 | A8 Board & Communication | สรุปผู้บริหาร + Emerging Strategy | `boardpacks` | Pack สไลด์ก่อนประชุม EC / BOD |
@@ -87,9 +89,10 @@ A7 เปลี่ยนสถานะเมื่อมีหลักฐา�
 
 | Collection | รหัสเอกสาร | ฟิลด์หลัก | ฟิลด์ที่คนเป็นเจ้าของ |
 |---|---|---|---|
-| `signals` | `SIG-YYYYMMDD-NN` (A1) · `SIG-YYYYMMDD-TNN` (A2) · `SIG-YYYYMMDD-ENN` (A5) | headline, date, run, agent, impact × likelihood, level, impacts[กลยุทธ์ × ด้าน × ทิศทาง], sources | `status`, `note` |
+| `signals` | `SIG-YYYYMMDD-NN` (A1) · `SIG-YYYYMMDD-HNN` (A1H) · `SIG-YYYYMMDD-TNN` (A2) · `SIG-YYYYMMDD-ENN` (A5) | headline, date, run, agent, impact × likelihood, level, impacts[กลยุทธ์ × ด้าน × ทิศทาง], sources | `status`, `note` |
 | `tenders` | `TND-YYYYMMDD-NN` | kind (ประกาศ/แผนจัดซื้อ/ผลผู้ชนะ/คู่แข่ง), buyer, budget, deadline, winner, strategies, fit 1–5, why, nowhat, sources | `status` (ใหม่/ไล่ตาม/เฝ้าดู/ไม่เข้า/ชนะ/แพ้), `note` |
 | `partners` | `PTN-<ชื่อ>` | name, type, country, what, why, risk, strategies, fit 1–5, firstSeen, lastSeen, sources | `stage` (พบใหม่/คัดกรอง/ติดต่อแล้ว/เจรจา/พักไว้), `note` |
+| `indicators` | `<key>` เช่น `copper` | name, unit, latest{value, asOf, source}, prev, change, changePct, series | — |
 | `reports` | `<Agent>-YYYY-MM-DD` | agent, date, week, headline, summary, disruptions[] + ฟิลด์เฉพาะของแต่ละ Agent | — |
 
 ฟิลด์เฉพาะใน `reports`
@@ -97,8 +100,9 @@ A7 เปลี่ยนสถานะเมื่อมีหลักฐา�
 - **A2:** counts, newTenders, hotDeadlines, competitorMoves, winLoss
 - **A5:** themes, newPartners, updatedPartners, proposals
 - **A6:** battles[งานเลยกำหนด/ใกล้ครบ], sla, issues, decisions, escalations
-- **A7:** scorecard[กลยุทธ์ × สถานะ × เหตุผล × หลักฐาน], battles, assumptionChanges, emergent, nonRealized, questions, quarterly
-- **A0:** decisionsNeeded, upcoming, agentHealth, dataIssues, registerProposals, kpis
+- **A1H:** themes, indicators, notFound, implications, logOnly
+- **A7:** scorecard[กลยุทธ์ × สถานะ × เหตุผล × หลักฐาน], battles, assumptionChanges, emergent, nonRealized, radarGaps, questions, quarterly
+- **A0:** decisionsNeeded, upcoming, agentHealth, dataIssues, registerProposals, kpis, outlook{indicators, weakSignals, regulatory}
 
 ## 6. วาระ Strategy Office huddle วันจันทร์ (30 นาที)
 
