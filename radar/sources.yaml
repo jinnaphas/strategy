@@ -30,6 +30,7 @@ source_tiers:
       - thansettakij.com
       - bangkokbiznews.com
       - thestandard.co
+      - kaohooninternational.com      # ข่าวประกาศบริษัทจดทะเบียน
       - reuters.com
       - bloomberg.com
       - asia.nikkei.com
@@ -37,6 +38,8 @@ source_tiers:
     label: "สื่ออุตสาหกรรม / รายงานที่ปรึกษา"
     examples:
       - energynewscenter.com
+      - carbon-pulse.com
+      - ieefa.org
       - utilitydive.com
       - power-technology.com
       - mckinsey.com

@@ -20,7 +20,7 @@ description: Strategy Radar agent — scans external news and data, matches each
 | `references/report-template.md` | รูปแบบรายงาน | |
 
 พารามิเตอร์ที่ผู้ใช้อาจระบุ (ถ้าไม่ระบุใช้ค่า default):
-- `period` — ช่วงเวลาข่าว (default: 7 วันล่าสุด)
+- `period` — ช่วงเวลาข่าว (default: 7 วันล่าสุด · ถ้ายังไม่มีรายงานใน `radar/reports/` ให้ใช้ 30 วันเป็น baseline รอบแรก)
 - `scope` — รหัสกลยุทธ์ที่ต้องการ หรือ `all` (default: `all`)
 - `depth` — `quick` (~15 queries) / `standard` (~30 queries, default) / `deep` (~60 queries + extended search)
 
@@ -36,6 +36,8 @@ description: Strategy Radar agent — scans external news and data, matches each
 - เพิ่ม cross-cutting queries จาก `radar/sources.yaml` → `cross_cutting_topics` (นโยบายพลังงาน, เศรษฐกิจมหภาค, AI, ESG ฯลฯ)
 - จำกัดจำนวน queries ตาม `depth` และให้ครอบคลุมทุกกลยุทธ์อย่างน้อย 1 query
 - ใช้ทั้งภาษาไทยและอังกฤษ — ข่าวท้องถิ่นใช้ไทย, เทคโนโลยี/คู่แข่งต่างประเทศใช้อังกฤษ
+- query ภาษาไทยใช้ปี พ.ศ. (2569 = 2026, 2570 = 2027) และตรวจปีในผลลัพธ์ให้ถูกระบบก่อนสรุปว่าข่าวใหม่หรือเก่า
+- มี query อย่างน้อย 1 ชุดสำหรับ **ความเคลื่อนไหวของคู่แข่ง** (ประกาศ SET, การได้สัญญา) จาก `stakeholders.competitors`
 
 ### 3. รวบรวมข่าว (Collect)
 - ใช้ **WebSearch** เป็นหลัก ส่งหลาย queries พร้อมกันในรอบเดียว ใช้ mode `standard` เป็นค่าเริ่มต้น และใช้ `extended` สำหรับเรื่องเฉพาะทาง ข่าวไทยที่หายาก หรือเมื่อผลลัพธ์บาง/เก่า
