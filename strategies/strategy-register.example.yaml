@@ -1,0 +1,84 @@
+# ตัวอย่างทะเบียนกลยุทธ์ (Strategy Register) — บริษัทสมมติ "ตัวอย่างพลังงานอัจฉริยะ"
+# ใช้เป็นแม่แบบเท่านั้น — ข้อมูลทั้งหมดเป็นข้อมูลสมมติ
+#
+# วิธีใช้: คัดลอกไฟล์นี้เป็น strategies/strategy-register.yaml แล้วใส่กลยุทธ์จริง
+#          (ไฟล์จริงถูก .gitignore ไว้ เพื่อไม่ให้ข้อมูลลับขึ้น repo สาธารณะ)
+
+meta:
+  organization: "บริษัท ตัวอย่างพลังงานอัจฉริยะ จำกัด (สมมติ)"
+  version: "2026-10"
+  horizon: "2026-2029"
+  owner: "Corporate Strategy"
+  confidentiality: "internal"
+
+pillars:
+  - id: P1
+    name: "ธุรกิจพลังงานสะอาดสำหรับภาคอุตสาหกรรม"
+  - id: P2
+    name: "องค์กรดิจิทัลและ Agentic AI"
+
+strategies:
+  - id: P1-S1
+    name: "ขยายธุรกิจโซลาร์รูฟท็อปและระบบกักเก็บพลังงานสำหรับโรงงาน"
+    pillar: P1
+    level: business            # corporate | business | functional
+    owner: "BU พลังงานสะอาด"
+    objective: "เป็นผู้ให้บริการติดตั้งและบริหารระบบพลังงานสะอาดครบวงจรสำหรับโรงงานในภาคตะวันออก"
+    targets:
+      - { kpi: "รายได้จากธุรกิจพลังงานสะอาด", target: "เติบโต 20% ต่อปี", year: 2029 }
+      - { kpi: "กำลังการผลิตติดตั้งสะสม", target: "50 MW", year: 2029 }
+    where_to_play:
+      customers: ["โรงงานอุตสาหกรรม", "นิคมอุตสาหกรรม"]
+      geographies: ["ภาคตะวันออก", "EEC"]
+    how_to_win: "ขายแบบ Private PPA ไม่ต้องลงทุนเอง + บริการบำรุงรักษาด้วยระบบติดตามระยะไกล"
+    key_technologies: ["Solar PV", "BESS", "Energy Management System"]
+    stakeholders:
+      customers: ["ผู้ประกอบการโรงงาน"]
+      competitors: ["ผู้ให้บริการ Solar EPC รายใหญ่", "บริษัทลูกของการไฟฟ้า"]
+      partners: ["ผู้ผลิตแผงและแบตเตอรี่", "ธนาคารสีเขียว"]
+      regulators: ["กกพ.", "กระทรวงพลังงาน", "BOI"]
+    assumptions:
+      - id: A1
+        statement: "ภาครัฐยังสนับสนุนการผลิตไฟฟ้าใช้เองและการซื้อขายไฟฟ้าสีเขียว"
+        signposts: ["การเปลี่ยนระเบียบ กกพ. เรื่องการเชื่อมต่อระบบ", "นโยบาย Direct PPA"]
+      - id: A2
+        statement: "ราคาแผงและแบตเตอรี่ยังลดลงต่อเนื่อง"
+        signposts: ["ราคาลิเธียม", "มาตรการภาษีนำเข้า"]
+    watch:
+      keywords_th: ["โซลาร์รูฟท็อป โรงงาน", "Private PPA", "ระบบกักเก็บพลังงาน", "ไฟฟ้าสีเขียว", "กกพ. โซลาร์"]
+      keywords_en: ["Thailand rooftop solar industrial", "BESS Thailand", "direct PPA Thailand"]
+      queries:
+        - "โซลาร์รูฟท็อป โรงงาน นโยบายใหม่"
+        - "Thailand battery energy storage project"
+
+  - id: P2-S1
+    name: "เปลี่ยนผ่านสู่องค์กร Agentic AI"
+    pillar: P2
+    level: functional
+    owner: "HR & Digital Transformation"
+    objective: "ใช้ AI Agents ในงานหลักเพื่อเพิ่มรายได้ต่อพนักงาน"
+    targets:
+      - { kpi: "รายได้ต่อพนักงาน", target: "+30%", year: 2029 }
+      - { kpi: "สัดส่วนกระบวนการที่มี AI Agent ช่วย", target: "50%", year: 2028 }
+    where_to_play:
+      customers: ["หน่วยงานภายใน"]
+      geographies: ["ประเทศไทย"]
+    how_to_win: "เริ่มจากงานเอกสาร/วิเคราะห์ซ้ำ ๆ แล้วขยายสู่งานลูกค้า พร้อม reskill พนักงาน"
+    key_technologies: ["LLM", "AI Agents", "Workflow automation", "Data platform"]
+    stakeholders:
+      partners: ["ผู้ให้บริการ AI/Cloud"]
+      competitors: ["คู่แข่งที่นำ AI มาใช้เร็วกว่า"]
+      regulators: ["สพธอ. (ETDA)", "PDPA"]
+    assumptions:
+      - id: A1
+        statement: "ต้นทุนการใช้ AI ลดลงและความสามารถเพิ่มขึ้นต่อเนื่อง"
+        signposts: ["ราคา API ของผู้ให้บริการ AI", "ความสามารถของโมเดลรุ่นใหม่"]
+      - id: A2
+        statement: "กฎหมาย AI ไทยไม่สร้างภาระการปฏิบัติตามที่สูงเกินไป"
+        signposts: ["ร่างกฎหมาย AI", "แนวปฏิบัติ ETDA"]
+    watch:
+      keywords_th: ["Agentic AI องค์กร", "กฎหมาย AI ไทย", "AI แรงงาน reskill"]
+      keywords_en: ["agentic AI enterprise", "AI agents workforce", "Thailand AI law"]
+      queries:
+        - "agentic AI enterprise adoption case study"
+        - "ร่างกฎหมาย AI ประเทศไทย"
