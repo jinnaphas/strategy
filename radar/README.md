@@ -38,14 +38,25 @@ flowchart LR
    - `สแกนข่าวเดือนนี้ว่ากระทบกลยุทธ์ไหนบ้าง`
 3. **อ่านรายงาน** ที่ `radar/reports/` และนำสัญญาณระดับ 🔥 Critical / ⚠️ High เข้าวาระประชุม
 
-## การรันอัตโนมัติ (Routine)
+## การรันอัตโนมัติ (Daily Routine)
 
-ตั้ง Claude Code Routine ให้รันทุกสัปดาห์ได้ เช่น ทุกวันจันทร์ 07:45 น. (เวลาไทย) ด้วยคำสั่ง
-`รัน strategy-radar สแกนข่าว 7 วันล่าสุด แบบ standard แล้วสรุป Top 5 สัญญาณ`
+Radar ทำงานเป็น **Claude Code Routine ทุกวัน 07:45 น. (เวลาไทย)** — Daily Brief พร้อมอ่านราว 08:00 น.
 
-ข้อควรรู้ก่อนตั้ง Routine:
-- Routine เริ่ม session ใหม่จาก repo ทุกครั้ง จึง **ต้องมีทะเบียนกลยุทธ์อยู่ใน repo** → ต้องเปลี่ยน repo เป็น **Private** ก่อน แล้วลบบรรทัดใน `.gitignore`
-- ทางเลือกถ้ายังต้องการให้ repo เป็น public: เก็บทะเบียนไว้ใน Google Drive / SharePoint แล้วให้ Agent อ่านผ่าน connector
+```mermaid
+flowchart LR
+    T(["Routine 07:45 น.<br/>เปิด session ใหม่"]) --> L["อ่านทะเบียนกลยุทธ์ + config<br/>จาก Strategy Cockpit DB"]
+    L --> W["ค้นข่าว ~28 queries<br/>ไทย + อังกฤษ"]
+    W --> A["คัดกรอง · จับคู่ · ให้คะแนน"]
+    A --> D[("เขียน signals + briefs<br/>กลับเข้า Cockpit DB")]
+    D --> V{{"ผู้บริหารเปิด Cockpit<br/>อ่าน Daily Brief"}}
+```
+
+ทำไมอ่าน/เขียนผ่าน Cockpit DB แทนไฟล์ใน repo:
+- Routine เปิด session ใหม่ทุกครั้ง ไฟล์ที่ `.gitignore` ไว้จึงไม่มีใน session นั้น
+- repo นี้เป็น public — ทะเบียนกลยุทธ์จริงและผลวิเคราะห์จึงต้องอยู่ในฐานข้อมูลของ Cockpit (artifact ส่วนตัว) เท่านั้น
+- prompt ของ Routine เป็นแบบ standalone (ขั้นตอน + เกณฑ์ให้คะแนน + guardrails) ไม่พึ่งไฟล์ใน repo
+
+Collection ที่ Routine ใช้: `strategies` (อ่าน + อัปเดตสถานะสมมติฐาน), `meta/radar` (อ่าน), `signals` (อ่านเพื่อตัดซ้ำ + สร้างใหม่), `briefs` (สร้างรายวัน), `meta/cockpit` (อัปเดต)
 
 ## ข้อจำกัดปัจจุบัน
 

@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Agentic Strategy Office</title>
+<meta name="description" content="ระบบบริหารกลยุทธ์องค์กรด้วย AI Agents: Strategy Radar รายวัน วงจร Sense–Decide–Deliver–Learn และทีม 9 Agents">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<style>
+/* Layout: one long control-room page — status bar, then stacked panels on a grey HMI ground.
+   Colour only marks meaning (green opportunity, red threat, amber watch), as in a high-performance HMI. */
+:root{
+  --bg:#E8EBED; --panel:#F7F8F9; --panel-2:#DEE2E5; --line:#C7CDD2;
+  --ink:#131E27; --ink-2:#46525D; --ink-3:#69747E;
+  --accent:#2356A8; --accent-soft:#D6E1F3; --on-accent:#FFFFFF;
+  --opp:#0ca30c; --threat:#d03b3b; --mixed:#fab219;
+  --opp-ink:#0A6A0A; --threat-ink:#A52828; --mixed-ink:#7F5300;
+  --font-display:"Chakra Petch","IBM Plex Sans Thai",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+  --r:6px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1317; --panel:#161B20; --panel-2:#1F262C; --line:#2E373E;
+    --ink:#E5E9EC; --ink-2:#A8B2BA; --ink-3:#7E8992;
+    --accent:#7AA5F0; --accent-soft:#1D2B42; --on-accent:#0C1420;
+    --opp-ink:#5FD25F; --threat-ink:#F08080; --mixed-ink:#F4C24E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1317; --panel:#161B20; --panel-2:#1F262C; --line:#2E373E;
+  --ink:#E5E9EC; --ink-2:#A8B2BA; --ink-3:#7E8992;
+  --accent:#7AA5F0; --accent-soft:#1D2B42; --on-accent:#0C1420;
+  --opp-ink:#5FD25F; --threat-ink:#F08080; --mixed-ink:#F4C24E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.65;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:0 56px}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.25}
+h1{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:600}
+h2{font-size:1.25rem;font-weight:600}
+h3{font-size:1rem;font-weight:600}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--ink-3)} .small{font-size:.84rem}
+.eyebrow{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.bar{border-bottom:1px solid var(--line)}
+.bar .in{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:2px 10px;font-size:.78rem;white-space:nowrap}
+.lamp{width:9px;height:9px;border-radius:50%;background:var(--opp);display:inline-block}
+.hero{padding-block:36px 24px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:28px;align-items:center}
+@media (max-width:820px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero p.lead{color:var(--ink-2);font-size:1.05rem;max-width:60ch;margin-top:12px}
+.path{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px;font-size:.86rem}
+.path span{border:1px solid var(--line);border-radius:4px;padding:2px 8px;background:var(--panel)}
+.path span.now{border-color:var(--accent);background:var(--accent-soft)}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:9px 16px;text-decoration:none;color:var(--ink);font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.clock{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:10px}
+.clock .t{font-family:var(--font-display);font-size:3rem;font-weight:600;line-height:1;color:var(--accent)}
+section{margin-top:22px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
+.panel-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;counter-reset:s}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.step{border:1px solid var(--line);border-radius:var(--r);padding:10px;background:var(--panel-2);display:flex;flex-direction:column;gap:4px;min-width:0}
+.step .n{font-family:var(--font-mono);font-size:.74rem;color:var(--ink-3)}
+.step b{font-family:var(--font-display);font-weight:600}
+.step span{font-size:.82rem;color:var(--ink-2)}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:820px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.dims{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+@media (max-width:560px){.dims{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dim{border:1px solid var(--line);border-radius:4px;padding:6px 8px;font-size:.84rem;background:var(--panel-2)}
+.dim .mono{color:var(--ink-3);font-size:.74rem;display:block}
+.dir{font-weight:600}
+.dir.opp{color:var(--opp-ink)} .dir.threat{color:var(--threat-ink)} .dir.mixed{color:var(--mixed-ink)}
+.levels{display:flex;flex-direction:column;gap:6px;font-size:.88rem}
+.levels div{display:grid;grid-template-columns:5.5rem 4.5rem minmax(0,1fr);gap:8px;align-items:baseline}
+.cycle{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:820px){.cycle{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.cycle{grid-template-columns:minmax(0,1fr)}}
+.stage{border:1px solid var(--line);border-radius:var(--r);padding:12px;background:var(--panel-2);display:flex;flex-direction:column;gap:6px;min-width:0}
+.stage .h{font-family:var(--font-display);font-weight:600;font-size:1.05rem}
+.stage ul{margin:0;padding-left:1.1em;font-size:.86rem;color:var(--ink-2)}
+.agents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:860px){.agents{grid-template-columns:minmax(0,1fr)}}
+.agent{border:1px solid var(--line);border-radius:var(--r);padding:12px;background:var(--panel);display:flex;flex-direction:column;gap:4px}
+.agent.live{border-color:var(--opp)}
+.agent .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.agent .id{font-family:var(--font-mono);font-size:.76rem;color:var(--ink-3)}
+.st{font-size:.72rem;border:1px solid var(--line);border-radius:999px;padding:0 8px;white-space:nowrap}
+.st.live{border-color:var(--opp);color:var(--opp-ink)}
+.agent p{font-size:.86rem;color:var(--ink-2)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.88rem}
+th{text-align:left;font-weight:500;color:var(--ink-3);font-size:.78rem;border-bottom:1px solid var(--line);padding:6px 8px}
+td{border-bottom:1px solid var(--line);padding:8px;vertical-align:top}
+ul.plain{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;color:var(--ink-2)}
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);padding:10px 12px;border-radius:0 6px 6px 0;font-size:.9rem}
+footer{margin-top:32px;font-size:.8rem;color:var(--ink-3);display:flex;flex-direction:column;gap:4px}
+</style>
+</head>
+<body>
+<header class="bar"><div class="in">
+  <span class="eyebrow">Agentic Strategy Office</span>
+  <span class="chip"><span class="lamp"></span>Strategy Radar ทำงานทุกเช้า 07:45 น.</span>
+</div></header>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <span class="eyebrow">ระบบบริหารกลยุทธ์องค์กร</span>
+      <h1>บริหารกลยุทธ์ทั้งองค์กรด้วยทีม AI Agents ที่มีคนกำกับ</h1>
+      <p class="lead">AI รวบรวม สแกน วิเคราะห์ และร่าง — คนเลือก แลก และตัดสินใจ ทุกเช้า Strategy Radar ดึงข่าวและข้อมูลภายนอกมาจับคู่กับกลยุทธ์แต่ละเรื่อง แล้วบอกว่ากระทบกลยุทธ์ไหน ในด้านไหน เป็นโอกาสหรือภัย และควรทำอะไร</p>
+      <div class="path" aria-label="เส้นทางการเปลี่ยนผ่าน"><span>Industrial</span>→<span>Platform</span>→<span>Ecosystem</span>→<span class="now">Agentic AI Organization</span></div>
+      <div class="cta">
+        <a class="btn primary" href="https://claude.ai/artifact/LBTsb8S1QvaJzXCPd5f4Cj" target="_blank" rel="noopener">เปิด Strategy Cockpit</a>
+        <a class="btn" href="https://github.com/jinnaphas/strategy" target="_blank" rel="noopener">ดูโครงสร้างระบบบน GitHub</a>
+      </div>
+      <p class="small muted" style="margin-top:8px">Strategy Cockpit มีข้อมูลกลยุทธ์จริง เปิดได้เฉพาะผู้ได้รับสิทธิ์ผ่าน claude.ai — หน้านี้ไม่มีข้อมูลลับขององค์กร</p>
+    </div>
+    <aside class="clock" aria-label="ตารางเวลา Daily Strategy Radar">
+      <span class="eyebrow">Daily Strategy Radar</span>
+      <span class="t mono">07:45</span>
+      <span>เริ่มสแกนทุกวัน (เวลาไทย) · <b>Daily Brief พร้อมอ่านราว 08:00 น.</b></span>
+      <span class="small muted">ค้นหาราว 28 ครั้งต่อวัน ภาษาไทยและอังกฤษ · ตัดข่าวซ้ำย้อนหลัง 30 วัน · เขียนผลเข้า Strategy Cockpit</span>
+    </aside>
+  </div>
+
+  <section class="panel" aria-labelledby="h-radar">
+    <div class="panel-h"><h2 id="h-radar">Strategy Radar ทำงานอย่างไรในแต่ละเช้า</h2><span class="small muted">Agent A1 · หน้าที่ F1–F2</span></div>
+    <div class="steps">
+      <div class="step"><span class="n">ขั้น 1</span><b>โหลดทะเบียนกลยุทธ์</b><span>กลยุทธ์ สมมติฐาน คำค้น คู่แข่ง ผู้กำกับดูแล</span></div>
+      <div class="step"><span class="n">ขั้น 2</span><b>วางแผนการค้นหา</b><span>1 คำค้นต่อกลยุทธ์ หมุนเวียนรายวัน + นโยบาย + คู่แข่ง</span></div>
+      <div class="step"><span class="n">ขั้น 3</span><b>ค้นข่าว</b><span>ไทย + อังกฤษ ข่าวไม่เกิน 2 วัน</span></div>
+      <div class="step"><span class="n">ขั้น 4</span><b>คัดกรอง</b><span>ตัดข่าวซ้ำ รวมเหตุการณ์เดียวกัน ให้ระดับแหล่งข่าว A–D</span></div>
+      <div class="step"><span class="n">ขั้น 5</span><b>จับคู่และให้คะแนน</b><span>กลยุทธ์ × ด้าน · โอกาส/ภัย · Impact × Likelihood</span></div>
+      <div class="step"><span class="n">ขั้น 6</span><b>Daily Brief</b><span>สรุป 3–5 ข้อ สมมติฐานที่เปลี่ยน คำถามสำหรับผู้บริหาร</span></div>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <section class="panel" aria-labelledby="h-dims">
+      <div class="panel-h"><h2 id="h-dims">กระทบ "ด้านไหน" — 10 ด้าน</h2></div>
+      <div class="dims">
+        <div class="dim"><span class="mono">D1</span>ตลาด / อุปสงค์</div>
+        <div class="dim"><span class="mono">D2</span>ลูกค้า</div>
+        <div class="dim"><span class="mono">D3</span>การแข่งขัน</div>
+        <div class="dim"><span class="mono">D4</span>เทคโนโลยี / โมเดลธุรกิจ</div>
+        <div class="dim"><span class="mono">D5</span>นโยบาย / กฎระเบียบ</div>
+        <div class="dim"><span class="mono">D6</span>ต้นทุน / ซัพพลายเชน</div>
+        <div class="dim"><span class="mono">D7</span>การเงิน / การลงทุน</div>
+        <div class="dim"><span class="mono">D8</span>คน / ขีดความสามารถ</div>
+        <div class="dim"><span class="mono">D9</span>พันธมิตร / Ecosystem</div>
+        <div class="dim"><span class="mono">D10</span>ESG / ชื่อเสียง</div>
+      </div>
+      <p class="small" style="margin-top:12px">ทิศทาง: <span class="dir opp">▲ โอกาส</span> · <span class="dir threat">▼ ภัยคุกคาม</span> · <span class="dir mixed">◆ ผสม / จับตา</span></p>
+    </section>
+    <section class="panel" aria-labelledby="h-score">
+      <div class="panel-h"><h2 id="h-score">"มากแค่ไหน เมื่อไร" — การให้คะแนน</h2></div>
+      <div class="levels">
+        <div><b>วิกฤต</b><span class="mono">15–25</span><span>แจ้ง CEO/EC ภายในสัปดาห์ เสนอการตัดสินใจ</span></div>
+        <div><b>สูง</b><span class="mono">8–14</span><span>เข้าวาระทบทวนรายเดือน เจ้าของกลยุทธ์วิเคราะห์เชิงลึก</span></div>
+        <div><b>เฝ้าระวัง</b><span class="mono">4–7</span><span>ติดตามต่อเนื่อง</span></div>
+        <div><b>บันทึก</b><span class="mono">1–3</span><span>อยู่ใน Daily Brief เท่านั้น</span></div>
+      </div>
+      <p class="small muted" style="margin-top:12px">คะแนน = Impact (1–5) × Likelihood (1–5) · ระยะเวลา H0 &lt;3 เดือน · H1 &lt;1 ปี · H2 1–3 ปี · H3 &gt;3 ปี</p>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="h-cycle">
+    <div class="panel-h"><h2 id="h-cycle">วงจรบริหารกลยุทธ์ และ 10 หน้าที่งานของนักกลยุทธ์</h2><a class="small" href="https://github.com/jinnaphas/strategy/blob/main/knowledge-base/01-strategist-core-functions.md" target="_blank" rel="noopener">อ่านรายละเอียด</a></div>
+    <div class="cycle">
+      <div class="stage"><span class="h">Sense</span><span class="small muted">โลกภายนอกเปลี่ยนอย่างไร</span><ul><li>F1 มองอนาคต & สแกนสภาพแวดล้อม</li><li>F2 วิเคราะห์ข้อมูลเชิงกลยุทธ์</li></ul></div>
+      <div class="stage"><span class="h">Decide</span><span class="small muted">เล่นที่ไหน ลงทรัพยากรเท่าไร</span><ul><li>F3 กำหนดกลยุทธ์ & ทางเลือก</li><li>F4 พอร์ต & จัดสรรทรัพยากร</li><li>F5 การเติบโต & โมเดลธุรกิจ</li><li>F6 Corporate Development & Ecosystem</li></ul></div>
+      <div class="stage"><span class="h">Deliver</span><span class="small muted">ทุกหน่วยเดินตามแผนหรือไม่</span><ul><li>F7 แปลงกลยุทธ์เป็นแผน & ถ่ายทอด</li><li>F8 บริหารโครงการ & Transformation</li></ul></div>
+      <div class="stage"><span class="h">Learn</span><span class="small muted">สมมติฐานยังจริงไหม</span><ul><li>F9 ติดตามผล ทบทวน & ปรับ</li><li>F10 ที่ปรึกษาผู้บริหาร & สื่อสาร</li></ul></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-agents">
+    <div class="panel-h"><h2 id="h-agents">ทีม 9 AI Agents = 1 Orchestrator + 8 Specialists</h2><a class="small" href="https://github.com/jinnaphas/strategy/blob/main/knowledge-base/02-agentic-strategy-office.md" target="_blank" rel="noopener">อ่านรายละเอียด</a></div>
+    <div class="agents">
+      <div class="agent"><div class="top"><span class="id">A0 · ระลอก 1</span><span class="st">สร้างต่อ</span></div><h3>Strategy Orchestrator</h3><p>ดูแลทะเบียนกลยุทธ์ชุดเดียว ตรวจตัวเลขขัดกัน สรุป Weekly Brief</p></div>
+      <div class="agent live"><div class="top"><span class="id">A1 · ระลอก 1</span><span class="st live">ทำงานทุกเช้า</span></div><h3>Strategy Radar</h3><p>ข่าว/ข้อมูลภายนอก → กลยุทธ์ไหน ด้านไหน โอกาสหรือภัย ควรทำอะไร</p></div>
+      <div class="agent"><div class="top"><span class="id">A2 · ระลอก 1</span><span class="st">สร้างต่อ</span></div><h3>Tender & Competitor Intelligence</h3><p>ประกาศจัดซื้อ ผลผู้ชนะ ความเคลื่อนไหวคู่แข่ง โจทย์ Pre-TOR</p></div>
+      <div class="agent"><div class="top"><span class="id">A8 · ระลอก 1</span><span class="st">สร้างต่อ</span></div><h3>Board & Communication</h3><p>ร่างเอกสารบอร์ด (ปรับรูปแบบเท่านั้น ห้ามสร้าง/แก้ตัวเลข) และสารสื่อสาร</p></div>
+      <div class="agent"><div class="top"><span class="id">A4 · ระลอก 2</span><span class="st">วางแผน</span></div><h3>Portfolio & Capital Allocation</h3><p>ผูก Capex/Opex กับกลยุทธ์ วัด say–do gap</p></div>
+      <div class="agent"><div class="top"><span class="id">A6 · ระลอก 2</span><span class="st">วางแผน</span></div><h3>Execution Tracker (AI-PMO)</h3><p>ติดตามแผนปฏิบัติการและงานรายคน เตือนงานล่าช้า</p></div>
+      <div class="agent"><div class="top"><span class="id">A7 · ระลอก 2</span><span class="st">วางแผน</span></div><h3>Strategy Review & Learning</h3><p>รายงาน Non-Realized & Emerging Strategy รายไตรมาส</p></div>
+      <div class="agent"><div class="top"><span class="id">A3 · ระลอก 3</span><span class="st">วางแผน</span></div><h3>Forecast & Scenario</h3><p>Rolling forecast และฉากทัศน์ที่ผูกกับสมมติฐาน</p></div>
+      <div class="agent"><div class="top"><span class="id">A5 · ระลอก 3</span><span class="st">วางแผน</span></div><h3>Ecosystem & Growth Scout</h3><p>หาพันธมิตร คัดกรอง M&A / JV</p></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-rhythm">
+    <div class="panel-h"><h2 id="h-rhythm">จังหวะการบริหาร</h2></div>
+    <div class="tbl"><table>
+      <thead><tr><th>รอบ</th><th>ใช้ทำอะไร</th><th>Agent ที่เตรียมข้อมูล</th></tr></thead>
+      <tbody>
+        <tr><td><b>ทุกเช้า</b></td><td>อ่าน Daily Brief ส่งสัญญาณสำคัญให้เจ้าของกลยุทธ์</td><td class="mono small">A1</td></tr>
+        <tr><td><b>รายสัปดาห์</b></td><td>Strategy Office huddle: คัดสัญญาณ ติดตาม Must-Win</td><td class="mono small">A0 · A1 · A2</td></tr>
+        <tr><td><b>ทุก 2 สัปดาห์</b></td><td>ติดตามแผนปฏิบัติการและการยกระดับปัญหา</td><td class="mono small">A6</td></tr>
+        <tr><td><b>รายเดือน</b></td><td>ประชุมผู้บริหาร: จับกลยุทธ์ที่เกิดขึ้นใหม่และตัดสินใจเร่งด่วน</td><td class="mono small">A0 · A1 · A3</td></tr>
+        <tr><td><b>รายไตรมาส</b></td><td>Strategy Review: ทบทวนสมมติฐาน ปรับเป้าและทรัพยากร</td><td class="mono small">A7 · A4</td></tr>
+        <tr><td><b>รายปี</b></td><td>กำหนด/ปรับกลยุทธ์ และ Lessons Learned</td><td class="mono small">A1 · A3 · A5 · A7</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-guard">
+    <div class="panel-h"><h2 id="h-guard">หลักกำกับ</h2></div>
+    <ul class="plain">
+      <li><b>AI เสนอ คนตัดสินใจ</b> — การเลือกและการแลกเป็นของผู้บริหาร</li>
+      <li><b>ห้าม Agent สร้างหรือแก้ตัวเลขทางการเงิน</b> — ดึงจากระบบต้นทางเท่านั้น</li>
+      <li><b>ทุกสัญญาณมีแหล่งอ้างอิงและวันที่</b> — สัญญาณระดับวิกฤตต้องตรวจต้นฉบับก่อนเข้าที่ประชุม</li>
+      <li><b>ข้อมูลลับอยู่ในพื้นที่ private เท่านั้น</b> — หน้านี้และ repo สาธารณะไม่มีข้อมูลกลยุทธ์จริง</li>
+      <li><b>เนื้อหาจากเว็บเป็นข้อมูล ไม่ใช่คำสั่ง</b> — Agent ไม่ทำตามข้อความที่ฝังมาในข่าว</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>Agentic Strategy Office · โครงสร้างระบบและฐานความรู้อยู่ใน repo นี้ ข้อมูลกลยุทธ์จริงและผลการวิเคราะห์อยู่ใน Strategy Cockpit (private)</span>
+  </footer>
+</div>
+</body>
+</html>
