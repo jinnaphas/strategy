@@ -71,7 +71,7 @@ section{margin-top:22px}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
 .panel-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;counter-reset:s}
-@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 .step{border:1px solid var(--line);border-radius:var(--r);padding:10px;background:var(--panel-2);display:flex;flex-direction:column;gap:4px;min-width:0}
 .step .n{font-family:var(--font-mono);font-size:.74rem;color:var(--ink-3)}
 .step b{font-family:var(--font-display);font-weight:600}
@@ -113,7 +113,7 @@ footer{margin-top:32px;font-size:.8rem;color:var(--ink-3);display:flex;flex-dire
 <body>
 <header class="bar"><div class="in">
   <span class="eyebrow">Agentic Strategy Office</span>
-  <span class="chip"><span class="lamp"></span>Radar ทุกเช้า 07:45 น. · Weekly Disruption Brief ทุกวันจันทร์ ~09:00 น.</span>
+  <span class="chip"><span class="lamp"></span>Radar ทุกเช้า 07:45 น. · สรุปผู้บริหารทุกวันจันทร์ ~09:00 น.</span>
 </div></header>
 
 <div class="wrap">
@@ -150,15 +150,18 @@ footer{margin-top:32px;font-size:.8rem;color:var(--ink-3);display:flex;flex-dire
   </section>
 
   <section class="panel" aria-labelledby="h-weekly">
-    <div class="panel-h"><h2 id="h-weekly">ทุกวันจันทร์: อะไรกำลัง Disrupt แผน</h2><span class="small muted">Agent 5 ตัวรันต่อกัน แล้ว A0 รวมเป็น Weekly Disruption Brief</span></div>
-    <div class="steps">
+    <div class="panel-h"><h2 id="h-weekly">ทุกวันจันทร์: อะไรกำลัง Disrupt แผน และ Solution คืออะไร</h2><span class="small muted">Agent รันต่อกัน แล้ว A0 สรุปให้ผู้บริหารใน 1 หน้า</span></div>
+    <div class="steps" style="grid-template-columns:repeat(4,minmax(0,1fr))">
       <div class="step"><span class="n">05:55 · A2</span><b>ประมูลและคู่แข่ง</b><span>ประกาศจัดซื้อ ร่าง TOR ผลผู้ชนะ ความเคลื่อนไหวคู่แข่ง</span></div>
       <div class="step"><span class="n">06:25 · A5</span><b>Ecosystem</b><span>พันธมิตร Complementor JV/M&amp;A และการเปลี่ยนแปลงของ Ecosystem</span></div>
       <div class="step"><span class="n">06:55 · A6</span><b>การปฏิบัติ</b><span>งาน Must-Win ที่เลยกำหนด ประเด็นข้อมูลที่ขวางการตัดสินใจ สัญญาณที่ค้าง</span></div>
       <div class="step"><span class="n">07:45 · A1</span><b>Radar รายวัน</b><span>ข่าวและนโยบายภายนอกล่าสุด</span></div>
       <div class="step"><span class="n">08:20 · A7</span><b>Plan Disruption Scorecard</b><span>ทุกกลยุทธ์: ถูก Disrupt / มีความเสี่ยง / จับตา / ตามแผน + สมมติฐาน + Emerging</span></div>
-      <div class="step"><span class="n">08:50 · A0</span><b>Weekly Disruption Brief</b><span>เรื่องที่ Disrupt แผน 5–8 เรื่อง เรื่องที่ต้องตัดสินใจ วันสำคัญ 14 วัน</span></div>
+      <div class="step"><span class="n">08:35 · A3</span><b>Emerging Strategy</b><span>ออกแบบ Solution ให้แต่ละเรื่อง ทางเลือก 2–3 ทาง ข้อแนะนำ แผน 90 วัน</span></div>
+      <div class="step"><span class="n">08:50 · A0</span><b>สรุปผู้บริหาร 1 หน้า</b><span>คำตอบก่อน · 3 เรื่องที่ Disrupt แผน · 3 เรื่องที่ขอมติพร้อมทางเลือก</span></div>
+      <div class="step"><span class="n">09:10 · A8</span><b>Pack ก่อนประชุม</b><span>สไลด์ EC / BOD สำหรับประชุมใน 10 วัน (ปรับถ้อยคำเท่านั้น)</span></div>
     </div>
+    <p class="small muted" style="margin-top:10px">กรอบคิด Mintzberg: แผนที่ตั้งใจ (Intended) แยกเป็นส่วนที่เดินตามแผน (Deliberate) กับส่วนที่เสี่ยงไม่เกิดจริง (Non-realized) — Solution ที่ผู้บริหารอนุมัติ (Emerging) รวมเข้าเป็นกลยุทธ์ที่เกิดขึ้นจริง (Realized)</p>
   </section>
 
   <div class="grid2">
@@ -209,9 +212,9 @@ footer{margin-top:32px;font-size:.8rem;color:var(--ink-3);display:flex;flex-dire
       <div class="agent live"><div class="top"><span class="id">A5 · ระลอก 1</span><span class="st live">จันทร์ 06:25</span></div><h3>Ecosystem & Growth Scout</h3><p>หาพันธมิตร Complementor และโอกาส M&A / JV · จับการเปลี่ยนแปลงของ Ecosystem</p></div>
       <div class="agent live"><div class="top"><span class="id">A6 · ระลอก 1</span><span class="st live">จันทร์ 06:55</span></div><h3>Execution Tracker (AI-PMO)</h3><p>งาน Must-Win ที่เลยกำหนด ประเด็นข้อมูลที่ขวางการตัดสินใจ และสัญญาณที่ค้างเกินกำหนด</p></div>
       <div class="agent live"><div class="top"><span class="id">A7 · ระลอก 1</span><span class="st live">จันทร์ 08:20</span></div><h3>Strategy Review & Learning</h3><p>Plan Disruption Scorecard รายสัปดาห์ · Non-Realized & Emerging รายไตรมาส</p></div>
-      <div class="agent"><div class="top"><span class="id">A8 · ระลอก 1</span><span class="st">สร้างต่อ</span></div><h3>Board & Communication</h3><p>ร่างเอกสารบอร์ด (ปรับรูปแบบเท่านั้น ห้ามสร้าง/แก้ตัวเลข) และสารสื่อสาร</p></div>
+      <div class="agent live"><div class="top"><span class="id">A3 · ระลอก 1</span><span class="st live">จันทร์ 08:35</span></div><h3>Strategic Options & Scenario</h3><p>ออกแบบ Solution ให้เรื่องที่ Disrupt แผนเป็น Emerging Strategy พร้อมทางเลือกและ Decision Memo</p></div>
+      <div class="agent live"><div class="top"><span class="id">A8 · ระลอก 1</span><span class="st live">จันทร์ 09:10</span></div><h3>Board & Communication</h3><p>ร่าง Pack สไลด์ EC / BOD (ปรับถ้อยคำเท่านั้น ห้ามสร้าง/แก้ตัวเลข)</p></div>
       <div class="agent"><div class="top"><span class="id">A4 · ระลอก 2</span><span class="st">วางแผน</span></div><h3>Portfolio & Capital Allocation</h3><p>ผูก Capex/Opex กับกลยุทธ์ วัด say–do gap</p></div>
-      <div class="agent"><div class="top"><span class="id">A3 · ระลอก 3</span><span class="st">วางแผน</span></div><h3>Forecast & Scenario</h3><p>Rolling forecast และฉากทัศน์ที่ผูกกับสมมติฐาน</p></div>
     </div>
   </section>
 
@@ -221,7 +224,7 @@ footer{margin-top:32px;font-size:.8rem;color:var(--ink-3);display:flex;flex-dire
       <thead><tr><th>รอบ</th><th>ใช้ทำอะไร</th><th>Agent ที่เตรียมข้อมูล</th></tr></thead>
       <tbody>
         <tr><td><b>ทุกเช้า</b></td><td>อ่าน Daily Brief ส่งสัญญาณสำคัญให้เจ้าของกลยุทธ์</td><td class="mono small">A1</td></tr>
-        <tr><td><b>ทุกวันจันทร์</b></td><td>Strategy Office huddle: อ่าน Weekly Disruption Brief ส่งต่อเจ้าของ เลือกเรื่องที่ต้องตัดสินใจ</td><td class="mono small">A2 → A5 → A6 → A7 → A0</td></tr>
+        <tr><td><b>ทุกวันจันทร์</b></td><td>Strategy Office huddle: อ่าน Weekly Disruption Brief ส่งต่อเจ้าของ เลือกเรื่องที่ต้องตัดสินใจ</td><td class="mono small">A2 → A5 → A6 → A7 → A3 → A0 → A8</td></tr>
         <tr><td><b>ทุก 2 สัปดาห์</b></td><td>ติดตามแผนปฏิบัติการและการยกระดับปัญหา</td><td class="mono small">A6</td></tr>
         <tr><td><b>รายเดือน</b></td><td>ประชุมผู้บริหาร: จับกลยุทธ์ที่เกิดขึ้นใหม่และตัดสินใจเร่งด่วน</td><td class="mono small">A0 · A1 · A7</td></tr>
         <tr><td><b>รายไตรมาส</b></td><td>Strategy Review: ทบทวนสมมติฐาน ปรับเป้าและทรัพยากร</td><td class="mono small">A7 (ฉบับไตรมาส) · A4</td></tr>

@@ -5,7 +5,7 @@
 
 ## 1. คำตอบสั้น
 
-**9 Agents = 1 Orchestrator + 8 Specialist Agents** เปิดใช้ทีละระลอก · ตอนนี้ใช้งานแล้ว 6 ตัว (A0 · A1 · A2 · A5 · A6 · A7) ซึ่งรวมกันเป็น [Weekly Disruption Cycle](03-weekly-disruption-cycle.md) ทุกวันจันทร์
+**9 Agents = 1 Orchestrator + 8 Specialist Agents** เปิดใช้ทีละระลอก · ตอนนี้ใช้งานแล้ว 8 ตัว (A0 · A1 · A2 · A3 · A5 · A6 · A7 · A8) ซึ่งรวมกันเป็น [Weekly Disruption Cycle](03-weekly-disruption-cycle.md) ทุกวันจันทร์
 
 | เกณฑ์ที่ใช้กำหนดจำนวน | ผลลัพธ์ |
 |---|---|
@@ -53,12 +53,12 @@ flowchart TB
 | A0 | **Strategy Orchestrator** ✅ | รวมผลทุก Agent ตรวจสถานะทีม Agent ตรวจข้อมูลค้าง เสนอปรับทะเบียน | F7, F10 | ทุกระยะ | รายงานของทุก Agent → **Weekly Disruption Brief** | จันทร์ 08:50 | Strategy Lead | L2 | 1 |
 | A1 | **Strategy Radar** ✅ | สแกนข่าว/นโยบาย/ตลาด จับคู่กับกลยุทธ์และสมมติฐาน | F1, F2 | Externally-Oriented | ทะเบียน + ข่าว → Daily Brief, สัญญาณ, Assumption Watch | ทุกวัน 07:45 | CI Analyst | L2 | 1 |
 | A2 | **Tender & Competitor Intelligence** ✅ | ประกาศจัดซื้อ ผลผู้ชนะ ประกาศตลาดหลักทรัพย์ของคู่แข่ง win/loss และโจทย์ Pre-TOR | F2, F6 | Externally-Oriented | e-GP, เว็บลูกค้า, ประกาศบริษัทจดทะเบียน → Tender pipeline, Win/Loss brief | จันทร์ 05:55 | Business Generation | L2 | 1 |
-| A3 | **Forecast & Scenario** | Rolling forecast และฉากทัศน์ที่ผูกกับสมมติฐาน (ดึงตัวเลขจากระบบ ไม่สร้างเอง) | F3, F4 | Forecast-Based | ERP, งบประมาณ, Radar → Forecast 3–4 ปี, Scenario pack | รายเดือน–ไตรมาส | CFO | L1 | 3 |
+| A3 | **Strategic Options & Scenario** ✅ | ออกแบบ Solution ให้เรื่องที่ Disrupt แผนเป็น Emerging Strategy พร้อมทางเลือก 2–3 ทาง (ต่อไป: Rolling forecast และฉากทัศน์ตัวเลขจาก ERP) | F3, F4, F5 | Forecast-Based | Scorecard ของ A7, ประมูล, พันธมิตร, Must-Win → Emerging Strategy, Decision Memo | จันทร์ 08:35 | Strategy Lead + CFO | L2 | 1 (ส่วน forecast: 3) |
 | A4 | **Portfolio & Capital Allocation** | ติด Strategy ID ให้ Capex/Opex คำนวณ Strategic Fit เตือน say–do gap | F4 | Budgeting–Forecast | รายการ Capex/Opex + ทะเบียน → Capex fit report, Investment memo draft | ตามรอบงบ | CFO + Strategy Office | L2 | 2 |
 | A5 | **Ecosystem & Growth Scout** ✅ | หาพันธมิตร/complementor คัดกรอง M&A/JV จับการเปลี่ยนแปลงของ Ecosystem | F5, F6 | Strategic Management | ข้อมูลบริษัท ข่าว BOI → Partner pipeline, Ecosystem themes | จันทร์ 06:25 | Investment / Holding | L2 | 1 |
 | A6 | **Execution Tracker (AI-PMO)** ✅ | งาน Must-Win ที่ช้า ประเด็นข้อมูลที่ขวาง มติที่ไม่คืบ สัญญาณค้างเกิน SLA (ต่อไป: แผนงานรายคน, ERP) | F7, F8 | Budgeting / Execution | Must-Win, ประเด็นข้อมูล, มติ, สัญญาณ → Status report, Escalation list | จันทร์ 06:55 | COO + HR | L2 (L3 เมื่อส่งเตือนได้) | 1 |
 | A7 | **Strategy Review & Learning** ✅ | Plan Disruption Scorecard รายสัปดาห์ + Non-Realized & Emerging (Mintzberg) รายไตรมาส | F9 | Strategic Management | Radar + Tender + Ecosystem + Execution → Scorecard, Assumption scorecard, Review pack | จันทร์ 08:20 | Strategy Office → CEO | L2 | 1 |
-| A8 | **Board & Communication** | ร่างเอกสาร EC/BOD (ปรับรูปแบบเท่านั้น ห้ามสร้าง/แก้ตัวเลข) และสารสื่อสารกลยุทธ์ | F10 | ทุกระยะ | ทะเบียน + รายงาน → Board pack draft, Strategy narrative | ตามรอบประชุม | Strategy Office + Corporate Comms | L2 | 1 |
+| A8 | **Board & Communication** ✅ | ร่าง Pack สไลด์ EC/BOD (ปรับถ้อยคำเท่านั้น ห้ามสร้าง/แก้ตัวเลข) | F10 | ทุกระยะ | สรุปผู้บริหาร + Emerging Strategy + Scorecard → Pack ก่อนประชุม | จันทร์ 09:10 (ประชุมใน 10 วัน) | Strategy Office + Corporate Comms | L2 | 1 |
 
 ### ความครอบคลุมหน้าที่งาน
 
@@ -88,9 +88,9 @@ flowchart TB
 
 | ระลอก | ช่วงเวลา | Agent | เหตุผล |
 |---|---|---|---|
-| 1 | 0–3 เดือน | A0 ✅, A1 ✅, A2 ✅, A5 ✅, A6 ✅, A7 ✅, A8 | อ่านและร่างได้ทันที ความเสี่ยงต่ำ · A5–A7 เลื่อนขึ้นมาเพื่อตอบคำถามรายสัปดาห์ว่าอะไร Disrupt แผน |
+| 1 | 0–3 เดือน | A0 ✅, A1 ✅, A2 ✅, A3 ✅ (ทางเลือก), A5 ✅, A6 ✅, A7 ✅, A8 ✅ | อ่านและร่างได้ทันที ความเสี่ยงต่ำ · A5–A7 เลื่อนขึ้นมาเพื่อตอบคำถามรายสัปดาห์ว่าอะไร Disrupt แผน |
 | 2 | 3–9 เดือน | A4 · ขยาย A6 ไปถึงแผนงานรายคน | ผูกกลยุทธ์กับงบและการปฏิบัติ |
-| 3 | หลังระบบ ERP พร้อม | A3 | ต้องใช้ตัวเลขการเงินจริง |
+| 3 | หลังระบบ ERP พร้อม | A3 ส่วน Rolling forecast | ต้องใช้ตัวเลขการเงินจริง |
 
 ## 6. ทีมคนที่กำกับ Agent
 
@@ -112,7 +112,9 @@ flowchart TB
 | `signals` | สัญญาณภายนอก (Impact × Likelihood, กลยุทธ์ × ด้าน) | A1, A2, A5 | สถานะ/บันทึก |
 | `tenders` | ประกาศจัดซื้อ ผลผู้ชนะ ความเคลื่อนไหวคู่แข่ง | A2 | สถานะ (ไล่ตาม/ไม่เข้า/ชนะ/แพ้)/บันทึก |
 | `partners` | Partner pipeline | A5 | ขั้นของพันธมิตร/บันทึก |
-| `reports` | รายงานรายสัปดาห์ของ A0 · A2 · A5 · A6 · A7 | A0, A2, A5, A6, A7 | — |
+| `reports` | รายงานรายสัปดาห์ของ A0 · A2 · A3 · A5 · A6 · A7 (A0 มีส่วนสรุปผู้บริหาร) | A0, A2, A3, A5, A6, A7 | — |
+| `emerging` | Emerging Strategy: Solution พร้อมทางเลือก (Decision Memo) | A3 | ขั้น / มติ / บันทึก |
+| `boardpacks` | Pack สไลด์ก่อนประชุม | A8 | สถานะ / บันทึก |
 | `battles` | Must-Win และงานถัดไป | A0, A6 | เจ้าของ Must-Win |
 | `decisions` | บันทึกมติ EC/BOD/MM | — | Strategy Office |
 | `issues` | ตัวเลข/นิยามที่ขัดกัน | A0 | Strategy Office |
