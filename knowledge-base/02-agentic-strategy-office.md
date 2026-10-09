@@ -5,13 +5,13 @@
 
 ## 1. คำตอบสั้น
 
-**10 Agents = 1 Orchestrator + 9 Specialist Agents** เปิดใช้ทีละระลอก · ตอนนี้ใช้งานแล้ว 9 ตัว (A0 · A1 · A1H · A2 · A3 · A5 · A6 · A7 · A8) ซึ่งรวมกันเป็น [Weekly Disruption Cycle](03-weekly-disruption-cycle.md) ทุกวันจันทร์ · A1H แยกงานมองไกล (Horizon Scan) ออกจาก A1 ทุกวันศุกร์
+**11 Agents = 1 Orchestrator + 10 Specialist Agents** เปิดใช้ทีละระลอก · ตอนนี้ใช้งานแล้ว 10 ตัว (A0 · A1 · A1H · A2 · A3 · A5 · A6 · A7 · A8 · A9) ซึ่งรวมกันเป็น [Weekly Disruption Cycle](03-weekly-disruption-cycle.md) ทุกวันจันทร์ · A1H แยกงานมองไกล (Horizon Scan) ออกจาก A1 ทุกวันศุกร์ · A9 เพิ่มชั้นข้อมูลลูกค้า (ตัวเลขอุปสงค์และเสียงลูกค้า) ทุกวันพุธ
 
 | เกณฑ์ที่ใช้กำหนดจำนวน | ผลลัพธ์ |
 |---|---|
 | ครอบคลุมหน้าที่งานนักกลยุทธ์ครบ 10 ด้าน (F1–F10) | ทุกหน้าที่มี Agent รับผิดชอบอย่างน้อย 1 ตัว |
 | 1 Agent = เจ้าของที่เป็นคน 1 บทบาท + ข้อมูลเข้า 1 ชุด + ผลลัพธ์ที่ชัด | ไม่มี Agent ที่ไม่มีคนกำกับ |
-| แยก Agent เมื่อ **จังหวะเวลา** หรือ **แหล่งข้อมูล** ต่างกัน | Radar (ข่าว รายวัน) แยกจาก Tender Intelligence (ประกาศจัดซื้อและคู่แข่ง รายสัปดาห์) |
+| แยก Agent เมื่อ **จังหวะเวลา** หรือ **แหล่งข้อมูล** ต่างกัน | Radar (ข่าว รายวัน) แยกจาก Tender Intelligence (ประกาศจัดซื้อและคู่แข่ง รายสัปดาห์) และจาก Market & Customer (ตัวเลขทางการรายเดือน + เสียงลูกค้า) |
 | รวม Agent เมื่อใช้ข้อมูลและเจ้าของเดียวกัน | ตรวจตัวเลขขัดกันรวมไว้ใน Orchestrator |
 | เปิดตามความพร้อมของข้อมูล | Agent ที่ต้องใช้ตัวเลขการเงินจริงรอระบบ ERP |
 
@@ -26,6 +26,7 @@ flowchart TB
         A1["A1 Strategy Radar"]
         A1H["A1H Horizon Scan & Indicators"]
         A2["A2 Tender & Competitor Intelligence"]
+        A9["A9 Market & Customer Intelligence"]
     end
     subgraph DECIDE["Decide"]
         A3["A3 Forecast & Scenario"]
@@ -54,6 +55,7 @@ flowchart TB
 | A0 | **Strategy Orchestrator** ✅ | รวมผลทุก Agent ตรวจสถานะทีม Agent ตรวจข้อมูลค้าง เสนอปรับทะเบียน | F7, F10 | ทุกระยะ | รายงานของทุก Agent → **Weekly Disruption Brief** | จันทร์ 08:50 | Strategy Lead | L2 | 1 |
 | A1 | **Strategy Radar** ✅ | สแกนข่าว/นโยบาย/ตลาด จุดเตือนของสมมติฐาน แหล่งทางการ และกลยุทธ์ที่ยังเป็นจุดบอด จับคู่กับกลยุทธ์และสมมติฐาน | F1, F2 | Externally-Oriented | ทะเบียน + ข่าว + แหล่งทางการ → Daily Brief, สัญญาณ, Assumption Watch, กฎระเบียบที่กำลังมา | ทุกวัน 07:45 | CI Analyst | L2 | 1 |
 | A1H | **Horizon Scan & Indicators** ✅ | สัญญาณอ่อนระยะ 1–5 ปี (H2–H3) และตัวชี้วัดภายนอกรายสัปดาห์ที่มีแหล่งอ้างอิง ([05](05-radar-coverage-and-horizon-scan.md)) | F1 | Externally-Oriented | ธีม Horizon + ทะเบียน → สัญญาณ H2–H3, ตัวชี้วัด, ข้อเสนอให้ A3/A7 | ศุกร์ 06:40 | CI Analyst | L2 | 1 |
+| A9 | **Market & Customer Intelligence** ✅ | Demand Pulse รายกลุ่มลูกค้าจากตัวเลขทางการที่มีแหล่ง + Control Chart · เสียงลูกค้าจากแบบฟอร์มหน้างาน แหล่งสาธารณะ และโซเชียล · เหตุผลแพ้–ชนะ ([06](06-market-customer-intelligence-and-qc-alerts.md)) | F1, F2 | Externally-Oriented | สถิติทางการ + แบบฟอร์ม + แหล่งสาธารณะ → ตัวเลขอุปสงค์, ธีมเสียงลูกค้า, หลักฐานสมมติฐาน, Pareto แพ้–ชนะ | พุธ 06:10 | CI Analyst + Sales/Marketing | L2 | 1 |
 | A2 | **Tender & Competitor Intelligence** ✅ | ประกาศจัดซื้อ ผลผู้ชนะ ประกาศตลาดหลักทรัพย์ของคู่แข่ง win/loss และโจทย์ Pre-TOR | F2, F6 | Externally-Oriented | e-GP, เว็บลูกค้า, ประกาศบริษัทจดทะเบียน → Tender pipeline, Win/Loss brief | จันทร์ 05:55 | Business Generation | L2 | 1 |
 | A3 | **Strategic Options & Scenario** ✅ | ออกแบบ Solution ให้เรื่องที่ Disrupt แผนเป็น Emerging Strategy พร้อมทางเลือก 2–3 ทาง (ต่อไป: Rolling forecast และฉากทัศน์ตัวเลขจาก ERP) | F3, F4, F5 | Forecast-Based | Scorecard ของ A7, ประมูล, พันธมิตร, Must-Win → Emerging Strategy, Decision Memo | จันทร์ 08:35 | Strategy Lead + CFO | L2 | 1 (ส่วน forecast: 3) |
 | A4 | **Portfolio & Capital Allocation** | ติด Strategy ID ให้ Capex/Opex คำนวณ Strategic Fit เตือน say–do gap | F4 | Budgeting–Forecast | รายการ Capex/Opex + ทะเบียน → Capex fit report, Investment memo draft | ตามรอบงบ | CFO + Strategy Office | L2 | 2 |
@@ -64,18 +66,18 @@ flowchart TB
 
 ### ความครอบคลุมหน้าที่งาน
 
-| หน้าที่ | A0 | A1 | A1H | A2 | A3 | A4 | A5 | A6 | A7 | A8 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| F1 มองอนาคต & สแกนสภาพแวดล้อม | | ● | ● | | | | | | | |
-| F2 วิเคราะห์ข้อมูลเชิงกลยุทธ์ | | ● | | ● | | | | | | |
-| F3 กำหนดกลยุทธ์ & ทางเลือก | | | | | ● | | | | | |
-| F4 บริหารพอร์ต & จัดสรรทรัพยากร | | | | | ● | ● | | | | |
-| F5 การเติบโต & โมเดลธุรกิจ | | | | | | | ● | | | |
-| F6 Corporate Development & Ecosystem | | | | ● | | | ● | | | |
-| F7 แปลงกลยุทธ์เป็นแผน & ถ่ายทอด | ● | | | | | | | ● | | |
-| F8 บริหารโครงการ & Transformation | | | | | | | | ● | | |
-| F9 ติดตามผล ทบทวน & ปรับ | | | | | | | | | ● | |
-| F10 ที่ปรึกษาผู้บริหาร & สื่อสาร | ● | | | | | | | | | ● |
+| หน้าที่ | A0 | A1 | A1H | A9 | A2 | A3 | A4 | A5 | A6 | A7 | A8 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| F1 มองอนาคต & สแกนสภาพแวดล้อม | | ● | ● | ● | | | | | | | |
+| F2 วิเคราะห์ข้อมูลเชิงกลยุทธ์ | | ● | | ● | ● | | | | | | |
+| F3 กำหนดกลยุทธ์ & ทางเลือก | | | | | | ● | | | | | |
+| F4 บริหารพอร์ต & จัดสรรทรัพยากร | | | | | | ● | ● | | | | |
+| F5 การเติบโต & โมเดลธุรกิจ | | | | | | | | ● | | | |
+| F6 Corporate Development & Ecosystem | | | | | ● | | | ● | | | |
+| F7 แปลงกลยุทธ์เป็นแผน & ถ่ายทอด | ● | | | | | | | | ● | | |
+| F8 บริหารโครงการ & Transformation | | | | | | | | | ● | | |
+| F9 ติดตามผล ทบทวน & ปรับ | | | | | | | | | | ● | |
+| F10 ที่ปรึกษาผู้บริหาร & สื่อสาร | ● | | | | | | | | | | ● |
 
 ## 4. ระดับความอิสระ (Autonomy)
 
@@ -90,7 +92,7 @@ flowchart TB
 
 | ระลอก | ช่วงเวลา | Agent | เหตุผล |
 |---|---|---|---|
-| 1 | 0–3 เดือน | A0 ✅, A1 ✅, A2 ✅, A3 ✅ (ทางเลือก), A5 ✅, A6 ✅, A7 ✅, A8 ✅ | อ่านและร่างได้ทันที ความเสี่ยงต่ำ · A5–A7 เลื่อนขึ้นมาเพื่อตอบคำถามรายสัปดาห์ว่าอะไร Disrupt แผน |
+| 1 | 0–3 เดือน | A0 ✅, A1 ✅, A1H ✅, A2 ✅, A3 ✅ (ทางเลือก), A5 ✅, A6 ✅, A7 ✅, A8 ✅, A9 ✅ | อ่านและร่างได้ทันที ความเสี่ยงต่ำ · A5–A7 เลื่อนขึ้นมาเพื่อตอบคำถามรายสัปดาห์ว่าอะไร Disrupt แผน |
 | 2 | 3–9 เดือน | A4 · ขยาย A6 ไปถึงแผนงานรายคน | ผูกกลยุทธ์กับงบและการปฏิบัติ |
 | 3 | หลังระบบ ERP พร้อม | A3 ส่วน Rolling forecast | ต้องใช้ตัวเลขการเงินจริง |
 
@@ -99,7 +101,7 @@ flowchart TB
 | บทบาท | กำกับ Agent |
 |---|---|
 | Strategy Lead | A0, A7, A8 |
-| CI / Strategy Analyst | A1, A2, A5 |
+| CI / Strategy Analyst | A1, A1H, A2, A5, A9 |
 | Strategy PMO | A6 |
 | Finance Partner | A3, A4 |
 | CoE / Data–AI Engineer | ดูแลแพลตฟอร์ม, skill และการเชื่อมต่อข้อมูลของทุก Agent |
@@ -111,10 +113,13 @@ flowchart TB
 | Collection | เนื้อหา | Agent ที่เขียน | คนที่แก้ |
 |---|---|---|---|
 | `strategies` | ทะเบียนกลยุทธ์ + สถานะสมมติฐาน | A0, A1 | Strategy Office |
-| `signals` | สัญญาณภายนอก (Impact × Likelihood, กลยุทธ์ × ด้าน) | A1, A2, A5 | สถานะ/บันทึก |
-| `tenders` | ประกาศจัดซื้อ ผลผู้ชนะ ความเคลื่อนไหวคู่แข่ง | A2 | สถานะ (ไล่ตาม/ไม่เข้า/ชนะ/แพ้)/บันทึก |
+| `signals` | สัญญาณภายนอก (Impact × Likelihood, กลยุทธ์ × ด้าน) | A1, A1H, A2, A5, A9 | สถานะ/บันทึก |
+| `market` | ตัวเลขอุปสงค์รายกลุ่มลูกค้า (Demand Pulse) ที่มีแหล่งทุกจุด | A9 | — |
+| `voice` | ธีมเสียงลูกค้า (ไม่มีข้อมูลส่วนบุคคล) | A9 | สถานะ/บันทึก |
+| `internal` | ตัวชี้วัดภายใน เช่น ยอดสั่งซื้อ (ภายหลังดึงจาก ERP) | — | Strategy Office |
+| `tenders` | ประกาศจัดซื้อ ผลผู้ชนะ ความเคลื่อนไหวคู่แข่ง | A2 | สถานะ (ไล่ตาม/ไม่เข้า/ชนะ/แพ้)/เหตุผลแพ้–ชนะ/บันทึก |
 | `partners` | Partner pipeline | A5 | ขั้นของพันธมิตร/บันทึก |
-| `reports` | รายงานรายสัปดาห์ของ A0 · A2 · A3 · A5 · A6 · A7 (A0 มีส่วนสรุปผู้บริหาร) | A0, A2, A3, A5, A6, A7 | — |
+| `reports` | รายงานรายสัปดาห์ของ A0 · A1H · A2 · A3 · A5 · A6 · A7 · A9 (A0 มีส่วนสรุปผู้บริหาร) | A0, A1H, A2, A3, A5, A6, A7, A9 | — |
 | `emerging` | Emerging Strategy: Solution พร้อมทางเลือก (Decision Memo) | A3 | ขั้น / มติ / บันทึก |
 | `boardpacks` | Pack สไลด์ก่อนประชุม | A8 | สถานะ / บันทึก |
 | `battles` | Must-Win และงานถัดไป | A0, A6 | เจ้าของ Must-Win |
@@ -123,6 +128,8 @@ flowchart TB
 | `events` | วันสำคัญ | A0, A1 | — |
 | `agents` | ทีม Agent สถานะ และวันที่รันล่าสุด | ทุก Agent (เฉพาะของตัวเอง) | — |
 | `meta/cockpit` | วันที่รัน Radar และ Weekly Brief ล่าสุด, รุ่นทะเบียน | A1, A0 | — |
+
+Cockpit คำนวณ **สัญญาณเตือน** (Control Chart · SLA · วันครบกำหนด · แผนแย่ลง · Agent ไม่รัน) และ **7QC Tools** จากข้อมูลชุดนี้ทุกครั้งที่เปิด — ดู [06](06-market-customer-intelligence-and-qc-alerts.md)
 
 > Cockpit ที่มีข้อมูลจริงเป็น artifact ส่วนตัว (private) — ไม่อยู่ใน repo นี้
 
