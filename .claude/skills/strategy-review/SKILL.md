@@ -11,7 +11,7 @@ description: A7 Strategy Review & Learning agent — produces the weekly Plan Di
 
 ## Inputs
 
-ทะเบียนกลยุทธ์ (เป้าหมาย สมมติฐาน signposts) · สัญญาณ 7 วัน (A1 · A1H · A2 · A5) และ 30 วันเป็นบริบท · รายงาน A2 · A5 · A6 ของสัปดาห์ · รายงาน A1H วันศุกร์ · `indicators` · Daily Brief ของสัปดาห์ (จุดเตือนที่ตรวจ กฎระเบียบที่กำลังมา จุดบอด) · `tenders` · `partners` · `battles` · `issues` · `decisions` · A7 ฉบับก่อน
+ทะเบียนกลยุทธ์ (เป้าหมาย สมมติฐาน signposts) · สัญญาณ 7 วัน (A1 · A1H · A2 · A5 · A9) และ 30 วันเป็นบริบท · รายงาน A2 · A5 · A6 ของสัปดาห์ · รายงาน A1H วันศุกร์ · รายงาน A9 วันพุธ (Demand Pulse · สัญญาณเตือน · หลักฐานสมมติฐาน · ธีมเสียงลูกค้า · แพ้–ชนะ) · `indicators` · `market` · `voice` · Daily Brief ของสัปดาห์ (จุดเตือนที่ตรวจ กฎระเบียบที่กำลังมา จุดบอด) · `tenders` · `partners` · `battles` · `issues` · `decisions` · A7 ฉบับก่อน
 
 ## Procedure
 
@@ -21,6 +21,7 @@ description: A7 Strategy Review & Learning agent — produces the weekly Plan Di
 4. **Mintzberg** — Emerging (โอกาสนอกแผน รวมข้อเสนอจาก Horizon Scan) และ Non-Realized (แผนที่อาจไม่เกิด)
    - สัญญาณอ่อน H2–H3 อย่างเดียวไม่ทำให้กลยุทธ์ "ถูก Disrupt" — ใช้เป็นเหตุผลให้ "จับตา" หรือเป็น Emerging
    - ตัวชี้วัดภายนอกใช้เป็นหลักฐานของสมมติฐานด้านต้นทุนและการเงิน อ้างเป็น `IND-<key>`
+   - ตัวเลขอุปสงค์ สัญญาณเตือน Control Chart และ `assumptionEvidence` ของ A9 ใช้เป็นหลักฐานของสมมติฐานด้านอุปสงค์และลูกค้า (D1/D2) อ้างเป็น `MKT-<key>` · เสียงลูกค้าอ้างเป็น `VOC-…`
    - **จุดที่ Radar ยังมองไม่เห็น** (`radarGaps`) — กลยุทธ์ที่ไม่มีสัญญาณใน 30 วัน และ driver / ด้านที่ไม่มีหลักฐาน เพื่อให้ Strategy Office ปรับคำค้น
 5. **Disruptions 3–8 เรื่อง** เรียงตามความรุนแรง + คำถามสำหรับผู้บริหาร 3–5 ข้อ
 6. **ฉบับไตรมาส** — สรุป deliberate / realized / emergent สมมติฐานที่เปลี่ยน และบทเรียน
