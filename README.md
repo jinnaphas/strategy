@@ -7,8 +7,9 @@ Repo สำหรับบริหารงานกลยุทธ์องค
 
 ## หน้าเว็บ
 
-- [`index.html`](index.html) — หน้าแรกของระบบ (เผยแพร่ผ่าน GitHub Pages ได้ ไม่มีข้อมูลลับ) อธิบาย Strategy Radar รายวัน Horizon Scan รายสัปดาห์ Market & Customer Intelligence Weekly Disruption Cycle วงจรบริหาร และทีม 11 Agents พร้อมปุ่มไป Strategy Cockpit
+- [`index.html`](index.html) — หน้าแรกของระบบ (เผยแพร่ผ่าน GitHub Pages ได้ ไม่มีข้อมูลลับ) อธิบาย Strategy Radar รายวัน Horizon Scan รายสัปดาห์ Market & Customer Intelligence Weekly Disruption Cycle วงจรบริหาร และทีม 11 Agents พร้อมปุ่มไป Strategy Cockpit และ Quick Win Cockpit
 - **Strategy Cockpit** — หน้าบริหารที่มีข้อมูลกลยุทธ์จริง เป็น artifact ส่วนตัวบน claude.ai (เปิดได้เฉพาะผู้ได้รับสิทธิ์) · มีศูนย์สัญญาณเตือน หน้าลูกค้าและตลาด 7QC Tools เส้นทางเหตุผล 5 ขั้น และคู่มืออ่านระบบ — แสดงชื่อแทนรหัสทุกจุด
+- **Quick Win Cockpit** — artifact ส่วนตัวอีกตัวสำหรับติดตามโครงการเร่งด่วนรายสัปดาห์: ภาพรวมทุกโครงการ หน้าโครงการ (ตัวชี้วัด Milestone ความเสี่ยง เรื่องที่รอตัดสินใจ) มุมมองเฉพาะตามลักษณะงาน และพอร์ตโครงการทั้งกลุ่มที่วางตารางจาก Excel / ERP ได้ · ลิงก์ไปมากับ Strategy Cockpit
 - **แบบฟอร์มเสียงลูกค้า** — artifact ส่วนตัวแยก ให้ฝ่ายขาย ฝ่ายบริการ และตัวแทนจำหน่ายบันทึกเสียงลูกค้า (ไม่เก็บข้อมูลส่วนบุคคล)
 
 ## โครงสร้าง
