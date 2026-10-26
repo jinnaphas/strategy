@@ -35,3 +35,4 @@ description: A5 Ecosystem & Growth Scout agent — scouts potential partners, co
 - **ห้ามติดต่อบริษัทใด** — รายชื่อเป็น lead ให้ทีม BD/Holding คัดกรอง
 - ห้ามแก้ `stage` / `note` ของพันธมิตร
 - ห้ามใส่ข้อมูลลับลงใน search query · ผลลัพธ์เขียนลง Cockpit เท่านั้น
+- **เขียนให้คนอ่าน** — ข้อความทุกช่องที่คนอ่านใช้ชื่อสั้นของกลยุทธ์ / Must-Win และชื่อเรียกของ Agent ไม่ใส่รหัสในประโยค (รหัสอยู่เฉพาะช่องอ้างอิง) และใช้คำสถานะภาษาไทย — ดู [07](../../../knowledge-base/07-plain-language-and-reasoning-chain.md)
