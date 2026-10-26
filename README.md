@@ -8,7 +8,7 @@ Repo สำหรับบริหารงานกลยุทธ์องค
 ## หน้าเว็บ
 
 - [`index.html`](index.html) — หน้าแรกของระบบ (เผยแพร่ผ่าน GitHub Pages ได้ ไม่มีข้อมูลลับ) อธิบาย Strategy Radar รายวัน Horizon Scan รายสัปดาห์ Market & Customer Intelligence Weekly Disruption Cycle วงจรบริหาร และทีม 11 Agents พร้อมปุ่มไป Strategy Cockpit
-- **Strategy Cockpit** — หน้าบริหารที่มีข้อมูลกลยุทธ์จริง เป็น artifact ส่วนตัวบน claude.ai (เปิดได้เฉพาะผู้ได้รับสิทธิ์) · มีศูนย์สัญญาณเตือน หน้าลูกค้าและตลาด และ 7QC Tools
+- **Strategy Cockpit** — หน้าบริหารที่มีข้อมูลกลยุทธ์จริง เป็น artifact ส่วนตัวบน claude.ai (เปิดได้เฉพาะผู้ได้รับสิทธิ์) · มีศูนย์สัญญาณเตือน หน้าลูกค้าและตลาด 7QC Tools เส้นทางเหตุผล 5 ขั้น และคู่มืออ่านระบบ — แสดงชื่อแทนรหัสทุกจุด
 - **แบบฟอร์มเสียงลูกค้า** — artifact ส่วนตัวแยก ให้ฝ่ายขาย ฝ่ายบริการ และตัวแทนจำหน่ายบันทึกเสียงลูกค้า (ไม่เก็บข้อมูลส่วนบุคคล)
 
 ## โครงสร้าง
@@ -22,21 +22,21 @@ Repo สำหรับบริหารงานกลยุทธ์องค
 
 ## AI Agents (แผน 11 Agents = 1 Orchestrator + 10 Specialists · ใช้งานแล้ว 10 ตัว)
 
-รายละเอียด: [Agentic Strategy Office](knowledge-base/02-agentic-strategy-office.md) · รอบสัปดาห์: [Weekly Disruption Cycle](knowledge-base/03-weekly-disruption-cycle.md) · Solution และการนำเสนอผู้บริหาร: [Emerging Strategy & Executive Briefing](knowledge-base/04-emerging-strategy-and-executive-briefing.md) · มุมข่าวและ Horizon Scan: [Radar Coverage & Horizon Scan](knowledge-base/05-radar-coverage-and-horizon-scan.md) · ลูกค้า 7QC และสัญญาณเตือน: [Market & Customer Intelligence](knowledge-base/06-market-customer-intelligence-and-qc-alerts.md)
+รายละเอียด: [Agentic Strategy Office](knowledge-base/02-agentic-strategy-office.md) · รอบสัปดาห์: [Weekly Disruption Cycle](knowledge-base/03-weekly-disruption-cycle.md) · Solution และการนำเสนอผู้บริหาร: [Emerging Strategy & Executive Briefing](knowledge-base/04-emerging-strategy-and-executive-briefing.md) · มุมข่าวและ Horizon Scan: [Radar Coverage & Horizon Scan](knowledge-base/05-radar-coverage-and-horizon-scan.md) · ลูกค้า 7QC และสัญญาณเตือน: [Market & Customer Intelligence](knowledge-base/06-market-customer-intelligence-and-qc-alerts.md) · อ่านง่าย: [ชื่อแทนรหัส และเส้นทางเหตุผล](knowledge-base/07-plain-language-and-reasoning-chain.md)
 
-| ID | Agent | หน้าที่ | รอบทำงาน (เวลาไทย) | สถานะ |
-|---|---|---|---|---|
-| A0 | [Strategy Orchestrator](.claude/skills/strategy-orchestrator/SKILL.md) | รวมผลทุก Agent เป็น **Weekly Disruption Brief** + สรุปผู้บริหาร 1 หน้า | จันทร์ 08:50 | ✅ |
-| A1 | [Strategy Radar](radar/README.md) | ข่าว/ข้อมูลภายนอก → กลยุทธ์ไหน ด้านไหน โอกาสหรือภัย · ตรวจจุดเตือนสมมติฐาน แหล่งทางการ และจุดบอดทุกวัน | ทุกวัน 07:45 | ✅ |
-| A1H | [Horizon Scan & Indicators](.claude/skills/horizon-scan/SKILL.md) | สัญญาณอ่อนระยะ 1–5 ปี (H2–H3) + ตัวชี้วัดภายนอกรายสัปดาห์ที่มีแหล่งอ้างอิง | ศุกร์ 06:40 | ✅ |
-| A9 | [Market & Customer Intelligence](.claude/skills/market-intelligence/SKILL.md) | Demand Pulse รายกลุ่มลูกค้าจากตัวเลขทางการ + Control Chart · เสียงลูกค้า (แบบฟอร์ม แหล่งสาธารณะ โซเชียล) · เหตุผลแพ้–ชนะ | พุธ 06:10 | ✅ |
-| A2 | [Tender & Competitor Intelligence](.claude/skills/tender-intelligence/SKILL.md) | ประกาศจัดซื้อ ผลผู้ชนะ ความเคลื่อนไหวคู่แข่ง | จันทร์ 05:55 | ✅ |
-| A5 | [Ecosystem & Growth Scout](.claude/skills/ecosystem-scout/SKILL.md) | พันธมิตร Complementor JV/M&A การเปลี่ยนแปลงของ Ecosystem | จันทร์ 06:25 | ✅ |
-| A6 | [Execution Tracker (AI-PMO)](.claude/skills/execution-tracker/SKILL.md) | งาน Must-Win ที่ช้า ประเด็นข้อมูลที่ขวาง สัญญาณค้าง | จันทร์ 06:55 | ✅ |
-| A7 | [Strategy Review & Learning](.claude/skills/strategy-review/SKILL.md) | Plan Disruption Scorecard รายสัปดาห์ + ฉบับไตรมาส | จันทร์ 08:20 | ✅ |
-| A3 | [Strategic Options & Scenario](.claude/skills/strategic-options/SKILL.md) | ออกแบบ Solution ให้เรื่องที่ Disrupt แผนเป็น **Emerging Strategy** พร้อมทางเลือก (ส่วน Rolling forecast รอระบบ ERP) | จันทร์ 08:35 | ✅ |
-| A8 | [Board & Communication](.claude/skills/board-communication/SKILL.md) | ร่าง Pack สไลด์สำหรับ EC / BOD (ปรับถ้อยคำเท่านั้น) | จันทร์ 09:10 (ประชุมใน 10 วัน) | ✅ |
-| A4 | Portfolio & Capital Allocation | ผูก Capex/Opex กับกลยุทธ์ | ตามรอบงบ | วางแผน |
+| ID | ชื่อเรียก | Agent | หน้าที่ | รอบทำงาน (เวลาไทย) | สถานะ |
+|---|---|---|---|---|---|
+| A0 | ผู้สรุปภาพรวม | [Strategy Orchestrator](.claude/skills/strategy-orchestrator/SKILL.md) | รวมผลทุก Agent เป็น **Weekly Disruption Brief** + สรุปผู้บริหาร 1 หน้า | จันทร์ 08:50 | ✅ |
+| A1 | เรดาร์ข่าวรายวัน | [Strategy Radar](radar/README.md) | ข่าว/ข้อมูลภายนอก → กลยุทธ์ไหน ด้านไหน โอกาสหรือภัย · ตรวจจุดเตือนสมมติฐาน แหล่งทางการ และจุดบอดทุกวัน | ทุกวัน 07:45 | ✅ |
+| A1H | มองไกล 1–5 ปี | [Horizon Scan & Indicators](.claude/skills/horizon-scan/SKILL.md) | สัญญาณอ่อนระยะ 1–5 ปี (H2–H3) + ตัวชี้วัดภายนอกรายสัปดาห์ที่มีแหล่งอ้างอิง | ศุกร์ 06:40 | ✅ |
+| A9 | เสียงลูกค้าและตลาด | [Market & Customer Intelligence](.claude/skills/market-intelligence/SKILL.md) | Demand Pulse รายกลุ่มลูกค้าจากตัวเลขทางการ + Control Chart · เสียงลูกค้า (แบบฟอร์ม แหล่งสาธารณะ โซเชียล) · เหตุผลแพ้–ชนะ | พุธ 06:10 | ✅ |
+| A2 | ประมูลและคู่แข่ง | [Tender & Competitor Intelligence](.claude/skills/tender-intelligence/SKILL.md) | ประกาศจัดซื้อ ผลผู้ชนะ ความเคลื่อนไหวคู่แข่ง | จันทร์ 05:55 | ✅ |
+| A5 | หาพันธมิตร | [Ecosystem & Growth Scout](.claude/skills/ecosystem-scout/SKILL.md) | พันธมิตร Complementor JV/M&A การเปลี่ยนแปลงของ Ecosystem | จันทร์ 06:25 | ✅ |
+| A6 | ผู้ติดตามแผน | [Execution Tracker (AI-PMO)](.claude/skills/execution-tracker/SKILL.md) | งาน Must-Win ที่ช้า ประเด็นข้อมูลที่ขวาง สัญญาณค้าง | จันทร์ 06:55 | ✅ |
+| A7 | ผู้ประเมินแผน | [Strategy Review & Learning](.claude/skills/strategy-review/SKILL.md) | Plan Disruption Scorecard รายสัปดาห์ + ฉบับไตรมาส | จันทร์ 08:20 | ✅ |
+| A3 | ผู้ออกแบบทางเลือก | [Strategic Options & Scenario](.claude/skills/strategic-options/SKILL.md) | ออกแบบ Solution ให้เรื่องที่ Disrupt แผนเป็น **Emerging Strategy** พร้อมทางเลือก (ส่วน Rolling forecast รอระบบ ERP) | จันทร์ 08:35 | ✅ |
+| A8 | ผู้ร่างเอกสารประชุม | [Board & Communication](.claude/skills/board-communication/SKILL.md) | ร่าง Pack สไลด์สำหรับ EC / BOD (ปรับถ้อยคำเท่านั้น) | จันทร์ 09:10 (ประชุมใน 10 วัน) | ✅ |
+| A4 | จัดสรรงบลงทุน | Portfolio & Capital Allocation | ผูก Capex/Opex กับกลยุทธ์ | ตามรอบงบ | วางแผน |
 
 ## ฐานความรู้
 
@@ -46,3 +46,4 @@ Repo สำหรับบริหารงานกลยุทธ์องค
 4. [Emerging Strategy & Executive Briefing](knowledge-base/04-emerging-strategy-and-executive-briefing.md) — Solution ตามกรอบ Mintzberg, Decision Memo แบบ SCQA, สรุปผู้บริหาร 1 หน้า, Pack สำหรับ EC / BOD และโหมดนำเสนอ
 5. [Radar Coverage & Horizon Scan](knowledge-base/05-radar-coverage-and-horizon-scan.md) — มุมข่าวที่ Radar ต้องเห็น: จุดเตือนสมมติฐาน อุปสงค์ลูกค้า ต้นทุน กฎระเบียบขั้นร่าง คน · ปิดจุดบอด · Horizon Scan H2–H3 · ตัวชี้วัดที่มีแหล่งอ้างอิง
 6. [Market & Customer Intelligence และ 7QC Tools](knowledge-base/06-market-customer-intelligence-and-qc-alerts.md) — ข้อมูล 3 ชั้น (ตัวเลขอุปสงค์ · เสียงลูกค้า · ตัวชี้วัดภายใน) · PDPA · 7QC Tools กับงานกลยุทธ์ · กฎ Control Chart · ศูนย์สัญญาณเตือน
+7. [อ่านง่าย: ชื่อแทนรหัส และเส้นทางเหตุผล 5 ขั้น](knowledge-base/07-plain-language-and-reasoning-chain.md) — รหัสให้ระบบจำ ชื่อให้คนอ่าน · ตารางแปลงรหัสเป็นคำ · ชื่อเรียกทีม AI · ลูกโซ่ เกิดอะไร → กลยุทธ์ → สมมติฐาน → Must-Win → ต้องทำอะไร
