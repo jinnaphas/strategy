@@ -27,6 +27,7 @@ description: A5 Ecosystem & Growth Scout agent — scouts potential partners, co
    - `partners/PTN-<ชื่อ>` — รายใหม่ `stage: spotted` · รายเดิมอัปเดตเฉพาะ `lastSeen`, `sources`, `signals`
    - `signals/SIG-YYYYMMDD-ENN` สำหรับการเปลี่ยนแปลงสำคัญ
    - `reports/A5-YYYY-MM-DD` — themes, รายชื่อใหม่, ข้อเสนอว่าควรคุยกับใครก่อน, disruptions
+   - พันธมิตรรายใหม่และสัญญาณที่สร้างใหม่ติดป้ายธุรกิจ `business` + `businessWhy` ตาม [กติกาการติดป้ายธุรกิจ](../strategy-radar/references/business-line-tagging.md) · ห้ามแก้ป้ายของรายเดิม
 6. **อัปเดต** `agents/A5.lastRun`
 
 ## Guardrails

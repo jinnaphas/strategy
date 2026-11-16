@@ -27,6 +27,7 @@ description: A2 Tender & Competitor Intelligence agent — tracks public procure
    - `tenders/TND-YYYYMMDD-NN` ทุกรายการที่เก็บ (สถานะเริ่มต้น `new`)
    - `signals/SIG-YYYYMMDD-TNN` เฉพาะเรื่องที่เปลี่ยนภาพของกลยุทธ์ (ให้คะแนนตาม [scoring rubric](../strategy-radar/references/scoring-rubric.md))
    - `reports/A2-YYYY-MM-DD` — สรุป, hotDeadlines (≤30 วัน), competitorMoves, winLoss, disruptions
+   - ทุกประมูลและสัญญาณที่สร้างใหม่ติดป้ายธุรกิจ `business` + `businessWhy` ตาม [กติกาการติดป้ายธุรกิจ](../strategy-radar/references/business-line-tagging.md)
 6. **อัปเดต** `agents/A2.lastRun`
 
 โครงข้อมูลเต็มอยู่ใน [Weekly Disruption Cycle §5](../../../knowledge-base/03-weekly-disruption-cycle.md#5-โครงข้อมูลใน-strategy-cockpit)

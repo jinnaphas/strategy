@@ -34,6 +34,7 @@ description: A1H Horizon Scan & Indicators agent — every Friday scans for weak
    - `nowhat` เน้นก้าวที่ใช้ทรัพยากรน้อย: จับตา · เรียนรู้ · หาพันธมิตร · ทดลองเล็ก
 5. **ข้อเสนอต่อ (`implications`)** — 2–4 เรื่องว่า "ถ้าเกิดจริง โมเดลธุรกิจหรือสนามแข่งของเราจะเปลี่ยนอย่างไร" พร้อม Emerging Strategy ที่ A3/A7 ควรพิจารณา
 6. **เขียน** สัญญาณ `SIG-YYYYMMDD-HNN` · `indicators/<key>` (เก็บย้อนหลัง 26 จุด) · `reports/A1H-YYYY-MM-DD`
+7. **ติดป้ายธุรกิจ** สัญญาณที่สร้างใหม่ (`business` + `businessWhy`) ตาม [กติกาการติดป้ายธุรกิจ](../strategy-radar/references/business-line-tagging.md)
 
 ## Guardrails
 
