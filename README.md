@@ -7,8 +7,8 @@ Repo สำหรับบริหารงานกลยุทธ์องค
 
 ## หน้าเว็บ
 
-- [`index.html`](index.html) — หน้าแรกของระบบ (เผยแพร่ผ่าน GitHub Pages ได้ ไม่มีข้อมูลลับ) อธิบาย Strategy Radar รายวัน Horizon Scan รายสัปดาห์ Market & Customer Intelligence Weekly Disruption Cycle วงจรบริหาร และทีม 11 Agents พร้อมปุ่มไป Strategy Cockpit และ Quick Win Cockpit
-- **Strategy Cockpit** — หน้าบริหารที่มีข้อมูลกลยุทธ์จริง เป็น artifact ส่วนตัวบน claude.ai (เปิดได้เฉพาะผู้ได้รับสิทธิ์) · มีศูนย์สัญญาณเตือน หน้าลูกค้าและตลาด 7QC Tools เส้นทางเหตุผล 5 ขั้น และคู่มืออ่านระบบ — แสดงชื่อแทนรหัสทุกจุด
+- [`index.html`](index.html) — หน้าแรกของระบบ (เผยแพร่ผ่าน GitHub Pages ได้ ไม่มีข้อมูลลับ · ใช้ฟอนต์ Sarabun) อธิบาย Strategy Radar รายวัน Horizon Scan รายสัปดาห์ Market & Customer Intelligence กลไกเชื่อมยุทธศาสตร์ลูกค้า Weekly Disruption Cycle วงจรบริหาร และทีม 11 Agents พร้อมปุ่มไป Strategy Cockpit และ Quick Win Cockpit
+- **Strategy Cockpit** — หน้าบริหารที่มีข้อมูลกลยุทธ์จริง เป็น artifact ส่วนตัวบน claude.ai (เปิดได้เฉพาะผู้ได้รับสิทธิ์) · มีศูนย์สัญญาณเตือน หน้าลูกค้าและตลาด กลไกเชื่อมยุทธศาสตร์ลูกค้ารายใหญ่ 7QC Tools เส้นทางเหตุผล 5 ขั้น และคู่มืออ่านระบบ — แสดงชื่อแทนรหัสทุกจุด
 - **Quick Win Cockpit** — artifact ส่วนตัวอีกตัวสำหรับติดตามโครงการเร่งด่วนรายสัปดาห์: ภาพรวมทุกโครงการ หน้าโครงการ (ตัวชี้วัด Milestone ความเสี่ยง เรื่องที่รอตัดสินใจ) มุมมองเฉพาะตามลักษณะงาน และพอร์ตโครงการทั้งกลุ่มที่วางตารางจาก Excel / ERP ได้ · ลิงก์ไปมากับ Strategy Cockpit
 - **แบบฟอร์มเสียงลูกค้า** — artifact ส่วนตัวแยก ให้ฝ่ายขาย ฝ่ายบริการ และตัวแทนจำหน่ายบันทึกเสียงลูกค้า (ไม่เก็บข้อมูลส่วนบุคคล)
 
@@ -23,7 +23,7 @@ Repo สำหรับบริหารงานกลยุทธ์องค
 
 ## AI Agents (แผน 11 Agents = 1 Orchestrator + 10 Specialists · ใช้งานแล้ว 10 ตัว)
 
-รายละเอียด: [Agentic Strategy Office](knowledge-base/02-agentic-strategy-office.md) · รอบสัปดาห์: [Weekly Disruption Cycle](knowledge-base/03-weekly-disruption-cycle.md) · Solution และการนำเสนอผู้บริหาร: [Emerging Strategy & Executive Briefing](knowledge-base/04-emerging-strategy-and-executive-briefing.md) · มุมข่าวและ Horizon Scan: [Radar Coverage & Horizon Scan](knowledge-base/05-radar-coverage-and-horizon-scan.md) · ลูกค้า 7QC และสัญญาณเตือน: [Market & Customer Intelligence](knowledge-base/06-market-customer-intelligence-and-qc-alerts.md) · อ่านง่าย: [ชื่อแทนรหัส และเส้นทางเหตุผล](knowledge-base/07-plain-language-and-reasoning-chain.md)
+รายละเอียด: [Agentic Strategy Office](knowledge-base/02-agentic-strategy-office.md) · รอบสัปดาห์: [Weekly Disruption Cycle](knowledge-base/03-weekly-disruption-cycle.md) · Solution และการนำเสนอผู้บริหาร: [Emerging Strategy & Executive Briefing](knowledge-base/04-emerging-strategy-and-executive-briefing.md) · มุมข่าวและ Horizon Scan: [Radar Coverage & Horizon Scan](knowledge-base/05-radar-coverage-and-horizon-scan.md) · ลูกค้า 7QC และสัญญาณเตือน: [Market & Customer Intelligence](knowledge-base/06-market-customer-intelligence-and-qc-alerts.md) · อ่านง่าย: [ชื่อแทนรหัส และเส้นทางเหตุผล](knowledge-base/07-plain-language-and-reasoning-chain.md) · ลูกค้ารายใหญ่: [กลไกเชื่อมยุทธศาสตร์ลูกค้า](knowledge-base/08-customer-strategy-alignment-mechanism.md)
 
 | ID | ชื่อเรียก | Agent | หน้าที่ | รอบทำงาน (เวลาไทย) | สถานะ |
 |---|---|---|---|---|---|
@@ -48,3 +48,4 @@ Repo สำหรับบริหารงานกลยุทธ์องค
 5. [Radar Coverage & Horizon Scan](knowledge-base/05-radar-coverage-and-horizon-scan.md) — มุมข่าวที่ Radar ต้องเห็น: จุดเตือนสมมติฐาน อุปสงค์ลูกค้า ต้นทุน กฎระเบียบขั้นร่าง คน · ปิดจุดบอด · Horizon Scan H2–H3 · ตัวชี้วัดที่มีแหล่งอ้างอิง
 6. [Market & Customer Intelligence และ 7QC Tools](knowledge-base/06-market-customer-intelligence-and-qc-alerts.md) — ข้อมูล 3 ชั้น (ตัวเลขอุปสงค์ · เสียงลูกค้า · ตัวชี้วัดภายใน) · PDPA · 7QC Tools กับงานกลยุทธ์ · กฎ Control Chart · ศูนย์สัญญาณเตือน
 7. [อ่านง่าย: ชื่อแทนรหัส และเส้นทางเหตุผล 5 ขั้น](knowledge-base/07-plain-language-and-reasoning-chain.md) — รหัสให้ระบบจำ ชื่อให้คนอ่าน · ตารางแปลงรหัสเป็นคำ · ชื่อเรียกทีม AI · ลูกโซ่ เกิดอะไร → กลยุทธ์ → สมมติฐาน → Must-Win → ต้องทำอะไร
+8. [กลไกเชื่อมยุทธศาสตร์ลูกค้ากับแผนธุรกิจกลุ่ม 3–5 ปี](knowledge-base/08-customer-strategy-alignment-mechanism.md) — แผนที่ยุทธศาสตร์ลูกค้า (ยุทธศาสตร์ · ตัวชี้วัด · ปัญหา) · โจทย์ร่วม 7 ขั้นพร้อมเงื่อนไข · คะแนน 5 ด้าน · ระดับหลักฐาน · ผลลัพธ์ 2 ด้าน · PDCA ประจำปี
