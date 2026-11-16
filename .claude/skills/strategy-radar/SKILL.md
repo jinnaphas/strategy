@@ -86,8 +86,9 @@ description: Strategy Radar agent — scans external news and data, matches each
 1. เขียนรายงานตาม `references/report-template.md` ไปที่ `radar/reports/YYYY-MM-DD-radar.md`
 2. เพิ่มแถวลง `radar/signal-log.csv` (สร้าง header ถ้ายังไม่มี — ดูคอลัมน์ใน scoring-rubric)
 3. **ส่งเข้า Strategy Cockpit (ถ้ามี)** — ถ้ามีไฟล์ `private/cockpit/cockpit.url` หรือผู้ใช้ให้ URL ของ Cockpit artifact:
-   - เขียนสัญญาณใหม่ลง collection `signals` ด้วย ArtifactData `batch` (doc_id = `SIG-YYYYMMDD-NN`; ฟิลด์: `headline, date, run, angle, deadline, driver, impact, likelihood, score, level, horizon, confidence, direction, impacts[{s, d[], dir}], strategies[], fact, sowhat, nowhat, owner, assumptions[], sources[{name,url}], tier, status:"new", note:""`)
-   - **ห้ามเขียนทับ** `status` และ `note` ของสัญญาณเดิม (ผู้ใช้แก้ไว้) — สัญญาณที่มีพัฒนาการใหม่ให้สร้าง doc ใหม่
+   - เขียนสัญญาณใหม่ลง collection `signals` ด้วย ArtifactData `batch` (doc_id = `SIG-YYYYMMDD-NN`; ฟิลด์: `headline, date, run, angle, deadline, driver, impact, likelihood, score, level, horizon, confidence, direction, impacts[{s, d[], dir}], strategies[], fact, sowhat, nowhat, owner, assumptions[], sources[{name,url}], tier, business[], businessWhy, status:"new", note:""`)
+   - ติดป้ายธุรกิจ `business` + `businessWhy` ตาม [กติกาการติดป้ายธุรกิจ](references/business-line-tagging.md) (อ่านตารางจาก `meta/business`)
+   - **ห้ามเขียนทับ** `status`, `note` และ `business` ของสัญญาณเดิม (ผู้ใช้แก้ไว้) — สัญญาณที่มีพัฒนาการใหม่ให้สร้าง doc ใหม่
    - อัปเดต `strategies/<id>.assumptions[].status/evidence` ตาม Assumption Watch และ `meta/cockpit` (`lastRun`, `period`, `queries`, `signalCount`)
    - อ่าน document ก่อนเขียนทับ และส่ง `if_version` ทุกครั้ง
 4. สรุปให้ผู้ใช้ในแชท: Top signals 3–5 เรื่อง + ลิงก์ไปไฟล์รายงาน (และ Cockpit ถ้ามี)

@@ -31,6 +31,7 @@ description: A9 Market & Customer Intelligence agent — every Wednesday measure
    - หลักฐานสมมติฐาน: สนับสนุน / ท้าทาย / เป็นกลาง / ยังไม่มีข้อมูล อ้าง `MKT-<key>` · `IND-<key>`
    - แพ้–ชนะ: นับเหตุผลจากประมูลที่คนบันทึกผลแล้ว (ช่องว่าง = ไม่ทราบ)
 5. **เขียน** `market/<key>` · `voice/VOC-YYYYMMDD-NN` · สัญญาณ 0–4 เรื่อง `SIG-YYYYMMDD-MNN` (เกณฑ์คะแนนเดียวกับ Radar) · `reports/A9-YYYY-MM-DD` · `agents/A9`
+6. **ติดป้ายธุรกิจ** เสียงลูกค้าและสัญญาณที่สร้างใหม่ (`business` + `businessWhy`) ตาม [กติกาการติดป้ายธุรกิจ](../strategy-radar/references/business-line-tagging.md)
 
 ## Guardrails
 

@@ -22,6 +22,7 @@ description: A3 Strategic Options & Emerging Strategy Designer — for each impo
 5. **90 วันแรก** (3–5 งาน มีผู้รับผิดชอบและวันที่) และ **ตัวชี้วัดล่วงหน้า** 2–3 ตัว
 6. **เวทีที่ต้องขอมติ** (EC / BOD / MM / CEO / Strategy Office) และวันที่ — ก่อนประชุมที่เกี่ยวข้อง
 7. **เขียน** `emerging/EMG-YYYYMMDD-NN` (ขั้นเริ่มต้น "รอตัดสินใจ") และ `reports/A3-YYYY-MM-DD`
+8. **ติดป้ายธุรกิจ** ข้อเสนอใหม่ทุกเรื่อง (`business` + `businessWhy`) ตาม [กติกาการติดป้ายธุรกิจ](../strategy-radar/references/business-line-tagging.md) · ห้ามแก้ป้ายของข้อเสนอเดิม
 
 ## Guardrails
 
