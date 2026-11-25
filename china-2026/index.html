@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#c22f1d">
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="บันทึกดูงาน">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>บันทึกดูงาน PCC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Prompt:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday field tool, used one-handed while walking an expo hall
+   IDEA a reporter's pocket notebook with a red cover, same family as the trip page
+   PICTURE the composer itself: quick snap button, note, attachments, send
+   COLOUR white page, China-red header, red for Group 1, blue for Group 2, amber only for "waiting to send"
+   TYPE Prompt for headings + IBM Plex Sans Thai for text
+   LAYOUT one column up to 560px; sticky status bar at the bottom */
+:root{color-scheme:light dark;--bg:#fff;--ink:#1c1816;--mute:#655c56;--line:#e7e1dc;--panel:#faf7f5;--red:#c22f1d;--g1:#c0361f;--g1bg:#fbe9e5;--g2:#1f5aa6;--g2bg:#e7eef8;--ok:#1d7a46;--wbg:#fff2c2;--wink:#4f3d00;--fbg:#fde8e4;--fink:#8f2414}
+@media (prefers-color-scheme:dark){:root{--bg:#141211;--ink:#f2ede9;--mute:#aaa098;--line:#2f2a27;--panel:#1c1917;--red:#9c2616;--g1:#ff8a70;--g1bg:#3a1d17;--g2:#8ab0f0;--g2bg:#17243a;--ok:#7dd3a3;--wbg:#3b3112;--wink:#f4dd8f;--fbg:#3d1a14;--fink:#ffb4a3}}
+*{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 "IBM Plex Sans Thai",system-ui,sans-serif;padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+h1,h2,.disp{font-family:Prompt,"IBM Plex Sans Thai",sans-serif;font-weight:600;line-height:1.3;margin:0}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{background:var(--red);color:#fff;padding-top:calc(14px + env(safe-area-inset-top,0px));padding-bottom:16px}
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+h1{font-size:26px}
+.sub{font-size:14px;opacity:.92;margin-top:2px}
+.me{font:600 15px Prompt,sans-serif;color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.5);border-radius:99px;padding:0 14px;min-height:40px;cursor:pointer;white-space:nowrap}
+.demo{background:var(--wbg);color:var(--wink);font-size:14px;padding:8px 0}
+h2{font-size:22px;margin:22px 0 6px}
+.mute{color:var(--mute)}
+.small{font-size:13px}
+.grp{margin-top:16px}
+.grp .lbl{font:600 14px Prompt,sans-serif;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.sw{width:20px;height:6px;border-radius:3px;background:var(--c)}
+.names{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.nm{min-height:56px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:600 16px Prompt,sans-serif;cursor:pointer}
+.nm:hover{border-color:var(--c)}
+input[type=text],input[type=password],textarea{width:100%;font:16px "IBM Plex Sans Thai",sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:110px;resize:vertical}
+input:focus,textarea:focus,button:focus-visible,label.btn:focus-within{outline:3px solid var(--g2);outline-offset:1px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 15px "IBM Plex Sans Thai",sans-serif;cursor:pointer;text-align:center}
+.btn svg{width:20px;height:20px;fill:currentColor;flex:none}
+.btn.dark{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.sm{min-height:36px;padding:0 12px;font-size:14px;border-radius:10px}
+.vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.city{margin-top:16px;display:flex;flex-direction:column;gap:6px}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{min-height:44px;border:0;background:var(--bg);color:var(--ink);font:500 15px "IBM Plex Sans Thai",sans-serif;cursor:pointer;padding:0 8px}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed=true]{background:var(--cbg);color:var(--c);font-weight:600}
+.snap{margin-top:14px;width:100%;min-height:64px;font-size:18px;background:var(--red);color:#fff;border-color:var(--red)}
+.card{margin-top:14px;border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:14px;display:flex;flex-direction:column;gap:10px}
+.card.drag{border-color:var(--g2);border-style:dashed}
+.hint{margin-top:14px;border-radius:14px;background:var(--g2bg);padding:12px 14px;font-size:14px;display:flex;flex-direction:column;gap:8px}
+.hint b{font:600 15px Prompt,sans-serif}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tray{display:flex;flex-wrap:wrap;gap:8px}
+.tray:empty{display:none}
+.ti{position:relative;width:72px;height:72px;border-radius:10px;overflow:hidden;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center;padding:4px;overflow-wrap:anywhere}
+.ti img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ti button{position:absolute;top:2px;right:2px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:18px;line-height:1;cursor:pointer}
+.err{color:var(--g1);font-size:14px;margin:0}
+.err:empty{display:none}
+.tabs{display:flex;gap:6px;margin-top:22px;border-bottom:1px solid var(--line)}
+.tabs button{min-height:44px;padding:0 14px;border:0;border-bottom:3px solid transparent;background:none;color:var(--mute);font:600 15px Prompt,sans-serif;cursor:pointer}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ink)}
+.day{font:600 14px Prompt,sans-serif;color:var(--mute);margin:16px 0 4px}
+.en{display:grid;grid-template-columns:3.4em minmax(0,1fr);gap:10px;padding:12px 0;border-top:1px solid var(--line)}
+.en .t{font:600 16px Prompt,sans-serif;font-variant-numeric:tabular-nums}
+.en .who{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:2px}
+.chip{display:inline-flex;align-items:center;font-size:13px;font-weight:600;line-height:1;padding:5px 9px;border-radius:99px;background:var(--panel);color:var(--mute);border:1px solid var(--line);white-space:nowrap}
+.chip.c1{background:var(--g1bg);color:var(--g1);border-color:transparent}
+.chip.c2{background:var(--g2bg);color:var(--g2);border-color:transparent}
+.chip.ok{color:var(--ok)}
+.chip.wait{background:var(--wbg);color:var(--wink);border-color:transparent}
+.chip.fail{background:var(--fbg);color:var(--fink);border-color:transparent}
+.failbox{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--fbg);color:var(--fink);font-size:14px;display:flex;flex-direction:column;gap:8px}
+.failbox .acts{display:flex;flex-wrap:wrap;gap:8px}
+.failbox .btn{background:var(--bg);color:var(--ink)}
+.en .txt{white-space:pre-wrap;overflow-wrap:anywhere}
+.th{display:flex;gap:6px;margin-top:6px;align-items:center}
+.th img{width:52px;height:52px;border-radius:8px;object-fit:cover}
+.empty{padding:28px 0;text-align:center;color:var(--mute)}
+.teamhead{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:12px}
+select{font:15px "IBM Plex Sans Thai",sans-serif;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:0 10px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:var(--bg);font-size:14px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));text-align:center;z-index:5}
+.bar.wait{background:var(--wbg);color:var(--wink)}
+.bar.fail{background:var(--fbg);color:var(--fink)}
+.bar button{margin-left:8px;font:600 14px "IBM Plex Sans Thai",sans-serif;background:none;border:1px solid currentColor;color:inherit;border-radius:8px;padding:4px 10px;cursor:pointer}
+@media (max-width:360px){.names{grid-template-columns:1fr 1fr}.row2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-cam" viewBox="0 0 24 24"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3zm3 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></symbol>
+<symbol id="i-clip" viewBox="0 0 24 24"><path d="M16.5 6v11.5a4 4 0 0 1-8 0V5a2.5 2.5 0 0 1 5 0v10.5a1 1 0 0 1-2 0V6H10v9.5a2.5 2.5 0 0 0 5 0V5a4 4 0 0 0-8 0v12.5a5.5 5.5 0 0 0 11 0V6z"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M2 21 23 12 2 3v7l15 2-15 2z"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M17.7 6.3A8 8 0 1 0 19.7 14h-2.1a6 6 0 1 1-1.4-6.2L13 11h7V4z"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap toprow">
+    <div>
+      <h1>บันทึกดูงาน</h1>
+      <div class="sub">PCC · EP Shanghai 2026 · <span style="white-space:nowrap">จีน 2–7 ธ.ค.</span></div>
+    </div>
+    <button class="me" id="meBtn" hidden aria-label="เปลี่ยนชื่อผู้บันทึก"></button>
+  </div>
+</header>
+<div class="demo" id="demo" hidden><div class="wrap">โหมดทดลอง: ยังไม่ได้เชื่อมกับ Drive ข้อมูลจะอยู่ในเครื่องนี้เท่านั้น</div></div>
+
+<main class="wrap">
+  <section id="vCode" hidden>
+    <h2>ใส่รหัสทีม</h2>
+    <p class="mute" style="margin:0 0 10px">ใส่ครั้งเดียว ขอรหัสจากผู้ดูแลทริป หรือเปิดจากลิงก์ส่วนตัวที่ได้รับ</p>
+    <form id="codeForm" style="display:flex;flex-direction:column;gap:10px">
+      <label class="vh" for="codeIn">รหัสทีม</label>
+      <input type="password" id="codeIn" autocomplete="off" placeholder="รหัสทีม">
+      <p class="err" id="codeErr"></p>
+      <button class="btn dark" type="submit">เริ่มใช้งาน</button>
+    </form>
+  </section>
+
+  <section id="vLoad" hidden>
+    <h2>กำลังโหลดรายชื่อทีม…</h2>
+    <p class="mute" id="loadMsg" style="margin:0 0 12px">ต้องต่อเน็ตครั้งแรกครั้งเดียว หลังจากนั้นเครื่องจะจำไว้</p>
+    <button class="btn dark" type="button" id="loadRetry" hidden>ลองใหม่</button>
+  </section>
+
+  <section id="vPick" hidden>
+    <h2>คุณคือใคร</h2>
+    <p class="mute" style="margin:0">เลือกครั้งเดียว เครื่องจะจำไว้</p>
+    <div id="names"></div>
+  </section>
+
+  <section id="vMain" hidden>
+    <div class="hint" id="homeHint" hidden>
+      <b>แนะนำ: เพิ่มหน้านี้ไว้ที่หน้าจอโฮม แล้วเปิดจากไอคอนทุกครั้ง</b>
+      <span>iPhone: กดปุ่มแชร์ → เพิ่มไปยังหน้าจอโฮม · Android: กด ⋮ → เพิ่มลงในหน้าจอหลัก</span>
+      <span>ใช้ทางเดียวตลอดทริป บนบางเครื่องไอคอนกับเบราว์เซอร์เก็บรายการ "ของฉัน" แยกกัน</span>
+      <div><button class="btn sm" type="button" id="hintOk">เข้าใจแล้ว</button></div>
+    </div>
+
+    <div class="city">
+      <span class="mute small">บันทึกลงโฟลเดอร์</span>
+      <div class="seg" id="seg" role="group" aria-label="เลือกเมือง"></div>
+    </div>
+
+    <label class="btn snap" for="snapIn"><svg><use href="#i-cam"/></svg>ถ่ายแล้วส่งเลย</label>
+    <input class="vh" type="file" id="snapIn" accept="image/*" capture="environment">
+    <p class="mute small" style="margin:6px 0 0;text-align:center">ถ่าย 1 รูป ส่งทันที ไม่ต้องพิมพ์อะไร</p>
+
+    <form class="card" id="composer" novalidate>
+      <label class="vh" for="txt">บันทึก</label>
+      <textarea id="txt" placeholder="เห็นอะไร น่าสนใจเพราะอะไร PCC เอาไปใช้อะไรได้ (กดไมค์บนคีย์บอร์ดเพื่อพูดแทนพิมพ์ได้)"></textarea>
+      <label class="vh" for="booth">บูธหรือบริษัท</label>
+      <input type="text" id="booth" placeholder="บูธ / บริษัท (ไม่บังคับ)" autocomplete="off">
+      <div class="row2">
+        <label class="btn" for="camIn"><svg><use href="#i-cam"/></svg>ถ่ายรูป</label>
+        <label class="btn" for="fileIn"><svg><use href="#i-clip"/></svg>เลือกรูป/ไฟล์</label>
+      </div>
+      <input class="vh" type="file" id="camIn" accept="image/*" capture="environment">
+      <input class="vh" type="file" id="fileIn" multiple>
+      <div class="tray" id="tray"></div>
+      <p class="mute small" style="margin:0">เลือกได้หลายไฟล์พร้อมกัน · รูปย่อให้อัตโนมัติ · ไฟล์อื่นไม่เกิน 10 MB · บนคอมพิวเตอร์ลากไฟล์มาวางหรือกด Ctrl+V ได้</p>
+      <p class="err" id="err"></p>
+      <button class="btn dark" type="submit" style="min-height:52px"><svg><use href="#i-send"/></svg>ส่ง</button>
+    </form>
+
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tabMine" aria-selected="true">ของฉัน</button>
+      <button role="tab" id="tabTeam" aria-selected="false">ทีม</button>
+    </div>
+    <div id="mine" role="tabpanel"></div>
+    <div id="team" role="tabpanel" hidden>
+      <div class="teamhead">
+        <label class="vh" for="daySel">วันที่</label>
+        <select id="daySel"></select>
+        <button class="btn" id="teamRefresh" style="min-height:44px"><svg><use href="#i-refresh"/></svg>รีเฟรช</button>
+      </div>
+      <div id="teamList"></div>
+    </div>
+  </section>
+</main>
+
+<div class="bar" id="bar" role="status" aria-live="polite">พร้อมบันทึก</div>
+
+<script>
+{
+/* ── ตั้งค่า ─────────────────────────────────────────────
+   API_URL: Web app URL จาก Apps Script (ว่าง = โหมดทดลอง)
+   รายชื่อทีมไม่อยู่ในไฟล์นี้ (repo เป็นสาธารณะ) หน้าเว็บขอจาก Apps Script หลังตรวจรหัสทีม */
+const API_URL = '';
+
+const CITY = {shanghai:{s:'เซี่ยงไฮ้ · งาน EP'},hangzhou:{s:'หางโจว'},suzhou:{s:'ซูโจว'}};
+const SWITCH = Date.UTC(2026,11,5,8,0);          // 5 ธ.ค. 16:00 เวลาจีน → เปลี่ยนไปเมืองของกลุ่ม
+const TRIP_DAYS = ['2026-12-02','2026-12-03','2026-12-04','2026-12-05','2026-12-06','2026-12-07'];
+const MAX_FILE = 10*1024*1024;                     // ไฟล์ที่ไม่ใช่รูป (ผ่าน roaming)
+const MAX_IMAGE = 40*1024*1024;                    // รูปต้นฉบับก่อนย่อ
+const MAX_TRIES = 3;                               // เซิร์ฟเวอร์ปฏิเสธครบเท่านี้ = ส่งไม่สำเร็จ แล้วข้ามไปชิ้นถัดไป
+const DEMO = !API_URL;
+const DEMO_ROSTER = {people:[{k:'demo1',n:'คนที่ 1',g:1},{k:'demo2',n:'คนที่ 2',g:1},{k:'demo3',n:'คนที่ 3',g:1},{k:'demo4',n:'คนที่ 4',g:2},{k:'demo5',n:'คนที่ 5',g:2},{k:'demo6',n:'คนที่ 6',g:2}],groups:{1:'หางโจว',2:'ซูโจว'}};
+
+/* ── ตัวช่วย ─────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const ls = {get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},del:k=>{try{localStorage.removeItem(k)}catch(e){}}};
+const fmtDay = new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'});
+const fmtHM = new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false});
+const fmtTh = new Intl.DateTimeFormat('th-TH',{timeZone:'Asia/Shanghai',weekday:'short',day:'numeric',month:'short'});
+const dayKey = d => fmtDay.format(d);
+const thDay = k => fmtTh.format(new Date(k+'T12:00:00+08:00'));
+const rid = () => {const a=new Uint8Array(3);crypto.getRandomValues(a);return Array.from(a,x=>(x%36).toString(36)).join('')+Date.now().toString(36).slice(-1)};
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+const mb = n => (n/1048576).toFixed(n<10485760?1:0)+' MB';
+const h = (tag,props={},...kids) => {const e=document.createElement(tag);for(const [k,v] of Object.entries(props)){if(k==='class')e.className=v;else if(k==='text')e.textContent=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else e.setAttribute(k,v)}kids.flat().forEach(c=>c!=null&&e.append(c));return e};
+const isStandalone = () => (window.matchMedia&&matchMedia('(display-mode: standalone)').matches) || navigator.standalone===true;
+
+/* ── ที่เก็บในเครื่อง (IndexedDB, สำรองเป็นหน่วยความจำ) ───────── */
+const mem = {queue:new Map(),entries:new Map()};
+let dbp = null;
+const idb = () => dbp || (dbp = new Promise(res=>{
+  try{const r=indexedDB.open('pcc-daily',1);
+    r.onupgradeneeded=()=>{const d=r.result;d.createObjectStore('queue',{keyPath:'id'});d.createObjectStore('entries',{keyPath:'id'})};
+    r.onsuccess=()=>res(r.result);r.onerror=()=>res(null);}catch(e){res(null)}}));
+const tx = async (store,mode,fn) => {const d=await idb();
+  if(!d){const m=mem[store];return fn({put:v=>m.set(v.id,v),delete:k=>m.delete(k),get:k=>m.get(k),getAll:()=>[...m.values()]},true)}
+  return new Promise((res,rej)=>{const t=d.transaction(store,mode);const r=fn(t.objectStore(store));let out;if(r&&'onsuccess' in r)r.onsuccess=()=>{out=r.result};t.oncomplete=()=>res(out);t.onerror=()=>rej(t.error)})};
+const put = (s,v) => tx(s,'readwrite',o=>o.put(v));
+const del = (s,k) => tx(s,'readwrite',o=>o.delete(k));
+const get = (s,k) => tx(s,'readonly',o=>o.get(k));
+const all = async s => (await tx(s,'readonly',o=>o.getAll()))||[];
+
+/* ── สถานะ ─────────────────────────────────────────────
+   ?code= และ ?me= ถูกเก็บในเครื่อง และคงไว้ในลิงก์ เพื่อให้ไอคอนบนหน้าจอโฮม (iPhone) เปิดได้ทันทีโดยไม่ต้องใส่ใหม่ */
+const qp = new URLSearchParams(location.search);
+if (qp.get('code')) ls.set('dn-code', qp.get('code'));
+if (qp.get('me')) ls.set('dn-me', qp.get('me'));
+let me = ls.get('dn-me');
+let code = ls.get('dn-code') || '';
+let roster = DEMO ? DEMO_ROSTER : (()=>{try{return JSON.parse(ls.get('dn-roster')||'null')}catch(e){return null}})();
+let tray = [];
+let loadingRoster = false;
+const person = () => roster && roster.people.find(p=>p.k===me);
+
+/* ── หน้าจอ ──────────────────────────────────────────── */
+function view(v){ ['vCode','vLoad','vPick','vMain'].forEach(id=>$(id).hidden=id!==v); }
+function show(){
+  $('demo').hidden = !DEMO;
+  const p = person();
+  $('meBtn').hidden = !p;
+  if (!DEMO && !code) { view('vCode'); return; }
+  if (!roster) { view('vLoad'); loadRoster(); return; }
+  if (!p) { renderNames(); view('vPick'); return; }
+  $('meBtn').textContent = p.n;
+  $('homeHint').hidden = isStandalone() || ls.get('dn-hint')==='1';
+  view('vMain'); renderSeg(); renderMine();
+}
+
+async function loadRoster(){
+  if (loadingRoster) return; loadingRoster = true;
+  $('loadRetry').hidden = true; $('loadMsg').textContent = 'ต้องต่อเน็ตครั้งแรกครั้งเดียว หลังจากนั้นเครื่องจะจำไว้';
+  try{
+    const r = await fetch(API_URL+'?action=roster&code='+encodeURIComponent(code)); const j = await r.json();
+    if (j.error==='bad_code'){ code=''; ls.del('dn-code'); $('codeErr').textContent='รหัสทีมไม่ถูกต้อง ลองใหม่'; loadingRoster=false; show(); return; }
+    if (!j.ok || !Array.isArray(j.people)) throw new Error(j.error||'bad_roster');
+    roster = {people:j.people, groups:j.groups||{}}; ls.set('dn-roster', JSON.stringify(roster));
+    loadingRoster = false; show(); run();
+  }catch(err){
+    loadingRoster = false;
+    $('loadMsg').textContent = 'โหลดรายชื่อไม่ได้ ตรวจสัญญาณแล้วกดลองใหม่';
+    $('loadRetry').hidden = false;
+  }
+}
+$('loadRetry').addEventListener('click', loadRoster);
+
+function renderNames(){
+  const gs = [...new Set(roster.people.map(p=>p.g))].sort();
+  $('names').replaceChildren(...gs.map(g=>h('div',{class:'grp',style:`--c:var(--g${g})`},
+    h('div',{class:'lbl'},h('span',{class:'sw'}),h('span',{text:`Group ${g}`+(roster.groups&&roster.groups[g]?` · ${roster.groups[g]}`:'')})),
+    h('div',{class:'names'},roster.people.filter(p=>p.g===g).map(p=>h('button',{class:'nm',type:'button',text:p.n,onclick:()=>{me=p.k;ls.set('dn-me',me);show()}}))))));
+}
+$('meBtn').addEventListener('click',()=>{ renderNames(); view('vPick'); window.scrollTo(0,0); });
+$('hintOk').addEventListener('click',()=>{ ls.set('dn-hint','1'); $('homeHint').hidden=true; });
+
+$('codeForm').addEventListener('submit',async e=>{
+  e.preventDefault(); const v=$('codeIn').value.trim();
+  if(!v){$('codeErr').textContent='ใส่รหัสทีมก่อน';return}
+  $('codeErr').textContent='กำลังตรวจรหัส…';
+  try{const r=await fetch(API_URL+'?action=ping&code='+encodeURIComponent(v));const j=await r.json();
+    if(!j.ok){$('codeErr').textContent='รหัสไม่ถูกต้อง ลองใหม่';return}}
+  catch(err){/* ไม่มีเน็ต: เก็บไว้ก่อน ตรวจตอนโหลดรายชื่อ */}
+  code=v;ls.set('dn-code',v);$('codeErr').textContent='';show();run();
+});
+$('codeIn').addEventListener('input',()=>$('codeErr').textContent='');
+
+/* ── เมือง ───────────────────────────────────────────── */
+function cityOptions(){ return ['shanghai', person().g===1?'hangzhou':'suzhou']; }
+function curCity(){
+  let o=null; try{o=JSON.parse(ls.get('dn-city')||'null')}catch(e){}
+  if (o && o.day===dayKey(new Date()) && cityOptions().includes(o.city)) return o.city;
+  return Date.now() < SWITCH ? 'shanghai' : cityOptions()[1];
+}
+function renderSeg(){
+  const g=person().g, cur=curCity();
+  $('seg').style.cssText=`--c:var(--g${g})`+`;--cbg:var(--g${g}bg)`;
+  $('seg').replaceChildren(...cityOptions().map(c=>h('button',{type:'button','aria-pressed':String(c===cur),text:CITY[c].s,
+    onclick:()=>{ls.set('dn-city',JSON.stringify({day:dayKey(new Date()),city:c}));renderSeg()}})));
+}
+
+/* ── แนบไฟล์ ─────────────────────────────────────────── */
+const isImg = f => /^image\//.test(f.type||'');
+function addFiles(list){
+  const msgs=[];
+  for (const f of list){
+    const lim = isImg(f) ? MAX_IMAGE : MAX_FILE;
+    if (f.size > lim){ msgs.push(`${f.name} ใหญ่ ${mb(f.size)} เกิน ${mb(lim)} ส่งผ่าน roaming ไม่ได้ (ถ้าเป็นวิดีโอ ให้ตัดสั้นลงหรือถ่ายรูปแทน)`); continue; }
+    tray.push({file:f,url:isImg(f)?URL.createObjectURL(f):''});
+  }
+  $('err').textContent = msgs.join(' · ');
+  renderTray();
+}
+function renderTray(){
+  $('tray').replaceChildren(...tray.map((t,i)=>h('div',{class:'ti'},
+    t.url?h('img',{src:t.url,alt:''}):h('span',{text:t.file.name}),
+    h('button',{type:'button','aria-label':'เอาออก',text:'×',onclick:()=>{if(t.url)URL.revokeObjectURL(t.url);tray.splice(i,1);renderTray()}}))));
+}
+$('camIn').addEventListener('change',e=>{addFiles(e.target.files);e.target.value=''});
+$('fileIn').addEventListener('change',e=>{addFiles(e.target.files);e.target.value=''});
+$('snapIn').addEventListener('change',async e=>{const fs=[...e.target.files].filter(f=>f.size<=MAX_IMAGE);e.target.value='';for(const f of fs) await submit('','',[f]);});
+document.addEventListener('paste',e=>{ if($('vMain').hidden) return; const fs=[...(e.clipboardData?.files||[])]; if(fs.length){e.preventDefault();addFiles(fs);} });
+const comp=$('composer');
+comp.addEventListener('dragover',e=>{e.preventDefault();comp.classList.add('drag')});
+comp.addEventListener('dragleave',()=>comp.classList.remove('drag'));
+comp.addEventListener('drop',e=>{e.preventDefault();comp.classList.remove('drag');addFiles(e.dataTransfer.files)});
+['txt','booth'].forEach(id=>$(id).addEventListener('input',()=>$('err').textContent=''));
+
+comp.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const text=$('txt').value.trim(), booth=$('booth').value.trim();
+  if(!text && !booth && !tray.length){ $('err').textContent='พิมพ์บันทึกหรือแนบรูปก่อนกดส่ง'; return; }
+  const files=tray.map(t=>t.file); tray.forEach(t=>t.url&&URL.revokeObjectURL(t.url)); tray=[]; renderTray();
+  $('txt').value=''; $('booth').value=''; $('err').textContent='';
+  await submit(text,booth,files);
+});
+
+/* ── ย่อรูปก่อนส่ง ───────────────────────────────────── */
+async function shrink(f){
+  if(!/^image\/(jpeg|png|webp|heic|heif)$/i.test(f.type)) return {blob:f,name:f.name,mime:f.type||'application/octet-stream'};
+  try{
+    const bmp=await createImageBitmap(f); const s=Math.min(1,1600/Math.max(bmp.width,bmp.height));
+    const c=document.createElement('canvas'); c.width=Math.round(bmp.width*s); c.height=Math.round(bmp.height*s);
+    c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+    const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',.82)); if(!blob) throw 0;
+    return {blob,name:f.name.replace(/\.[^.]+$/,'')+'.jpg',mime:'image/jpeg'};
+  }catch(err){ return {blob:f,name:f.name,mime:f.type||'application/octet-stream'}; }
+}
+async function thumb(f){
+  if(!isImg(f)) return null;
+  try{const bmp=await createImageBitmap(f);const s=104/Math.min(bmp.width,bmp.height);const c=document.createElement('canvas');
+    c.width=Math.round(bmp.width*s);c.height=Math.round(bmp.height*s);c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.7);}
+  catch(err){return null}
+}
+
+/* ── ส่ง: เก็บลงคิวในเครื่องก่อน แล้วค่อยส่งทีละชิ้น ─────────── */
+async function submit(text,booth,files){
+  const ts=new Date(), entry=rid(), id=ts.getTime()+'-'+entry, city=curCity();
+  const items=[];
+  if(text||booth) items.push({action:'note'});
+  for(let i=0;i<files.length;i++){ const s=await shrink(files[i]); items.push({action:'file',idx:i+1,name:s.name,mime:s.mime,blob:s.blob}); }
+  const thumbs=[]; for(const f of files.slice(0,4)){ const t=await thumb(f); if(t) thumbs.push(t); }
+  await put('entries',{id,entry,ts:ts.toISOString(),day:dayKey(ts),person:me,city,text,booth,thumbs,nfiles:files.length,total:items.length,done:0});
+  for(let k=0;k<items.length;k++) await put('queue',{...items[k],id:id+'-'+String(k).padStart(2,'0'),eid:id,entry,ts:ts.toISOString(),person:me,city,text,booth,files:files.length,tries:0,failed:false,lastError:''});
+  renderMine(); run();
+}
+
+const b64 = blob => new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej(r.error);r.readAsDataURL(blob)});
+
+/* ผลการส่ง: ok · badcode · net (ติดต่อเซิร์ฟเวอร์ไม่ได้) · reject (เซิร์ฟเวอร์ตอบว่าไม่รับชิ้นนี้) */
+async function send(it){
+  if(DEMO){ await sleep(350); return {r:'ok'}; }
+  const p={code,action:it.action,person:it.person,city:it.city,entry:it.entry,ts:it.ts,booth:it.booth,text:it.text,files:it.files};
+  if(it.action==='file'){ Object.assign(p,{idx:it.idx,name:it.name,mime:it.mime,data:await b64(it.blob)}); }
+  let res;
+  try{ res=await fetch(API_URL,{method:'POST',body:JSON.stringify(p)}); }
+  catch(err){ return {r:'net'}; }
+  let j=null; try{ j=await res.json(); }catch(err){}
+  if(!j) return {r:'reject',e:'bad_response '+res.status};
+  if(j.ok) return {r:'ok'};
+  if(j.error==='bad_code') return {r:'badcode'};
+  return {r:'reject',e:String(j.error||'error')};
+}
+/* ชิ้นใหญ่ที่หลุดกลางทาง อาจเป็นเพราะชิ้นนั้นเอง ไม่ใช่เน็ตล่ม: ถ้า ping ผ่าน ให้นับเป็นการปฏิเสธ */
+async function reachable(){
+  if(DEMO) return true;
+  try{ const r=await fetch(API_URL+'?action=ping&code='+encodeURIComponent(code)); const j=await r.json(); return !!j.ok; }catch(err){ return false; }
+}
+
+let running=false, again=false, retry=null;
+async function run(){
+  if(!DEMO && (!code || !roster)) return;
+  if(running){ again=true; return; }
+  running=true; again=false; clearTimeout(retry);
+  let stalled=false;
+  try{
+    const now=Date.now(), q=(await all('queue')).filter(it=>!it.failed && !(it.lastTry && now-it.lastTry<15000)).sort((a,b)=>a.id<b.id?-1:1);
+    for(const it of q){
+      if(!DEMO && !navigator.onLine){ stalled=true; break; }
+      bar(); let s=await send(it);
+      if(s.r==='net' && await reachable()) s={r:'reject',e:'upload_dropped'};
+      if(s.r==='badcode'){ stalled=true; code='';ls.del('dn-code');$('codeErr').textContent='รหัสทีมเปลี่ยนแล้ว ใส่รหัสใหม่';show();break; }
+      if(s.r==='net'){ stalled=true; break; }
+      if(s.r==='reject'){
+        it.tries=(it.tries||0)+1; it.lastError=s.e||''; it.lastTry=Date.now(); it.failed=it.tries>=MAX_TRIES;
+        await put('queue',it); renderMine(); continue;            // ข้ามไปชิ้นถัดไป ไม่ให้ชิ้นเดียวขวางทั้งคิว
+      }
+      await del('queue',it.id);
+      const en=await get('entries',it.eid); if(en){ en.done=Math.min(en.total,en.done+1); await put('entries',en); }
+      renderMine();
+    }
+  } finally { running=false; bar(); }
+  if(stalled) retry=setTimeout(run,20000);
+  else if(again) run();
+  else if((await all('queue')).some(it=>!it.failed)) retry=setTimeout(run,20000);   // ชิ้นที่ถูกปฏิเสธแต่ยังไม่ครบ 3 ครั้ง
+}
+window.addEventListener('online',run);
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) run(); });
+setInterval(run,30000);
+
+async function bar(){
+  const q=await all('queue'), n=q.filter(it=>!it.failed).length, nf=q.filter(it=>it.failed).length, b=$('bar');
+  b.classList.toggle('wait',n>0); b.classList.toggle('fail',!n&&nf>0);
+  if(!n && !nf){ b.textContent='ส่งครบแล้ว · พร้อมบันทึก'; return; }
+  if(!n){ b.textContent=`ส่งไม่สำเร็จ ${nf} ชิ้น · ดูในแท็บ "ของฉัน"`; return; }
+  const off=!DEMO && !navigator.onLine;
+  b.textContent=off?`ไม่มีสัญญาณ · รอส่ง ${n} ชิ้น จะส่งเองเมื่อมีเน็ต`:(running?`กำลังส่ง… เหลือ ${n} ชิ้น · เปิดหน้านี้ค้างไว้จนส่งครบ`:`รอส่ง ${n} ชิ้น`)+(nf?` · ส่งไม่สำเร็จ ${nf}`:'');
+  if(!running) b.append(h('button',{type:'button',text:'ส่งตอนนี้',onclick:run}));
+}
+
+/* ── จัดการชิ้นที่ส่งไม่สำเร็จ ─────────────────────────── */
+async function retryFailed(eid){
+  for(const it of (await all('queue')).filter(x=>x.eid===eid&&x.failed)){ it.failed=false; it.tries=0; it.lastError=''; it.lastTry=0; await put('queue',it); }
+  renderMine(); run();
+}
+async function dropFailed(eid){
+  const gone=(await all('queue')).filter(x=>x.eid===eid&&x.failed);
+  for(const it of gone) await del('queue',it.id);
+  const en=await get('entries',eid); if(en){ en.total=Math.max(en.done,en.total-gone.length); en.dropped=(en.dropped||0)+gone.length; await put('entries',en); }
+  renderMine(); bar();
+}
+const ERR_TH = e => /too_large/.test(e)?'ไฟล์ใหญ่เกินที่ระบบรับได้':/bad_target/.test(e)?'ชื่อหรือเมืองไม่ตรงกับโฟลเดอร์':/upload_dropped/.test(e)?'ส่งไม่จบ อาจเพราะไฟล์ใหญ่หรือสัญญาณอ่อน':'ระบบปลายทางไม่รับ ('+e+')';
+
+/* ── แท็บของฉัน ───────────────────────────────────────── */
+async function renderMine(){
+  if(!me) return;
+  const list=(await all('entries')).filter(e=>e.person===me).sort((a,b)=>a.ts<b.ts?1:-1);
+  const q=await all('queue'), fails={};
+  q.filter(it=>it.failed).forEach(it=>{(fails[it.eid]=fails[it.eid]||[]).push(it)});
+  const box=$('mine');
+  if(!list.length){ box.replaceChildren(h('div',{class:'empty',text:'ยังไม่มีบันทึก ลองกด "ถ่ายแล้วส่งเลย" หรือพิมพ์ด้านบน'})); return; }
+  const out=[]; let last='';
+  for(const e of list){
+    if(e.day!==last){ last=e.day; out.push(h('div',{class:'day',text:thDay(e.day)})); }
+    const f=fails[e.id]||[], left=e.total-e.done-f.length, done=e.done>=e.total;
+    const chip = f.length ? h('span',{class:'chip fail',text:`ส่งไม่สำเร็จ ${f.length}`}) : h('span',{class:'chip '+(done?'ok':'wait'),text:done?'ส่งแล้ว':`รอส่ง ${left}`});
+    out.push(h('div',{class:'en'},
+      h('div',{class:'t',text:fmtHM.format(new Date(e.ts))}),
+      h('div',{},
+        h('div',{class:'who'},h('span',{class:'chip',text:CITY[e.city].s}),chip,(f.length&&left>0)?h('span',{class:'chip wait',text:`รอส่ง ${left}`}):null,e.dropped?h('span',{class:'chip',text:`ทิ้งไป ${e.dropped}`}):null),
+        e.booth?h('div',{class:'disp',style:'font-size:15px',text:e.booth}):null,
+        e.text?h('div',{class:'txt',text:e.text}):(!e.booth?h('div',{class:'mute',text:`รูป/ไฟล์ ${e.nfiles} ไฟล์`}):null),
+        e.thumbs&&e.thumbs.length?h('div',{class:'th'},e.thumbs.map(t=>h('img',{src:t,alt:''})),e.nfiles>e.thumbs.length?h('span',{class:'mute small',text:`+${e.nfiles-e.thumbs.length}`}):null):null,
+        f.length?h('div',{class:'failbox'},
+          h('span',{text:f.map(it=>(it.action==='note'?'ข้อความ':(it.name||'ไฟล์'))+': '+ERR_TH(it.lastError)).join(' · ')}),
+          h('div',{class:'acts'},h('button',{class:'btn sm',type:'button',text:'ลองส่งใหม่',onclick:()=>retryFailed(e.id)}),h('button',{class:'btn sm',type:'button',text:'ทิ้งชิ้นที่ส่งไม่ได้',onclick:()=>dropFailed(e.id)}))):null)));
+  }
+  box.replaceChildren(...out);
+}
+
+/* ── แท็บทีม ─────────────────────────────────────────── */
+function tab(t){ $('tabMine').setAttribute('aria-selected',String(t==='mine')); $('tabTeam').setAttribute('aria-selected',String(t==='team'));
+  $('mine').hidden=t!=='mine'; $('team').hidden=t!=='team'; if(t==='team') loadTeam(); }
+$('tabMine').addEventListener('click',()=>tab('mine'));
+$('tabTeam').addEventListener('click',()=>tab('team'));
+const today=dayKey(new Date());
+const days=[...new Set([...TRIP_DAYS,today])].sort();
+$('daySel').replaceChildren(...days.map(d=>h('option',{value:d,text:thDay(d)})));
+$('daySel').value=today;
+$('daySel').addEventListener('change',loadTeam);
+$('teamRefresh').addEventListener('click',loadTeam);
+
+async function loadTeam(){
+  const box=$('teamList'), day=$('daySel').value;
+  box.replaceChildren(h('div',{class:'empty',text:'กำลังโหลด…'}));
+  let list=[];
+  try{
+    if(DEMO){
+      list=(await all('entries')).filter(e=>e.day===day).map(e=>({person:e.person,city:e.city,time:fmtHM.format(new Date(e.ts)),booth:e.booth,text:e.text,files:e.nfiles,images:e.nfiles}));
+    }else{
+      const r=await fetch(`${API_URL}?action=list&code=${encodeURIComponent(code)}&date=${day}`); const j=await r.json();
+      if(!j.ok) throw new Error(j.error); list=j.entries;
+    }
+  }catch(err){ box.replaceChildren(h('div',{class:'empty',text:'โหลดไม่ได้ ตรวจสัญญาณแล้วกดรีเฟรช'})); return; }
+  if(!list.length){ box.replaceChildren(h('div',{class:'empty',text:'ยังไม่มีใครส่งบันทึกในวันนี้'})); return; }
+  list.sort((a,b)=>a.time<b.time?1:-1);
+  box.replaceChildren(...list.map(e=>{const p=(roster&&roster.people.find(x=>x.k===e.person))||{n:e.person,g:0};
+    return h('div',{class:'en'},
+      h('div',{class:'t',text:e.time}),
+      h('div',{},
+        h('div',{class:'who'},h('span',{class:'chip c'+p.g,text:p.n}),h('span',{class:'chip',text:(CITY[e.city]||{s:e.city}).s})),
+        e.booth?h('div',{class:'disp',style:'font-size:15px',text:e.booth}):null,
+        e.text?h('div',{class:'txt',text:e.text}):null,
+        e.files?h('div',{class:'mute small',text:`แนบ ${e.files} ไฟล์`+(e.images?` (รูป ${e.images})`:'')}):null));}));
+}
+
+/* ── เริ่ม ───────────────────────────────────────────── */
+show(); bar(); run();
+if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
