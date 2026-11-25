@@ -1,7 +1,7 @@
 // เก็บหน้าเว็บไว้ในเครื่อง เพื่อให้เปิดได้แม้ไม่มีสัญญาณในฮอลล์งาน
 // ใช้แบบ network-first: มีเน็ตจะโหลดเวอร์ชันล่าสุด ไม่มีเน็ตจะใช้ฉบับที่เก็บไว้
 // เปลี่ยนเลขเวอร์ชันทุกครั้งที่แก้ไฟล์ในโฟลเดอร์นี้
-const CACHE = 'pcc-daily-v2';
+const CACHE = 'pcc-daily-v3';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
